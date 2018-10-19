@@ -141,26 +141,30 @@ def partialFractions():
     jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
     return jsonResponse
 
-listMethods =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
+def inequations1():
+    a = random.randint(1,100)*(random.randint(0,1)*2-1)
+    b = random.randint(1,100)*(random.randint(0,1)*2-1)
+    c = random.randint(1,100)*(random.randint(0,1)*2-1)
+    d = random.randint(1,100)*(random.randint(0,1)*2-1)
+    e = random.randint(1,100)*(random.randint(0,1)*2-1)
+    f = random.randint(1,100)*(random.randint(0,1)*2-1)
+    question = 'let x alonge in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'x)+('+str(e)+')]/('+str(f)+')'
+    sol = round(((c*f)*(e-b))/((c*f)*(a-d)),2)*(-1 if ((c>0) != (f>0)) else 1)
+    solution ='x'+('>=' if ((c>0) != (f>0)) else '<=')+str(sol)
+    options = coursesFunctionsBll.inequationsAlternatives1(sol)
+    jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+    return jsonResponse
 
+exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
+exam2 =[inequations1]
+listMethods = [exam1, exam2]
 def generateExam(unit):
-    if(unit=='1'):
-        return examUnitOne()
-    elif(unit=='2'):
-        return examUnitTwo()
-    elif(unit=='3'):
-        return examUnitThree()
-    return ''
-def examUnitOne():
     solution=''
+    lista = listMethods[int(unit)-1]
     for x in range(12):
-        question =  random.randint(1,len(listMethods))
-        solution +='QUESTION N°'+str(x+1)+': '+ listMethods[question-1]()
+        question =  random.randint(1,len(lista))
+        solution +='QUESTION N°'+str(x+1)+': '+ lista[question-1]()
     return solution
-def examUnitTwo():
-    return 'unit 2'
-def examUnitThree():
-    return 'unit 3'
 
 
 
