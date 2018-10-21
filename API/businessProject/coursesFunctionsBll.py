@@ -1,5 +1,6 @@
 import random
 import json
+import math
 from flask import jsonify
 
 def generateOptions(solution):
@@ -107,6 +108,24 @@ def inequationsAlternatives1(sol):
     tempAlternatives.append('x<='+str(options[1]))
     strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]})
     return strOptions
+def rationalInequations(union_range):
+    try:
+        alternatives = []
+        alternatives.append("no solution")
+        alternatives.append('('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')')
+        alternatives.append('('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')')
+        min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
+        if(min_range[0]>min_range[1]):
+            if(union_range[0][0]<union_range[1][0]):
+                alternatives.append('('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')')
+            else:
+                alternatives.append('('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')')
+        max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
+        alternatives.append('('+(str(round(max_range[0],2)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],2)) if max_range[1]!=1000 else str(math.inf))+')')
+        strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+        return strOptions
+    except Exception as er:
+        return er
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

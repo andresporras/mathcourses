@@ -1,5 +1,6 @@
 import BasicAlgebraDll
 import random
+import math
 import coursesFunctionsBll
 from fractions import Fraction
 from flask import jsonify
@@ -148,15 +149,56 @@ def inequations1():
     d = random.randint(1,100)*(random.randint(0,1)*2-1)
     e = random.randint(1,100)*(random.randint(0,1)*2-1)
     f = random.randint(1,100)*(random.randint(0,1)*2-1)
-    question = 'let x alonge in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'x)+('+str(e)+')]/('+str(f)+')'
-    sol = round(((c*f)*(e-b))/((c*f)*(a-d)),2)*(-1 if ((c>0) != (f>0)) else 1)
-    solution ='x'+('>=' if ((c>0) != (f>0)) else '<=')+str(sol)
+    if(((a*f)-(d*c))==0):
+        return inequations1()
+    question = 'let x alone in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'x)+('+str(e)+')]/('+str(f)+')'
+    sol = round(((e*c)-(b*f))/((a*f)-(d*c)),4)
+    solution ='x'+('<=' if (((a*f)-(d*c))*c*f>=0) else '>=')+str(sol)
     options = coursesFunctionsBll.inequationsAlternatives1(sol)
     jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
     return jsonResponse
 
+def rationalInequations():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)
+        c = random.randint(1,100)*(random.randint(0,1)*2-1)
+        d = random.randint(1,100)*(random.randint(0,1)*2-1)
+        range = []
+        range1 = [-1000, -b/a] if a>0 else [-b/a, 1000]
+        range2 = [-1000, -d/c] if c>0 else [-d/c, 1000]
+        range3 = [-b/a, 1000] if a>0 else [-1000, -b/a]
+        range4 = [-d/c, 1000] if c>0 else [-1000, -d/c]
+        intersect_range1 = [range1[0] if range1[0]>range2[0] else range2[0], range1[1] if range1[1]<range2[1] else range2[1]]
+        intersect_range2 = [range3[0] if range3[0]>range4[0] else range4[0], range3[1] if range3[1]<range4[1] else range4[1]]
+        union_range= []
+        solution=""
+        if(intersect_range1[0]<intersect_range1[1]):
+            union_range.append(intersect_range1)
+        if(intersect_range2[0]<intersect_range2[1]):
+            union_range.append(intersect_range2)
+        if(len(union_range)==0):
+            solution="no solution"
+        if(len(union_range)==1):
+            solution='('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')'
+        if(len(union_range)==2):
+            min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
+            if(min_range[0]>min_range[1]):
+                if(union_range[0][0]<union_range[1][0]):
+                    solution = '('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')'
+                else:
+                    solution = '('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')'
+            else:
+                max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
+                solution='('+(str(round(max_range[0],2)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],2)) if max_range[1]!=1000 else str(math.inf))+')'
+        question = 'Which is the right range for x in the next inequality?: [('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]>0'
+        options = coursesFunctionsBll.rationalInequations([intersect_range1, intersect_range2])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1]
+exam2 =[inequations1, rationalInequations]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
