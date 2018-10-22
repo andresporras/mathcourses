@@ -87,11 +87,11 @@ def secondGradeEquation():
     a = random.randint(1,100)*(random.randint(0,1)*2-1)
     b = random.randint(1,100)*(random.randint(0,1)*2-1)
     c = random.randint(1,100)*(random.randint(0,1)*2-1)
-    solution='yes'
+    solution='Yes'
     if(((b**2)-4*a*c)<0):
-        solution = 'no'
+        solution = 'No'
     question = 'On the next function ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')=0. Has x any solution?:'
-    options = json.dumps({'1':'yes', '2':'no'})
+    options = json.dumps({'1':'Yes', '2':'No'})
     jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
     return jsonResponse
 #given a ax^3 + bx^2 + cx + d get, from the given options, the right factorization (ex^2 + f)(gx + h)
@@ -197,8 +197,26 @@ def rationalInequations():
         return jsonResponse
     except Exception as er:
         return er
+def inequationTwoSides():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)
+        c = random.randint(1,100)*(random.randint(0,1)*2-1)
+        d = random.randint(1,100)*(random.randint(0,1)*2-1)
+        e = random.randint(1,100)*(random.randint(0,1)*2-1)
+        sol1 = ((a*d)-c)/b
+        sol2 = ((e*d)-c)/b
+        solution='No'
+        if((sol1<=sol2 and b*c>0) or (sol1>=sol2 and b*c<0)):
+            solution='Yes'
+        question = 'for the next inequation, has x any valid solution?: '+str(a)+'<=[('+str(b)+'x)+('+str(c)+')]/('+str(d)+')<='+str(e)
+        options = options = json.dumps({'1':'yes', '2':'no'})
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations]
+exam2 =[inequations1, rationalInequations, inequationTwoSides]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
