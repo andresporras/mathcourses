@@ -141,7 +141,7 @@ def partialFractions():
     options = coursesFunctionsBll.generateAlternativesPF([aSolution, bx, bc, bSolution, cx, cc])
     jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
     return jsonResponse
-
+#given an inequation like (ax+b)/c <=(dx+e)/f, define the solution range for x
 def inequations1():
     a = random.randint(1,100)*(random.randint(0,1)*2-1)
     b = random.randint(1,100)*(random.randint(0,1)*2-1)
@@ -158,6 +158,7 @@ def inequations1():
     jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
     return jsonResponse
 
+#given an inequation like (ax+b)/(cx+d)>0 get the right range
 def rationalInequations():
     try:
         a = random.randint(1,100)*(random.randint(0,1)*2-1)
@@ -197,6 +198,7 @@ def rationalInequations():
         return jsonResponse
     except Exception as er:
         return er
+#given an inequation like a<=(bx+c)/d<=e determine if it has any valid solution
 def inequationTwoSides():
     try:
         a = random.randint(1,100)*(random.randint(0,1)*2-1)
