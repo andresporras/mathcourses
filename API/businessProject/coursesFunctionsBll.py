@@ -8,7 +8,7 @@ def generateOptions(solution):
     for x in range(4):
         i=random.randint(0,1)
         if(i==0):
-            options.insert(0, round(options[0]/2,2))
+            options.insert(0, round(options[0]/2,4))
         else:
             options.append(options[len(options)-1]*2)
     strOptions =json.dumps({'a':str(options[0]), 'b':str(options[1]), 'c': str(options[2]), 'd': str(options[3]), 'e': str(options[4])})
@@ -17,14 +17,14 @@ def generateTwoVariableOptions(options):
     solutions =[options.copy()]
     for x in range(4):
         i=random.randint(0,1)
-        j=random.randint(0,2)
+        j=random.randint(0,4)
         if(i==0):
             nSolution = solutions[0].copy()
-            nSolution[j]=round(nSolution[j]/2,2)
+            nSolution[j]=round(nSolution[j]/2,4)
             solutions.insert(0,nSolution)
         else:
             nSolution = solutions[len(solutions)-1].copy()
-            nSolution[j]=round(nSolution[j]*2,2)
+            nSolution[j]=round(nSolution[j]*2,4)
             solutions.append(nSolution)
     tempSolutions =[]
     for y in range(5):
@@ -82,7 +82,7 @@ def generateAlternativesPF(lista):
             alternatives.append(nAlternative)
     tempAlternatives =[]
     for y in range(5):
-        tempAlternatives.append('('+str(round(alternatives[y][0],2))+')/[('+str(alternatives[y][1])+'x)+('+str(alternatives[y][2])+')] + ('+str(round(alternatives[y][3],2))+')/[('+str(alternatives[y][4])+'x)+('+str(alternatives[y][5])+')]')
+        tempAlternatives.append('('+str(round(alternatives[y][0],4))+')/[('+str(alternatives[y][1])+'x)+('+str(alternatives[y][2])+')] + ('+str(round(alternatives[y][3],4))+')/[('+str(alternatives[y][4])+'x)+('+str(alternatives[y][5])+')]')
     strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]})
     return strOptions
 def quadraticFactorization(type_):
@@ -98,7 +98,7 @@ def inequationsAlternatives1(sol):
     options =[sol]
     i=random.randint(0,1)
     if(i==0):
-        options.insert(0, round(options[0]/2,2))
+        options.insert(0, round(options[0]/2,4))
     else:
         options.append(options[len(options)-1]*2)
     tempAlternatives =[]
@@ -112,20 +112,37 @@ def rationalInequations(union_range):
     try:
         alternatives = []
         alternatives.append("no solution")
-        alternatives.append('('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')')
-        alternatives.append('('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')')
+        alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
+        alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
         min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
         if(min_range[0]>min_range[1]):
             if(union_range[0][0]<union_range[1][0]):
-                alternatives.append('('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')')
+                alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
             else:
-                alternatives.append('('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')')
+                alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
         max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
-        alternatives.append('('+(str(round(max_range[0],2)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],2)) if max_range[1]!=1000 else str(math.inf))+')')
+        alternatives.append('('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')')
         strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
         return strOptions
     except Exception as er:
         return er
+def inequationsAlternatives2(sol):
+    options =[sol.copy()]
+    i=random.randint(0,3)
+    noption = options[0].copy()
+    noption[i] = noption[i]*(-1)
+    j=random.randint(0,1)
+    if(j==0):
+        options.insert(0, noption)
+    else:
+        options.append(noption)
+    tempAlternatives =[]
+    tempAlternatives.append('x>='+'[('+str(options[0][0])+'y)+('+str(options[0][1])+')]/[('+str(options[0][2])+'y)+('+str(options[0][3])+')]')
+    tempAlternatives.append('x<='+'[('+str(options[0][0])+'y)+('+str(options[0][1])+')]/[('+str(options[0][2])+'y)+('+str(options[0][3])+')]')
+    tempAlternatives.append('x>='+'[('+str(options[1][0])+'y)+('+str(options[1][1])+')]/[('+str(options[1][2])+'y)+('+str(options[1][3])+')]')
+    tempAlternatives.append('x<='+'[('+str(options[1][0])+'y)+('+str(options[1][1])+')]/[('+str(options[1][2])+'y)+('+str(options[1][3])+')]')
+    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]})
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

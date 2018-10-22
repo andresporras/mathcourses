@@ -5,6 +5,7 @@ import coursesFunctionsBll
 from fractions import Fraction
 from flask import jsonify
 import json
+#https://aerodynamics.lr.tudelft.nl/~rdwight/work_multiple_choice_code.html useful link for latex format
 #question type (ax/b)+(c/d)=(e/f) and get the right vaue for x
 def firstGradeEquation():
     divisor1 =  random.randint(1,10)*(random.randint(0,1)*2-1)
@@ -22,7 +23,7 @@ def firstGradeEquation():
     
     sol = allDivisor/allDividend
     question = "("+str(divisor1)+"x/"+str(dividend1)+")+("+str(divisor2)+"/"+str(dividend2)+")=("+str(divisor3)+"x/"+str(dividend3)+")+("+str(divisor4)+"/"+str(dividend4)+")"
-    solution = round(sol,2)
+    solution = round(sol,4)
     options = coursesFunctionsBll.generateOptions(solution)
     jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
     return jsonResponse
@@ -51,7 +52,7 @@ def areaProblem():
     question = 'if a rectangle area is '+str(-1*c)+', its height is h and its width is equal to ('+str(a)+'h)+('+str(b)+'), which is the perimeter of this rectangle?:'
     solution1 = (-b+((b*b)-(4*a*c))**(0.5))/(2*a)
     solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
-    solution = round((((solution1*a)+b)*2)+(solution1*2) if solution1>0 else (((solution2*a)+b)*2)+(solution2*2),2)
+    solution = round((((solution1*a)+b)*2)+(solution1*2) if solution1>0 else (((solution2*a)+b)*2)+(solution2*2),4)
     options = coursesFunctionsBll.generateOptions(solution)
     jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
     return jsonResponse
@@ -78,7 +79,7 @@ def plantProblem():
     question = 'In a plant, the cost to produce x units is equal to ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+'), how many units can be produce with '+str(y)+'? choose the correct range for x value:'
     solution1 = (-b+((b*b)-(4*a*(c-y)))**(0.5))/(2*a)
     solution2 = (-b-((b*b)-(4*a*(c-y)))**(0.5))/(2*a)
-    sol = round(solution1 if solution1>0 else solution2,2)
+    sol = round(solution1 if solution1>0 else solution2,4)
     solution = 'x is in range (0,1)' if (sol<1) else 'x is in range [1,3]' if (sol>=1 and sol<=3) else 'x is in range (3,6)' if (sol>3 and sol<6) else 'x is in range [6,10]' if (sol>=6 and sol<=10) else 'x is in range (10,infinite)'
     options = json.dumps({'a':'x is in range (0,1)', 'b':'x is in range [1,3]', 'c': 'x is in range (3,6)', 'd': 'x is in range [6,10]', 'e': 'x is in range (10,infinite)'})
     return json.dumps({'question':question, 'solution':str(solution), 'options':options})
@@ -134,8 +135,8 @@ def partialFractions():
     tempComponentValue = xComponents[1]
     for i in range(len(xComponents)):
         xComponents[i] =xComponents[i]/tempComponentValue
-    aSolution = round(xComponents[0],2)
-    bSolution = round(cComponents[0],2)
+    aSolution = round(xComponents[0],4)
+    bSolution = round(cComponents[0],4)
     question = 'On the next function [('+str(ax)+'x)+('+str(ac)+')]/[('+str(dx2)+'x^2)+('+str(dx)+'x)+('+str(dc)+')], which of the next partial fraction is equivalent?:'
     solution ='('+str(aSolution)+')/[('+str(bx)+'x)+('+str(bc)+')] + ('+str(bSolution)+')/[('+str(cx)+'x)+('+str(cc)+')]'
     options = coursesFunctionsBll.generateAlternativesPF([aSolution, bx, bc, bSolution, cx, cc])
@@ -181,17 +182,17 @@ def rationalInequations():
         if(len(union_range)==0):
             solution="no solution"
         if(len(union_range)==1):
-            solution='('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')'
+            solution='('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')'
         if(len(union_range)==2):
             min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
             if(min_range[0]>min_range[1]):
                 if(union_range[0][0]<union_range[1][0]):
-                    solution = '('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+')'
+                    solution = '('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')'
                 else:
-                    solution = '('+(str(round(union_range[1][0],2)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],2)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],2)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],2)) if union_range[0][1]!=1000 else str(math.inf))+')'
+                    solution = '('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')'
             else:
                 max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
-                solution='('+(str(round(max_range[0],2)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],2)) if max_range[1]!=1000 else str(math.inf))+')'
+                solution='('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')'
         question = 'Which is the right range for x in the next inequality?: [('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]>0'
         options = coursesFunctionsBll.rationalInequations([intersect_range1, intersect_range2])
         jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
@@ -217,8 +218,26 @@ def inequationTwoSides():
         return jsonResponse
     except Exception as er:
         return er
+#get the valid range for x in the inequation type (ax+b)/c <= (dy+e)/(fy+g)
+def inequations2():
+    a = random.randint(1,10)*(random.randint(0,1)*2-1)
+    b = random.randint(1,10)*(random.randint(0,1)*2-1)
+    c = random.randint(1,10)*(random.randint(0,1)*2-1)
+    d = random.randint(1,10)*(random.randint(0,1)*2-1)
+    e = random.randint(1,10)*(random.randint(0,1)*2-1)
+    f = random.randint(1,10)*(random.randint(0,1)*2-1)
+    g = random.randint(1,10)*(random.randint(0,1)*2-1)
+    sola = (d*c)-(b*f)
+    solb = (e*c)-(b*g)
+    solc = a*f
+    sold = a*g
+    solution = 'x'+('<=' if a*c>0 else '>=')+'[('+str(sola)+'y)+('+str(solb)+')]/[('+str(solc)+'y)+('+str(sold)+')]'
+    question = 'let x alone in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'y)+('+str(e)+')]/[('+str(f)+'y)+('+str(g)+')]'
+    options = coursesFunctionsBll.inequationsAlternatives2([sola, solb, solc, sold])
+    jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+    return jsonResponse
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
