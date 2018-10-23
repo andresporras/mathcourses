@@ -143,6 +143,15 @@ def inequationsAlternatives2(sol):
     tempAlternatives.append('x<='+'[('+str(options[1][0])+'y)+('+str(options[1][1])+')]/[('+str(options[1][2])+'y)+('+str(options[1][3])+')]')
     strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]})
     return strOptions
+def inequationGrade2(lista):
+    alternatives =[]
+    alternatives.append('(void)')
+    alternatives.append('(-inf,inf)')
+    alternatives.append('('+str(round(lista[0],4))+')')
+    alternatives.append('('+str(round(lista[1] if lista[1]<lista[2] else lista[2], 4))+','+str(round(lista[1] if lista[1]>lista[2] else lista[2], 4))+')')
+    alternatives.append('(-inf, '+str(round(lista[1] if lista[1]<lista[2] else lista[2], 4))+') U ('+str(round(lista[1] if lista[1]>lista[2] else lista[2], 4))+',inf)')
+    strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

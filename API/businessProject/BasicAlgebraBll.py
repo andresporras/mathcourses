@@ -236,8 +236,39 @@ def inequations2():
     options = coursesFunctionsBll.inequationsAlternatives2([sola, solb, solc, sold])
     jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
     return jsonResponse
+#given a problem like ax^2 +bx + c>=0 determina the valid range for x
+def inequationGrade2():
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        deriv = -b/(2*a)
+        minMax = (a*(deriv**2))+(b*deriv)+c
+        sol1= (random.randint(1,100)*(-1))+deriv
+        sol2= random.randint(1,100)+deriv
+        solution=''
+        if(((b**2)-(4*a*c))<=0):
+            if(minMax>0):
+                solution='(-inf,inf)'
+            elif(minMax==0):
+                solution='('+str(round(deriv,4))+')'
+            else:
+                solution='(void)'
+        else:
+            sol1= (-b+((b**2)-(4*a*c))**(0.5))/(2*a)
+            sol2= (-b-((b**2)-(4*a*c))**(0.5))/(2*a)
+            if(minMax>0):
+                solution= '('+str(round(sol1 if sol1<sol2 else sol2, 4))+','+str(round(sol1 if sol1>sol2 else sol2, 4))+')'
+            else:
+                solution = '(-inf, '+str(round(sol1 if sol1<sol2 else sol2, 4))+') U ('+str(round(sol1 if sol1>sol2 else sol2, 4))+',inf)'
+        question = 'for the next inequation, define the valid range for x: ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')>=0'
+        options = coursesFunctionsBll.inequationGrade2([deriv, sol1, sol2])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
