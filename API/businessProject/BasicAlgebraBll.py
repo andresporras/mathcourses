@@ -267,8 +267,46 @@ def inequationGrade2():
         return jsonResponse
     except Exception as er:
         return er
+def inequationProblem1():
+    try:
+        acceleration = random.randint(1,10)*(random.randint(0,1)*2-1)
+        velocity = random.randint(1,10)*(random.randint(0,1)*2-1)
+        distance = random.randint(1,100)
+        a = acceleration/2
+        b = velocity
+        c = (-1)*distance
+        deriv = -b/(2*a)
+        if(deriv<0):
+            inequationProblem1()
+        minMax = (a*(deriv**2))+(b*deriv)+c
+        sols = [random.randint(1,10),random.randint(11,20)]
+        solution=''
+        if(((b**2)-(4*a*c))<=0):
+            if(minMax>0):
+                solution='(0,inf)'
+            elif(minMax==0):
+                solution='('+str(round(deriv,4))+')'
+            else:
+                solution='(void)'
+        else:
+            sol1= (-b+((b**2)-(4*a*c))**(0.5))/(2*a)
+            sol2= (-b-((b**2)-(4*a*c))**(0.5))/(2*a)
+            sols = [sol1,sol2]
+            sols.sort()
+            if(sols[0]<0):
+                solution = '('+str(round(sols[1],4))+',inf)'
+            elif(minMax>0):
+                solution= '('+str(round(sols[0], 4))+','+str(round(sols[1], 4))+')'
+            else:
+                solution = '(0, '+str(round(sols[0], 4))+') U ('+str(round(sols[1], 4))+',inf)'
+        question = 'a car is moving with constant acceleration of '+str(acceleration)+'m/s^2 and initial speed of '+str(velocity)+'m/s, on which range of time (in seconds) the car equals or surpass the distance of '+str(distance)+' meters?. PS: Use the final distance formula for objects with constant acceleration'
+        options = coursesFunctionsBll.inequationProblem1([deriv, sols[0], sols[1]])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''

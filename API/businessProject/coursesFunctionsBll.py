@@ -152,6 +152,15 @@ def inequationGrade2(lista):
     alternatives.append('(-inf, '+str(round(lista[1] if lista[1]<lista[2] else lista[2], 4))+') U ('+str(round(lista[1] if lista[1]>lista[2] else lista[2], 4))+',inf)')
     strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
     return strOptions
+def inequationProblem1(lista):
+    alternatives =[]
+    alternatives.append('(void)')
+    alternatives.append('(0,inf)')
+    alternatives.append('('+str(round(lista[0], 4))+')')
+    alternatives.append('('+str(round(lista[1] if lista[1]>0 else 0, 4))+','+str(round(lista[2], 4))+')')
+    alternatives.append('(0, '+str(round(lista[1], 4))+') U ' if lista[1]>0 else ''+ '('+str(round(lista[2], 4))+',inf)')
+    strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1
