@@ -213,7 +213,7 @@ def inequationTwoSides():
         if((sol1<=sol2 and b*c>0) or (sol1>=sol2 and b*c<0)):
             solution='Yes'
         question = 'for the next inequation, has x any valid solution?: '+str(a)+'<=[('+str(b)+'x)+('+str(c)+')]/('+str(d)+')<='+str(e)
-        options = options = json.dumps({'1':'yes', '2':'no'})
+        options = json.dumps({'1':'yes', '2':'no'})
         jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
         return jsonResponse
     except Exception as er:
@@ -267,6 +267,7 @@ def inequationGrade2():
         return jsonResponse
     except Exception as er:
         return er
+#using the final disntant formula for constant accelerated object (df = (1/2)ax^2 + vx + di) define the range of time where a car equals or surpass a distance x having the acceleration and the initial speed
 def inequationProblem1():
     try:
         acceleration = random.randint(1,10)*(random.randint(0,1)*2-1)
@@ -305,8 +306,33 @@ def inequationProblem1():
         return jsonResponse
     except Exception as er:
         return er
+#the final note of a math college course is define by 3 notes, the first two with equal value, and the final exam which is the n% of the course
+#given the first two notes and the percentage  for the exam note, which should be the exam note so the student get Acceptable note
+#a student get acceptable note when the final note of the course is betweeen 60% and 80%
+def inequationProblem2():
+    try:
+        nota1 = random.randint(1,100)
+        nota2 = random.randint(1,100)
+        percentage = random.randint(40,60)
+        rangoMenor= (12000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
+        rangoMayor= (16000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
+        solution=''
+        if(rangoMayor<0):
+            solution='student already lost the course'
+        elif(rangoMenor>100):
+            solution='student already surpassed the acceptable note (>80)'
+        else:
+            solution='('+str(round(rangoMenor if rangoMenor>=0 else 0,4))+','+str(round(rangoMayor if rangoMayor<=100 else 100,4))+')'
+        question = 'On a math course, the note is defined for two notes with same value and the final exam which value is '+str(percentage)+'% of the course. If a student get '+str(nota1)+' in the first note and '+str(nota2)+' for the second note, which note student should achieve in the final exam in order to get acceptable note (betwen 60& and 80% of the course)?'
+        rangoMenor = rangoMenor if rangoMenor>0 else 0
+        rangoMayor = rangoMayor if rangoMayor<100 else 100
+        options = coursesFunctionsBll.inequationProblem2([rangoMenor, rangoMayor])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
