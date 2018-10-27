@@ -183,6 +183,42 @@ def inequationProblem2(lista):
     alternatives.append('('+str(round(tempAlternatives[2][0] if tempAlternatives[2][0]>=0 else 0,4))+','+str(round(tempAlternatives[2][1] if tempAlternatives[2][1]<=100 else 100,4))+')')
     strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
     return strOptions
+def absoluteValue1(solution):
+    options =[solution.copy()]
+    for x in range(4):
+        i=random.randint(0,1)
+        j=random.randint(0,1)
+        if(i==0):
+            temp = options[0].copy()
+            temp[j]=round(temp[j]/2,4)
+            options.insert(0, temp)
+        else:
+            temp = options[len(options)-1].copy()
+            temp[j]=temp[j]*2
+            options.append(temp)
+    strOptions =json.dumps({'a':str(options[0][0])+','+str(options[0][1]), 'b':str(options[1][0])+','+str(options[1][1]), 'c': str(options[2][0])+','+str(options[2][1]), 'd': str(options[3][0])+','+str(options[3][1]), 'e': str(options[4][0])+','+str(options[4][1])})
+    return strOptions
+def absoluteValue2(solution):
+    options =[solution.copy()]
+    for x in range(3):
+        i=random.randint(0,1)
+        j=random.randint(0,1)
+        if(i==0):
+            temp = options[0].copy()
+            temp[j]=round(temp[j]-(abs(temp[1]-temp[0])/2),4)
+            options.insert(0, temp)
+        else:
+            temp = options[len(options)-1].copy()
+            temp[j]=round(temp[j]+(abs(temp[1]-temp[0])/2),4)
+            options.append(temp)
+    alternatives=[]
+    alternatives.append('(null)')
+    alternatives.append(str(options[0][0])+'<x<'+str(options[0][1]))
+    alternatives.append(str(options[1][0])+'<x<'+str(options[1][1]))
+    alternatives.append(str(options[2][0])+'<x<'+str(options[2][1]))
+    alternatives.append(str(options[3][0])+'<x<'+str(options[3][1]))
+    strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])})
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

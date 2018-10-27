@@ -331,8 +331,45 @@ def inequationProblem2():
         return jsonResponse
     except Exception as er:
         return er
+#get the two solutions for x on |(ax+b)/(cx+d)| = c
+def absoluteValue1():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)
+        c = random.randint(1,100)*(random.randint(0,1)*2-1)
+        d = random.randint(1,100)*(random.randint(0,1)*2-1)
+        e = random.randint(1,100)
+        sol1 = ((d*e)-b)/(a-(e*c))
+        sol2 = ((d*(-e))-b)/(a-((-e)*c))
+        solution=''+str(round(sol1,4))+','+str(round(sol2,4))+''
+        question = 'which are the two solutions for |[('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]|='+str(e)+''
+        options = coursesFunctionsBll.absoluteValue1([round(sol1,4), round(sol2,4)])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#get the range of solutions for x on |(ax+b)/c| < d
+def absoluteValue2():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)
+        c = random.randint(1,100)*(random.randint(0,1)*2-1)
+        d = random.randint(1,100)
+        solPos = round(((d*c)-b)/a if a*c>0 else (((-d)*c)-b)/a,4)
+        solNeg = round((((-d)*c)-b)/a if a*c>0 else ((d*c)-b)/a,4)
+        solution=''
+        if(solNeg>solPos):
+            solution='(null)'
+        else:
+            solution=''+str(solNeg)+'<x<'+str(solPos)+''
+        question = 'get valid range for x in |[('+str(a)+'x)+('+str(b)+')]/('+str(c)+')|<'+str(d)+''
+        options = coursesFunctionsBll.absoluteValue2([solNeg, solPos])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2, absoluteValue1, absoluteValue2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''
