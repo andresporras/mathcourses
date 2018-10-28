@@ -368,8 +368,37 @@ def absoluteValue2():
         return jsonResponse
     except Exception as er:
         return er
+#the force acting on an object is equal to at^2+bt+c
+#which of the next options is not a valid time when the magnitude of force was equal to d
+def absoluteValueProblem():
+    try:
+        a = random.randint(1,50)
+        b = random.randint(51,100)*(-1)
+        c = random.randint(26,50)
+        d = random.randint(1,25)
+        e1= c-d
+        e2=c+d
+        if((b*b)<=4*a*e2):
+            return absoluteValueProblem()
+        sols=[]
+        while True:
+            sols.append(round((-b+(((b**2)-(4*a*e1))**(0.5)))/(2*a),4))
+            sols.append(round((-b-(((b**2)-(4*a*e1))**(0.5)))/(2*a),4))
+            sols.append(round((-b+(((b**2)-(4*a*e2))**(0.5)))/(2*a),4))
+            sols.append(round((-b-(((b**2)-(4*a*e2))**(0.5)))/(2*a),4))
+            sols.append(round(random.uniform(0, max(sols)+min(sols)),4))
+            if sols[4]!=sols[0] and sols[4]!=sols[1] and sols[4]!=sols[2] and sols[4]!=sols[3]:
+                break
+            sols=[]
+        options = coursesFunctionsBll.absoluteValueProblem(sols)
+        question = 'the force acting on an object is equal to ('+str(a)+'t^2)+('+str(b)+'t)+('+str(c)+'), where t is time, which of the options is not a valid time when the magnitude of force on the object was equal to '+str(d)+''
+        solution=str(sols[4])
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGradeFraction, quadraticFactorizationType1, quadraticFactorizationType2, areaProblem, plantProblem, partialFractions, cubicFactorization]
-exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2, absoluteValue1, absoluteValue2]
+exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2, absoluteValue1, absoluteValue2, absoluteValueProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=''

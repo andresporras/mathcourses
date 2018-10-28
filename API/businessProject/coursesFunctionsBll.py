@@ -219,6 +219,11 @@ def absoluteValue2(solution):
     alternatives.append(str(options[3][0])+'<x<'+str(options[3][1]))
     strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])})
     return strOptions
+def absoluteValueProblem(nSols):
+    sols = nSols.copy()
+    sols.sort()
+    strOptions =json.dumps({'a':str(sols[0]), 'b':str(sols[1]), 'c': str(sols[2]), 'd': str(sols[3]), 'e': str(sols[4])})
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1
