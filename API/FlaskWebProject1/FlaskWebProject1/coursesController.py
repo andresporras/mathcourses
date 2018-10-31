@@ -5,6 +5,7 @@ import BasicAlgebraBll
 
 api=Api(app)
 
+
 defaultRoute='/courses'
 
 class coursesController(object):

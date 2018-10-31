@@ -85,6 +85,7 @@ class UserController(Resource):
     def loginUser():
         #nUsuario = UserModel
         nUsuario = munchify(request.json)
+        x=2+2
         result = UserBll.loginUser(nUsuario)
         if(result==1):
             token = encode({'user': nUsuario.usuario+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])

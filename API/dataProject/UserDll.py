@@ -42,9 +42,9 @@ def createUser(user):
     a =db.eval(x, user.documento, user.tipoDocumento, user.nombre, user.apellido, user.usuario, user.password, user.genero, user.ciudadResidencia, user.paisResidencia, user.ciudadNacimiento, user.paisNacimiento, user.correo1, user.correo2, user.fechaNacimiento);
     return a
 
-def loginUser(user):
+async def loginUser(user):
     query = str('function(usuario){var userData =JSON.parse(JSON.stringify(db.userData.findOne({usuario:usuario}))); if(userData!=null){return userData["password"];} return "0";}')
-    password=db.eval(query, user.usuario)
+    password= db.eval(query, user.usuario)
     if(password=="0"):
         return 0
     elif(not sha256_crypt.verify(user.password, password)):
