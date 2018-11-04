@@ -11,6 +11,11 @@ import { componentFactoryName } from '@angular/compiler';
 //   return DEFAULT_PREFIX + template + '.html';
 // }
 
+interface choice{
+  idChoice:String;
+  textChoice:String;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,9 +32,14 @@ export class AppComponent {
   pas='';
   loginSuccess=0;
   componentSelector="";
+  defaultChoice="0";
+  choices:choice[]=[];
 
   constructor(private httpClient:HttpClient, private router : Router){
     this.componentSelector=globalData.componentSelector;
+    this.choices.push({idChoice:"0", textChoice:"sign in"});
+    this.choices.push({idChoice:"1", textChoice:"sign up"});
+    this.choices.push({idChoice:"2", textChoice:"recover password"});
   }
 
   sayHi(){
@@ -48,6 +58,11 @@ export class AppComponent {
   private extractData(res: Response) {
     let body = res;
     return body || { };
+  }
+
+  cleanLogin() {
+    this.usuario="";
+    this.pas="";
   }
 
   doLogin() {

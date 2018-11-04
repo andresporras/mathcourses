@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   }
 
   public abrirSeccion(variable:string){
-    globalData.componentSeccion= "<app-"+variable+"></app-"+variable+">";
+    globalData.componentSeccion= "app-"+variable;
     console.log(variable);
   }
 
