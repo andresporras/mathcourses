@@ -5,6 +5,7 @@ Routes and views for the flask application.
 #https://dzone.com/articles/top-10-most-common-commands-for-beginners
 #https://flask-restful.readthedocs.io/en/latest/api.html
 #edit app.py comment options.setdefault('use_reloader', self.debug) int order to allow debugging
+#https://mongoosejs.com/docs/guide.html how to connect to database with password and username
 
 
 from datetime import datetime

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 from flask_restful import reqparse, abort, Api, Resource
 from FlaskWebProject1 import app
 import BasicAlgebraBll
+import PreCalculusBll
 
 api=Api(app)
 
@@ -17,6 +18,8 @@ class coursesController(object):
         unit = json_data['unit']
         if(course=='BasicAlgebra'):
             return BasicAlgebraBll.generateExam(unit)
+        elif(course=='PreCalculus'):
+            return PreCalculusBll.generateExam(unit)
         return 'course or unit invalid'
 
 
