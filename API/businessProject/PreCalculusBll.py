@@ -5,8 +5,7 @@ from fractions import Fraction
 from flask import jsonify
 import json
 
-#the force acting on an object is equal to at^2+bt+c
-#which of the next options is not a valid time when the magnitude of force was equal to d
+#choose the right number to follow the series
 def seriesProblem():
     try:
         addNumber = random.randint(1,5)*(random.randint(0,1)*2-1)
@@ -32,8 +31,7 @@ def seriesProblem():
     except Exception as er:
         return er
 
-#the force acting on an object is equal to at^2+bt+c
-#which of the next options is not a valid time when the magnitude of force was equal to d
+#for the function define the type of series when x tends to infinity
 def typeSeriesProblem():
     try:
         addNumber = random.randint(1,5)*(random.randint(0,1)*2-1)
@@ -50,14 +48,17 @@ def typeSeriesProblem():
         elif(a==3):
             function=str(addNumber)+"+(x^("+str(opNumber)+"))"
             solution = "decreasing" if opNumber<0 else "increasing"
-        elif(a==2):
-          function=str(addNumber)+"+(("+str(opNumber)+")^x)"
-          solution = "alterning" if opNumber<0 else "increasing"
-        elif(a==3):
-            function=str(addNumber)+"+(x^("+str(opNumber)+"))"
+        elif(a==4):
+          function=str(addNumber)+"+ln("+str(opNumber)+"x)"
+          solution = "undefined" if opNumber<0 else "increasing"
+        elif(a==5):
+            function=str(addNumber)+"+ln(("+str(opNumber)+")^x)"
+            solution = "undefined" if opNumber<0 else "increasing"
+        else:
+            function=str(addNumber)+"+ln(x^("+str(opNumber)+"))"
             solution = "decreasing" if opNumber<0 else "increasing"
         question = "for de next function  "+function+", define the series type when x tends to infinity"
-        options =json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning'})
+        options =json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning', 'c':'undefined'})
         jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
         return jsonResponse
     except Exception as er:
