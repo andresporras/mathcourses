@@ -38,7 +38,7 @@ def typeSeriesProblem():
     try:
         addNumber = random.randint(1,5)*(random.randint(0,1)*2-1)
         opNumber = random.randint(1,5)*(random.randint(0,1)*2-1)
-        a = random.randint(1,3)
+        a = random.randint(1,6)
         function=""
         solution=""
         if(a==1):
@@ -47,7 +47,13 @@ def typeSeriesProblem():
         elif(a==2):
             function=str(addNumber)+"+(("+str(opNumber)+")^x)"
             solution = "alterning" if opNumber<0 else "increasing"
-        else:
+        elif(a==3):
+            function=str(addNumber)+"+(x^("+str(opNumber)+"))"
+            solution = "decreasing" if opNumber<0 else "increasing"
+        elif(a==2):
+          function=str(addNumber)+"+(("+str(opNumber)+")^x)"
+          solution = "alterning" if opNumber<0 else "increasing"
+        elif(a==3):
             function=str(addNumber)+"+(x^("+str(opNumber)+"))"
             solution = "decreasing" if opNumber<0 else "increasing"
         question = "for de next function  "+function+", define the series type when x tends to infinity"
