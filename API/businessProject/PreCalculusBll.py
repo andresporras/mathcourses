@@ -96,7 +96,33 @@ def boundedSeriesProblem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem]
+#for the function define the type of series
+def convergentSeriesProblem():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        op = random.randint(1,6)
+        question=""
+        solution=""
+        if(op==1):
+            question="for de next function: tan(x), defines the function type when x tends to "+str(a)+"*pi/2"
+            solution = "convergent" if a%2==0 else "divergent"
+        elif(op==2):
+            question="for de next function: cot(x), defines the function type when x tends to "+str(a)+"*pi/2"
+            solution = "convergent" if a%2!=0 else "divergent"
+        elif(op==3):
+            question="for de next function: sec(x), defines the function type when x tends to "+str(a)+"*pi/2"
+            solution = "convergent" if a%2==0 else "divergent"
+        else:
+            question="for de next function: csc(x), defines the function type when x tends to "+str(a)+"*pi/2"
+            solution = "convergent" if a%2!=0 else "divergent"
+        options =json.dumps({'a':'convergent', 'b':'divergent'})
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
