@@ -67,6 +67,7 @@ def generateAlternativesCubicF(lista):
         tempAlternatives.append('[('+str(alternatives[y][0])+'x^2)+('+str(alternatives[y][1])+')]*[('+str(alternatives[y][2])+'x)+('+str(alternatives[y][3])+')]')
     strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]})
     return strOptions
+
 def generateAlternativesPF(lista):
     alternatives = [lista.copy()]
     for x in range(4):
@@ -235,6 +236,19 @@ def alternativesSequence(solution):
         else:
             alternatives.append(alternatives[len(alternatives)-1]+1)
     strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c':str( alternatives[2]), 'd':str(alternatives[3]), 'e': str(alternatives[4])})
+    return strOptions
+def arithmeticAlternatives(sol):
+    alternatives = [sol]
+    for x in range(4):
+        i=random.randint(0,1)
+        j=random.randint(0,3)
+        if(i==0):
+            nAlternative = alternatives[0]-1
+            alternatives.insert(0,nAlternative)
+        else:
+            nAlternative = alternatives[len(alternatives)-1]+1
+            alternatives.append(nAlternative)
+    strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])})
     return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)

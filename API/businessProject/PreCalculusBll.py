@@ -122,7 +122,22 @@ def convergentSeriesProblem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem]
+
+#for a series get the sum of the first n terms
+def gaussSeriesProblem():
+    try:
+        a = random.randint(10,100)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        sol=((b+(c*a))+(b+c))*a/2
+        question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"+("+str(c)+"x)): "
+        solution=str(sol)
+        options =coursesFunctionsBll.arithmeticAlternatives(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
