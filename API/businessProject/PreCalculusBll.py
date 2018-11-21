@@ -137,7 +137,92 @@ def gaussSeriesProblem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem]
+
+#get the sum of the first n natural numbers
+def simpleGaussProblem():
+    try:
+        a = random.randint(100,1000)
+        sol=(a+1)*a/2
+        question="use the gauss formula to get the sum of the natural numbers between 1 and "+str(a)+":"
+        solution=str(sol)
+        options =coursesFunctionsBll.arithmeticAlternatives(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#sum of the first n terms in the series b((c/d)^x)
+def geometricSeriesProblem():
+    try:
+        a = random.randint(5,10)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)
+        d = random.randint(1,5)
+        if(c==d):
+            return geometricSeriesProblem()
+        sol=round((b*(c/d))*(((c/d)**a)-1)/((c/d)-1),4)
+        question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"*(("+str(c)+"/"+str(d)+")^x)): "
+        solution=str(sol)
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+    #for the arithmetic series get the nth item
+def nArithmeticProblem():
+    try:
+        a = random.randint(10,100)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        sol=b+(c*a)
+        items=[]
+        for x in range(5):
+            items.append(b+(c*(x+1)))
+
+        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
+        solution=str(sol)
+        options =coursesFunctionsBll.arithmeticAlternatives(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#for the geometric series get the nth item
+def nGeometricProblem():
+    try:
+        a = random.randint(10,20)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        sol=b+(c**a)
+        items=[]
+        for x in range(5):
+            items.append(b+(c**(x+1)))
+        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
+        solution=str(sol)
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#get the product of the first n numbers of the geometric series
+def productGeometricProblem():
+    try:
+        a = random.randint(5,8)
+        b = random.randint(2,4)*(random.randint(0,1)*2-1)
+        c = random.randint(2,5)*(random.randint(0,1)*2-1)
+        sol= (((b*c)*(b*(c**a)))**a)**(0.5)
+        sol =  int(format(sol,'.53g'))
+        items=[]
+        for x in range(4):
+            items.append(b*(c**(x+1)))
+        question="The first four elements of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+", which is the product of the first "+str(a)+" items?:"
+        solution=str(sol)
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
