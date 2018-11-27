@@ -25,6 +25,9 @@
     <Compile Include="BasicAlgebraDll.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="coursesDll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserDll.py">
       <SubType>Code</SubType>
     </Compile>

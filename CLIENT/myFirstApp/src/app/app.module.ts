@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { CursosComponent } from './cursos/cursos.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import {KeysPipe} from './pipes/keysPipes.pipe';
 
 //routes mapping
 const appRoutes: Routes = [
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
     MenuComponent,
     CursosComponent,
     UsuarioComponent,
+    KeysPipe,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     //NavbarComponent,
   ],
-  providers: [],
+  providers: [KeysPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

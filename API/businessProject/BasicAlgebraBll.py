@@ -25,7 +25,7 @@ def firstGradeEquation():
     question = "("+str(divisor1)+"x/"+str(dividend1)+")+("+str(divisor2)+"/"+str(dividend2)+")=("+str(divisor3)+"x/"+str(dividend3)+")+("+str(divisor4)+"/"+str(dividend4)+")"
     solution = round(sol,4)
     options = coursesFunctionsBll.generateOptions(solution)
-    jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #giving a function like f(x)=(ax/b)+(c/b) get f(x)^-1
 def firstGradeTwoVariables():
@@ -37,7 +37,8 @@ def firstGradeTwoVariables():
     question = 'for f(x)=('+str(xDivisor)+'x/'+str(xDividend)+')+('+str(cDivisor)+'/'+str(cDividend)+') find f(x)^(-1)'
     solution = '[('+str(xDividend*cDividend)+'x+('+str(-1*xDividend*cDivisor)+')]/('+str(cDividend*xDivisor)+')=x'
     options = coursesFunctionsBll.generateTwoVariableOptions(components)
-    return json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+    return jsonResponse
 #for a function type ax^2 + bx+ c get the right (dx+e)(fx+g) factorization between the given options
 def quadraticFactorizationType2():
     return coursesFunctionsBll.quadraticFactorization(False)
@@ -54,7 +55,7 @@ def areaProblem():
     solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
     solution = round((((solution1*a)+b)*2)+(solution1*2) if solution1>0 else (((solution2*a)+b)*2)+(solution2*2),4)
     options = coursesFunctionsBll.generateOptions(solution)
-    jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #for a function like (ax+b)/(cx+d)= e choose the right range when x falls
 def firstGradeFraction():
@@ -67,7 +68,8 @@ def firstGradeFraction():
     question = 'choose right range for x in [('+str(xUp)+'x)+('+str(cUp)+')]/[('+str(xDown)+'x)+('+str(cDown)+')]='+str(cSolution)
     solution = 'x is in range (-infinite,-15)' if (sol<-15) else 'x is in range [-15,-5]' if (sol>=-15 and sol<=-5) else 'x is in range (-5,5)' if (sol>-5 and sol<5) else 'x is in range [5,15]' if (sol>=5 and sol<=15) else 'x is in range (15,infinite)'
     options = json.dumps({'a':'x is in range (-infinite,-15)', 'b':'x is in range [-15,-5]', 'c': 'x is in range (-5,5)', 'd': 'x is in range [5,15]', 'e': 'x is in range (15,infinite)'})
-    return json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+    return jsonResponse 
 #In a plant, the cost to produce x units is equal to ax^2+bx+c...
 def plantProblem():
     a = random.randint(1,10)*(random.randint(0,1)*2-1)
@@ -82,7 +84,8 @@ def plantProblem():
     sol = round(solution1 if solution1>0 else solution2,4)
     solution = 'x is in range (0,1)' if (sol<1) else 'x is in range [1,3]' if (sol>=1 and sol<=3) else 'x is in range (3,6)' if (sol>3 and sol<6) else 'x is in range [6,10]' if (sol>=6 and sol<=10) else 'x is in range (10,infinite)'
     options = json.dumps({'a':'x is in range (0,1)', 'b':'x is in range [1,3]', 'c': 'x is in range (3,6)', 'd': 'x is in range [6,10]', 'e': 'x is in range (10,infinite)'})
-    return json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+    return jsonResponse
 #for a typical quadratic equation like ax^2 + bx + c determine if it has any solution
 def secondGradeEquation():
     a = random.randint(1,100)*(random.randint(0,1)*2-1)
@@ -92,8 +95,8 @@ def secondGradeEquation():
     if(((b**2)-4*a*c)<0):
         solution = 'No'
     question = 'On the next function ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')=0. Has x any solution?:'
-    options = json.dumps({'1':'Yes', '2':'No'})
-    jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    options = json.dumps({"1":"Yes", "2":"No"})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #given a ax^3 + bx^2 + cx + d get, from the given options, the right factorization (ex^2 + f)(gx + h)
 def cubicFactorization():
@@ -104,7 +107,7 @@ def cubicFactorization():
     question = 'Find the right factorization for ('+str(a*c)+'x^3)+('+str(a*d)+'x^2)+('+str(b*c)+'x)+('+str(b*d)+'):'
     solution = '[('+str(a)+'x^2)+('+str(b)+')]*[('+str(c)+'x)+('+str(d)+')]'
     options = coursesFunctionsBll.generateAlternativesCubicF([a, b, c, d])
-    jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #given a fractions like (ax+b)/(cx^2+dx+e) get the right equivalent partial fraction A/(fx+g) + B/(hx+i)
 def partialFractions():
@@ -140,7 +143,7 @@ def partialFractions():
     question = 'On the next function [('+str(ax)+'x)+('+str(ac)+')]/[('+str(dx2)+'x^2)+('+str(dx)+'x)+('+str(dc)+')], which of the next partial fraction is equivalent?:'
     solution ='('+str(aSolution)+')/[('+str(bx)+'x)+('+str(bc)+')] + ('+str(bSolution)+')/[('+str(cx)+'x)+('+str(cc)+')]'
     options = coursesFunctionsBll.generateAlternativesPF([aSolution, bx, bc, bSolution, cx, cc])
-    jsonResponse = json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #given an inequation like (ax+b)/c <=(dx+e)/f, define the solution range for x
 def inequations1():
@@ -156,7 +159,7 @@ def inequations1():
     sol = round(((e*c)-(b*f))/((a*f)-(d*c)),4)
     solution ='x'+('<=' if (((a*f)-(d*c))*c*f>=0) else '>=')+str(sol)
     options = coursesFunctionsBll.inequationsAlternatives1(sol)
-    jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 
 #given an inequation like (ax+b)/(cx+d)>0 get the right range
@@ -195,7 +198,7 @@ def rationalInequations():
                 solution='('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')'
         question = 'Which is the right range for x in the next inequality?: [('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]>0'
         options = coursesFunctionsBll.rationalInequations([intersect_range1, intersect_range2])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -213,8 +216,8 @@ def inequationTwoSides():
         if((sol1<=sol2 and b*c>0) or (sol1>=sol2 and b*c<0)):
             solution='Yes'
         question = 'for the next inequation, has x any valid solution?: '+str(a)+'<=[('+str(b)+'x)+('+str(c)+')]/('+str(d)+')<='+str(e)
-        options = json.dumps({'1':'yes', '2':'no'})
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        options = json.dumps({"1":"yes", "2":"no"})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -234,7 +237,7 @@ def inequations2():
     solution = 'x'+('<=' if a*c>0 else '>=')+'[('+str(sola)+'y)+('+str(solb)+')]/[('+str(solc)+'y)+('+str(sold)+')]'
     question = 'let x alone in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'y)+('+str(e)+')]/[('+str(f)+'y)+('+str(g)+')]'
     options = coursesFunctionsBll.inequationsAlternatives2([sola, solb, solc, sold])
-    jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+    jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #given a problem like ax^2 +bx + c>=0 determina the valid range for x
 def inequationGrade2():
@@ -263,7 +266,7 @@ def inequationGrade2():
                 solution = '(-inf, '+str(round(sol1 if sol1<sol2 else sol2, 4))+') U ('+str(round(sol1 if sol1>sol2 else sol2, 4))+',inf)'
         question = 'for the next inequation, define the valid range for x: ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')>=0'
         options = coursesFunctionsBll.inequationGrade2([deriv, sol1, sol2])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -302,7 +305,7 @@ def inequationProblem1():
                 solution = '(0, '+str(round(sols[0], 4))+') U ('+str(round(sols[1], 4))+',inf)'
         question = 'a car is moving with constant acceleration of '+str(acceleration)+'m/s^2 and initial speed of '+str(velocity)+'m/s, on which range of time (in seconds) the car equals or surpass the distance of '+str(distance)+' meters?. PS: Use the final distance formula for objects with constant acceleration'
         options = coursesFunctionsBll.inequationProblem1([deriv, sols[0], sols[1]])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -327,7 +330,7 @@ def inequationProblem2():
         rangoMenor = rangoMenor if rangoMenor>0 else 0
         rangoMayor = rangoMayor if rangoMayor<100 else 100
         options = coursesFunctionsBll.inequationProblem2([rangoMenor, rangoMayor])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -344,7 +347,7 @@ def absoluteValue1():
         solution=''+str(round(sol1,4))+','+str(round(sol2,4))+''
         question = 'which are the two solutions for |[('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]|='+str(e)+''
         options = coursesFunctionsBll.absoluteValue1([round(sol1,4), round(sol2,4)])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -364,7 +367,7 @@ def absoluteValue2():
             solution=''+str(solNeg)+'<x<'+str(solPos)+''
         question = 'get valid range for x in |[('+str(a)+'x)+('+str(b)+')]/('+str(c)+')|<'+str(d)+''
         options = coursesFunctionsBll.absoluteValue2([solNeg, solPos])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -393,7 +396,7 @@ def absoluteValueProblem():
         options = coursesFunctionsBll.absoluteValueProblem(sols)
         question = 'the force acting on an object is equal to ('+str(a)+'t^2)+('+str(b)+'t)+('+str(c)+'), where t is time, which of the options is not a valid time when the magnitude of force on the object was equal to '+str(d)+''
         solution=str(sols[4])
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -401,11 +404,14 @@ exam1 =[secondGradeEquation, firstGradeEquation, firstGradeTwoVariables, firstGr
 exam2 =[inequations1, rationalInequations, inequationTwoSides, inequations2, inequationGrade2,inequationProblem1, inequationProblem2, absoluteValue1, absoluteValue2, absoluteValueProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
-    solution=''
+    solution=[]
     lista = listMethods[int(unit)-1]
     for x in range(12):
         question =  random.randint(1,len(lista))
-        solution +='QUESTION N°'+str(x+1)+': '+ lista[question-1]()
+        #numberQuestion='QUESTION '+str(x+1)
+        item = str(lista[question-1]())
+        #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
+        solution.append(json.loads(item))
     return solution
 
 

@@ -26,7 +26,7 @@ def seriesProblem():
         sol = sequence[5]
         solution= str(sol)
         options = coursesFunctionsBll.alternativesSequence(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -58,8 +58,8 @@ def typeSeriesProblem():
             function=str(addNumber)+"+ln(x^("+str(opNumber)+"))"
             solution = "decreasing" if opNumber<0 else "increasing"
         question = "for de next function  "+function+", define the series type when x tends to infinity"
-        options =json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning', 'd':'undefined'})
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        options =json.loads(json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning', 'd':'undefined'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -91,8 +91,8 @@ def boundedSeriesProblem():
             function="cos(x)*(sin(x)^("+str(a)+"))"
             solution = "not bounded" if a<0 else "bounded"
         question = "for de next function  "+function+", define the series type"
-        options =json.dumps({'a':'inferior bounded', 'b':'superior bounded', 'c':'not bounded', 'd':'bounded'})
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        options =json.loads(json.dumps({'a':'inferior bounded', 'b':'superior bounded', 'c':'not bounded', 'd':'bounded'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -117,8 +117,8 @@ def convergentSeriesProblem():
         else:
             question="for de next function: csc(x), defines the function type when x tends to "+str(a)+"*pi/2"
             solution = "convergent" if a%2!=0 else "divergent"
-        options =json.dumps({'a':'convergent', 'b':'divergent'})
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        options =json.loads(json.dumps({'a':'convergent', 'b':'divergent'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -133,7 +133,7 @@ def gaussSeriesProblem():
         question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"+("+str(c)+"x)): "
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -146,7 +146,7 @@ def simpleGaussProblem():
         question="use the gauss formula to get the sum of the natural numbers between 1 and "+str(a)+":"
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -164,7 +164,7 @@ def geometricSeriesProblem():
         question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"*(("+str(c)+"/"+str(d)+")^x)): "
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -182,7 +182,7 @@ def nArithmeticProblem():
         question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -199,7 +199,7 @@ def nGeometricProblem():
         question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -217,7 +217,7 @@ def productGeometricProblem():
         question="The first four elements of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+", which is the product of the first "+str(a)+" items?:"
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({'question':question, 'solution':solution, 'options':options})
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
@@ -226,9 +226,12 @@ exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeries
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
-    solution=''
+    solution=[]
     lista = listMethods[int(unit)-1]
     for x in range(12):
         question =  random.randint(1,len(lista))
-        solution +='QUESTION N°'+str(x+1)+': '+ lista[question-1]()
+        #numberQuestion='QUESTION '+str(x+1)
+        item = str(lista[question-1]())
+        #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
+        solution.append(json.loads(item))
     return solution

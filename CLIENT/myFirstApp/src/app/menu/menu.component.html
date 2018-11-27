@@ -4,11 +4,10 @@
 
 <button (click)="abrirSeccion('usuario')">usuario</button>
 <button (click)="abrirSeccion('cursos')">cursos</button>
-<!-- {{gd.componentSeccion}}
-<div class="gd.componentSeccion">
 
+<div>
+  <app-cursos *ngIf="gd.componentSeccion=='cursos'"></app-cursos>
+  <app-usuario *ngIf="gd.componentSeccion=='usuario'"></app-usuario> 
 </div>
-<app-cursos *ngIf="gd.componentSeccion=='app-cursos'"></app-cursos>
-<app-usuario *ngIf="gd.componentSeccion=='app-usuario'"></app-usuario> -->
-<div id="loadComponent" name="loadComponent" [innerHTML]="gd.componentSeccion"></div>
+<!-- <div id="loadComponent" name="loadComponent" [innerHTML]="gd.componentSeccion"></div> -->
 

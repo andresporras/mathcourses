@@ -11,13 +11,13 @@ def generateOptions(solution):
             options.insert(0, round(options[0]/2,4))
         else:
             options.append(options[len(options)-1]*2)
-    strOptions =json.dumps({'a':str(options[0]), 'b':str(options[1]), 'c': str(options[2]), 'd': str(options[3]), 'e': str(options[4])})
+    strOptions =json.loads(json.dumps({'a':str(options[0]), 'b':str(options[1]), 'c': str(options[2]), 'd': str(options[3]), 'e': str(options[4])}))
     return strOptions
 def generateTwoVariableOptions(options):
     solutions =[options.copy()]
     for x in range(4):
         i=random.randint(0,1)
-        j=random.randint(0,4)
+        j=random.randint(0,2)
         if(i==0):
             nSolution = solutions[0].copy()
             nSolution[j]=round(nSolution[j]/2,4)
@@ -29,7 +29,7 @@ def generateTwoVariableOptions(options):
     tempSolutions =[]
     for y in range(5):
         tempSolutions.append('[('+str(solutions[y][0])+'x+('+str(solutions[y][1])+')]/('+str(solutions[y][2])+')=x')
-    strOptions =json.dumps({'a':tempSolutions[0], 'b':tempSolutions[1], 'c': tempSolutions[2], 'd': tempSolutions[3], 'e': tempSolutions[4]})
+    strOptions =json.loads(json.dumps({'a':tempSolutions[0], 'b':tempSolutions[1], 'c': tempSolutions[2], 'd': tempSolutions[3], 'e': tempSolutions[4]}))
     return strOptions
 def generateAlternativesQF(lista, type_):
     alternatives = [lista.copy()]
@@ -47,7 +47,7 @@ def generateAlternativesQF(lista, type_):
     tempAlternatives =[]
     for y in range(5):
         tempAlternatives.append('[('+(str(alternatives[y][0]) if type_==False else remove(str(alternatives[y][0]), len(str(alternatives[y][0]))-1))+'x+('+str(alternatives[y][1])+')]*[('+(str(alternatives[y][2]) if type_==False else remove(str(alternatives[y][2]), len(str(alternatives[y][2]))-1))+'x+('+str(alternatives[y][3])+')]')
-    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]})
+    strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
     return strOptions
 def generateAlternativesCubicF(lista):
     alternatives = [lista.copy()]
@@ -65,7 +65,7 @@ def generateAlternativesCubicF(lista):
     tempAlternatives =[]
     for y in range(5):
         tempAlternatives.append('[('+str(alternatives[y][0])+'x^2)+('+str(alternatives[y][1])+')]*[('+str(alternatives[y][2])+'x)+('+str(alternatives[y][3])+')]')
-    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]})
+    strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
     return strOptions
 
 def generateAlternativesPF(lista):
@@ -84,7 +84,7 @@ def generateAlternativesPF(lista):
     tempAlternatives =[]
     for y in range(5):
         tempAlternatives.append('('+str(round(alternatives[y][0],4))+')/[('+str(alternatives[y][1])+'x)+('+str(alternatives[y][2])+')] + ('+str(round(alternatives[y][3],4))+')/[('+str(alternatives[y][4])+'x)+('+str(alternatives[y][5])+')]')
-    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]})
+    strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
     return strOptions
 def quadraticFactorization(type_):
     a=random.randint(2,10)*(random.randint(0,1)*2-1) if type_==False else (random.randint(0,1)*2)-1
@@ -94,7 +94,7 @@ def quadraticFactorization(type_):
     question ='for the next cuadratic function: ('+(str(a*c) if type_==False else remove(str(a*c), len(str(a*c))-1))+'x^2)+('+str((a*d)+(b*c))+'x)+('+str(b*d)+') determine which of the next factorizationn is valid'
     solution = '[('+(str(a) if type_==False else remove(str(a), len(str(a))-1))+'x)+('+str(b)+')]*[('+(str(c) if type_==False else remove(str(c), len(str(c))-1))+'x)+('+str(d)+')]'
     options = generateAlternativesQF([a,b,c,d],type_)
-    return json.dumps({'question':question, 'solution':str(solution), 'options':options})
+    return json.dumps({"question":question, "solution":str(solution), "options":options})
 def inequationsAlternatives1(sol):
     options =[sol]
     i=random.randint(0,1)
@@ -107,7 +107,7 @@ def inequationsAlternatives1(sol):
     tempAlternatives.append('x<='+str(options[0]))
     tempAlternatives.append('x>='+str(options[1]))
     tempAlternatives.append('x<='+str(options[1]))
-    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]})
+    strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]}))
     return strOptions
 def rationalInequations(union_range):
     try:
@@ -123,7 +123,7 @@ def rationalInequations(union_range):
                 alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
         max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
         alternatives.append('('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')')
-        strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+        strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
         return strOptions
     except Exception as er:
         return er
@@ -142,7 +142,7 @@ def inequationsAlternatives2(sol):
     tempAlternatives.append('x<='+'[('+str(options[0][0])+'y)+('+str(options[0][1])+')]/[('+str(options[0][2])+'y)+('+str(options[0][3])+')]')
     tempAlternatives.append('x>='+'[('+str(options[1][0])+'y)+('+str(options[1][1])+')]/[('+str(options[1][2])+'y)+('+str(options[1][3])+')]')
     tempAlternatives.append('x<='+'[('+str(options[1][0])+'y)+('+str(options[1][1])+')]/[('+str(options[1][2])+'y)+('+str(options[1][3])+')]')
-    strOptions =json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]})
+    strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]}))
     return strOptions
 def inequationGrade2(lista):
     alternatives =[]
@@ -151,7 +151,7 @@ def inequationGrade2(lista):
     alternatives.append('('+str(round(lista[0],4))+')')
     alternatives.append('('+str(round(lista[1] if lista[1]<lista[2] else lista[2], 4))+','+str(round(lista[1] if lista[1]>lista[2] else lista[2], 4))+')')
     alternatives.append('(-inf, '+str(round(lista[1] if lista[1]<lista[2] else lista[2], 4))+') U ('+str(round(lista[1] if lista[1]>lista[2] else lista[2], 4))+',inf)')
-    strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+    strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
     return strOptions
 def inequationProblem1(lista):
     alternatives =[]
@@ -160,7 +160,7 @@ def inequationProblem1(lista):
     alternatives.append('('+str(round(lista[0], 4))+')')
     alternatives.append('('+str(round(lista[1] if lista[1]>0 else 0, 4))+','+str(round(lista[2], 4))+')')
     alternatives.append('(0, '+str(round(lista[1], 4))+') U ' if lista[1]>0 else ''+ '('+str(round(lista[2], 4))+',inf)')
-    strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+    strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
     return strOptions
 def inequationProblem2(lista):
     tempAlternatives = [lista.copy()]
@@ -182,7 +182,7 @@ def inequationProblem2(lista):
     alternatives.append('('+str(round(tempAlternatives[0][0] if tempAlternatives[0][0]>=0 else 0,4))+','+str(round(tempAlternatives[0][1] if tempAlternatives[0][1]<=100 else 100,4))+')')
     alternatives.append('('+str(round(tempAlternatives[1][0] if tempAlternatives[1][0]>=0 else 0,4))+','+str(round(tempAlternatives[1][1] if tempAlternatives[1][1]<=100 else 100,4))+')')
     alternatives.append('('+str(round(tempAlternatives[2][0] if tempAlternatives[2][0]>=0 else 0,4))+','+str(round(tempAlternatives[2][1] if tempAlternatives[2][1]<=100 else 100,4))+')')
-    strOptions =json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]})
+    strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
     return strOptions
 def absoluteValue1(solution):
     options =[solution.copy()]
@@ -197,7 +197,7 @@ def absoluteValue1(solution):
             temp = options[len(options)-1].copy()
             temp[j]=temp[j]*2
             options.append(temp)
-    strOptions =json.dumps({'a':str(options[0][0])+','+str(options[0][1]), 'b':str(options[1][0])+','+str(options[1][1]), 'c': str(options[2][0])+','+str(options[2][1]), 'd': str(options[3][0])+','+str(options[3][1]), 'e': str(options[4][0])+','+str(options[4][1])})
+    strOptions =json.loads(json.dumps({'a':str(options[0][0])+','+str(options[0][1]), 'b':str(options[1][0])+','+str(options[1][1]), 'c': str(options[2][0])+','+str(options[2][1]), 'd': str(options[3][0])+','+str(options[3][1]), 'e': str(options[4][0])+','+str(options[4][1])}))
     return strOptions
 def absoluteValue2(solution):
     options =[solution.copy()]
@@ -218,12 +218,12 @@ def absoluteValue2(solution):
     alternatives.append(str(options[1][0])+'<x<'+str(options[1][1]))
     alternatives.append(str(options[2][0])+'<x<'+str(options[2][1]))
     alternatives.append(str(options[3][0])+'<x<'+str(options[3][1]))
-    strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])})
+    strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
     return strOptions
 def absoluteValueProblem(nSols):
     sols = nSols.copy()
     sols.sort()
-    strOptions =json.dumps({'a':str(sols[0]), 'b':str(sols[1]), 'c': str(sols[2]), 'd': str(sols[3]), 'e': str(sols[4])})
+    strOptions =json.loads(json.dumps({'a':str(sols[0]), 'b':str(sols[1]), 'c': str(sols[2]), 'd': str(sols[3]), 'e': str(sols[4])}))
     return strOptions
 
 def alternativesSequence(solution):
@@ -235,7 +235,7 @@ def alternativesSequence(solution):
             alternatives.insert(0,alternatives[0]-1)
         else:
             alternatives.append(alternatives[len(alternatives)-1]+1)
-    strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c':str( alternatives[2]), 'd':str(alternatives[3]), 'e': str(alternatives[4])})
+    strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c':str( alternatives[2]), 'd':str(alternatives[3]), 'e': str(alternatives[4])}))
     return strOptions
 def arithmeticAlternatives(sol):
     alternatives = [sol]
@@ -248,7 +248,7 @@ def arithmeticAlternatives(sol):
         else:
             nAlternative = alternatives[len(alternatives)-1]+1
             alternatives.append(nAlternative)
-    strOptions =json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])})
+    strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
     return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)

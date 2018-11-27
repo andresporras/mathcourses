@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders  } from "@angular/common/http";
 
 @Component({
   selector: 'app-cursos',
@@ -6,10 +7,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cursos.component.css']
 })
 export class CursosComponent implements OnInit {
-
-  constructor() { }
+  courseList: JSON;
+  examData: JSON;
+  show: Number=0;
+  radioValue: String[]=[];
+  listChars:String[]=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+  constructor(private httpClient:HttpClient) {
+    this.getCourses();
+   }
 
   ngOnInit() {
+
+  }
+
+  getCourses() {
+    this.httpClient.get<JSON>('http://localhost:5000/courses/getData')
+    .subscribe(data => {
+      console.log(data);
+      debugger;
+      this.courseList = data as JSON;
+
+      console.log(this.courseList);
+      //globalData.sessionId = this.serverData['token'];
+    })
+  }
+
+  generateExam(course:String, unit:String) {
+    let options =  
+    {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
+    ,'**Accept**': 'application/json'
+})};
+    
+    var userData={course, unit};
+    this.httpClient.post<JSON>('http://localhost:5000/courses/generateExam', userData, options)
+    .subscribe(data => {
+      this.examData = data as JSON;
+      this.show=1;
+      this.radioValue=[];
+      console.log(this.examData);
+    })
   }
 
 }
