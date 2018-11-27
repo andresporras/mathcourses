@@ -9,8 +9,9 @@ import { HttpClient, HttpHeaders  } from "@angular/common/http";
 export class CursosComponent implements OnInit {
   courseList: JSON;
   examData: JSON;
-  show: Number=0;
+  show: number=0;
   radioValue: String[]=[];
+  score:number=0;
   listChars:String[]=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
   constructor(private httpClient:HttpClient) {
     this.getCourses();
@@ -44,8 +45,20 @@ export class CursosComponent implements OnInit {
       this.examData = data as JSON;
       this.show=1;
       this.radioValue=[];
+      this.score=0;
       console.log(this.examData);
     })
+  }
+
+  updateScore(newValue:string, index:number){
+    this.radioValue[index]=newValue;
+    this.score=0;
+    debugger;
+    for(var i=0;i<this.radioValue.length;i++){
+      if(this.radioValue[i]==this.examData[i]['solution']){
+        this.score+=1;
+      }
+    }
   }
 
 }

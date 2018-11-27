@@ -11,11 +11,11 @@
       <p>{{i+1}}) {{e['question']}}</p>
       <div *ngFor="let op of e['options'] | keys">
          
-                  <input type="radio" name="{{i}}" [(ngModel)]="radioValue[i]" value={{op.value}}>
+                  <input type="radio" name="{{i}}" (click)="updateScore(op.value, i)" [(ngModel)]="radioValue[i]" value={{op.value}}>
                   <label>{{op.key}}- {{op.value}}</label>
                 
         </div>
         <div [ngClass]="radioValue[i]!=undefined?(radioValue[i]==e['solution']?'greenColor':'redColor'):'blueColor'">{{radioValue[i]!=undefined?(radioValue[i]==e['solution']?'right':'wrong'):'choose an option'}}</div>
   </div>
-  
+  current score: {{score}}/{{examData.length}}
 </div>
