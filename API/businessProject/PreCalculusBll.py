@@ -221,9 +221,21 @@ def productGeometricProblem():
         return jsonResponse
     except Exception as er:
         return er
+#find limit when x->a for the function  (x^2-a^2)/(x-a) + b 
+def simpleLimitProblem():
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        solution=(2*a)+b
+        question="[lim x->("+str(a)+")] for ((x^2)+("+str(b)+"*x)+("+str((-a*b)-(a**2))+"))/(x-("+str(a)+"))"
+        options=coursesFunctionsBll.arithmeticAlternatives(solution)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
-exam2 =[]
+exam2 =[simpleLimitProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
