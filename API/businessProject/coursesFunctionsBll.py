@@ -10,7 +10,7 @@ def generateOptions(solution):
         if(i==0):
             options.insert(0, round(options[0]/2,4))
         else:
-            options.append(options[len(options)-1]*2)
+            options.append(round(options[len(options)-1]*2,4))
     strOptions =json.loads(json.dumps({'a':str(options[0]), 'b':str(options[1]), 'c': str(options[2]), 'd': str(options[3]), 'e': str(options[4])}))
     return strOptions
 def generateTwoVariableOptions(options):

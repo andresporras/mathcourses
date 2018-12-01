@@ -233,9 +233,59 @@ def simpleLimitProblem():
         return jsonResponse
     except Exception as er:
         return er
+#find limit when x->-a for the function  (x+a)(x+b)/(x+a)
+def simpleLimitProblem2():
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+
+        solution=a+b
+        question="[Lim x->("+str(a)+")] for ((x^2)+("+str((-1*a)+b)+"*x)+("+str(-1*a*b)+"))/(x-("+str(a)+"))"
+        options=coursesFunctionsBll.arithmeticAlternatives(solution)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->inf for the function  (ax+b)/(cx+d) + (ex+f)/(gx+h)
+def infiniteLimitProblem():
+    try:
+        a = random.randint(1,5)*(random.randint(0,1)*2-1)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        d = random.randint(1,5)*(random.randint(0,1)*2-1)
+        e = random.randint(1,5)*(random.randint(0,1)*2-1)
+        f = random.randint(1,5)*(random.randint(0,1)*2-1)
+        g = random.randint(1,5)*(random.randint(0,1)*2-1)
+        h = random.randint(1,5)*(random.randint(0,1)*2-1)
+        sol=round(((a*g)+(c*e))/(c*g),4)
+        solution=str(sol)
+        question="[Lim x->inf] for (("+str(a)+"x)+("+str(b)+"))/(("+str(c)+"x)+("+str(d)+")) + (("+str(e)+"x)+("+str(f)+"))/(("+str(g)+"x)+("+str(h)+"))"
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->inf for the function  [((ax^(2*g))+bx)^(1/2)](ex+f)/((cx^g)+d)(ex+f)
+def infiniteLimitProblem2():
+    try:
+        a = random.randint(1,5)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        d = random.randint(1,5)*(random.randint(0,1)*2-1)
+        e = random.randint(1,5)*(random.randint(0,1)*2-1)
+        f = random.randint(1,5)*(random.randint(0,1)*2-1)
+        g = random.randint(1,5)
+        sol=round((a**(0.5))/c,4)
+        solution=str(sol)
+        question="[Lim x->inf] for [(("+str(a)+"x^"+str(2*g)+")+("+str(b)+"x))^(1/2)](("+str(e)+"x)+("+str(f)+"))/(("+str(c*e)+"x^"+str(g+1)+")+("+str(c*f)+"x^"+str(g)+")+("+str(e*d)+"x)+("+str(d*f)+"))"
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
-exam2 =[simpleLimitProblem]
+exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
