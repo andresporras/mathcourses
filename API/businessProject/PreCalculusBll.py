@@ -233,6 +233,8 @@ def simpleLimitProblem():
         return jsonResponse
     except Exception as er:
         return er
+
+
 #find limit when x->-a for the function  (x+a)(x+b)/(x+a)
 def simpleLimitProblem2():
     try:
@@ -283,9 +285,51 @@ def infiniteLimitProblem2():
         return jsonResponse
     except Exception as er:
         return er
-
+#find limit when x->b for the function a/(x-b)(x-c)
+def toInfiniteLimitProblem():
+    try:
+        a = random.randint(1,5)*(random.randint(0,1)*2-1)
+        b = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        d = random.randint(0,2)
+        if c==b:
+            toInfiniteLimitProblem()
+        solution=''
+        if d==0:
+            solution='undefined'
+        else:
+            solution='inf' if a>0 else '-inf'
+            c=b
+        question="[lim x->("+str(b)+")] for ("+str(a)+")/(x^2+("+str(-b-c)+"x)+("+str(b*c)+"))"
+        options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->c for the function (x-a)^b/(x-c)^d
+def toInfiniteLimitProblem2():
+    try:
+        a = random.randint(1,8)*(random.randint(0,1)*2-1)
+        b = random.randint(1,8)*(random.randint(0,1)*2-1)
+        c = random.randint(1,8)*(random.randint(0,1)*2-1)
+        d = random.randint(1,8)*(random.randint(0,1)*2-1)
+        if a==c:
+            toInfiniteLimitProblem2()
+        solution=''
+        if d<0:
+            solution='0'
+        elif d%2!=0:
+            solution='undefined'
+        else:
+            solution='inf' if ((c-a)**b)>0 else '-inf'
+        question="[lim x->("+str(c)+")] for [(x-("+str(a)+"))^("+str(b)+")]/[(x-("+str(c)+"))^("+str(d)+")]"
+        options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined', 'd': '0'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
-exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2]
+exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2, toInfiniteLimitProblem, toInfiniteLimitProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
