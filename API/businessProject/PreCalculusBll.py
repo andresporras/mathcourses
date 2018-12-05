@@ -328,8 +328,43 @@ def toInfiniteLimitProblem2():
         return jsonResponse
     except Exception as er:
         return er
+#find limit when x->inf for the function (ax^2-b)^(1/2) - cx
+def squareLimitProblem():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        d = random.randint(0,2)
+        if a==(c*c):
+            squareLimitProblem()
+        solution=''
+        if d==0:
+            solution='0'
+            a=c*c
+        else:
+            solution= 'inf' if a>(c*c) else '-inf'
+        question="[lim x->(inf)] for (("+str(a)+"x^2)-("+str(b)+"))^(1/2)-("+str(c)+"x)"
+        options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'0'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->0 for the function ((a+bx)^(1/2)-(a)^(1/2))/cx
+def squareLimitProblem2():
+    try:
+        a = random.randint(1,10)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        sol = round((b/(c*2*(a**(0.5)))),4)
+        solution=str(sol)
+        question="[lim x->(0)] for ((("+str(a)+")+("+str(b)+"x))^(1/2)-("+str(a)+")^(1/2))/("+str(c)+"x)"
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
-exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2, toInfiniteLimitProblem, toInfiniteLimitProblem2]
+exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2, toInfiniteLimitProblem, toInfiniteLimitProblem2, squareLimitProblem, squareLimitProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
