@@ -363,8 +363,40 @@ def squareLimitProblem2():
         return jsonResponse
     except Exception as er:
         return er
+#find limit when x->0 for the function (sin(ax)+bx)/cx
+def trigonometryLimitProblem():
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        sol = round((b/c)+(1/(c/a)),4)
+        solution=str(sol)
+        question="[lim x->(0)] for (sin("+str(a)+"x)+("+str(b)+"x))/("+str(c)+"x)"
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->0 for the function [(ax+b)(cx+d)-bd*cos(ex)]/(ex)
+def trigonometryLimitProblem2():
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        d = random.randint(1,10)
+        e = random.randint(1,10)*(random.randint(0,1)*2-1)
+        if (a*d)+(c*b)==0: # avoid solution equals 0 since this will be a problem generating the options
+            trigonometryLimitProblem2()
+        sol = round(((a*d)+(b*c))/e,4)
+        solution=str(sol)
+        question="[lim x->(0)] for [(("+str(a)+"x)+("+str(b)+"))(("+str(c)+"x)+("+str(d)+"))-(("+str(b*d)+")*cos("+str(e)+"x))]/("+str(e)+"x)"
+        options =coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]
-exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2, toInfiniteLimitProblem, toInfiniteLimitProblem2, squareLimitProblem, squareLimitProblem2]
+exam2 =[simpleLimitProblem, simpleLimitProblem2, infiniteLimitProblem, infiniteLimitProblem2, toInfiniteLimitProblem, toInfiniteLimitProblem2, squareLimitProblem, squareLimitProblem2, trigonometryLimitProblem, trigonometryLimitProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
