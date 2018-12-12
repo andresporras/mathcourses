@@ -45,7 +45,7 @@ def quadraticFactorizationType2():
 #for a function type ax^2 + bx+ c get the right (dx+e)(fx+g) factorization between the given options
 def quadraticFactorizationType1():
     return coursesFunctionsBll.quadraticFactorization(True)
-#for an area, with height equals to ax+b and a base equals to cx+d, get the x value wich solves the problem
+#for an rectangle, with height equals to x and a base equals to cx+d, get the perimeter of the rectangle
 def areaProblem():
     a = random.randint(1,100)
     b = random.randint(1,100)*(random.randint(0,1)*2-1)
@@ -53,7 +53,7 @@ def areaProblem():
     question = 'if a rectangle area is '+str(-1*c)+', its height is h and its width is equal to ('+str(a)+'h)+('+str(b)+'), which is the perimeter of this rectangle?:'
     solution1 = (-b+((b*b)-(4*a*c))**(0.5))/(2*a)
     solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
-    solution = round((((solution1*a)+b)*2)+(solution1*2) if solution1>0 else (((solution2*a)+b)*2)+(solution2*2),4)
+    solution = round(solution1*4, 4) if solution1>0 else round(solution2,4)
     options = coursesFunctionsBll.generateOptions(solution)
     jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
@@ -67,7 +67,7 @@ def firstGradeFraction():
     sol = ((cSolution*cDown)-cUp)/(xUp-(cSolution*xDown))
     question = 'choose right range for x in [('+str(xUp)+'x)+('+str(cUp)+')]/[('+str(xDown)+'x)+('+str(cDown)+')]='+str(cSolution)
     solution = 'x is in range (-infinite,-15)' if (sol<-15) else 'x is in range [-15,-5]' if (sol>=-15 and sol<=-5) else 'x is in range (-5,5)' if (sol>-5 and sol<5) else 'x is in range [5,15]' if (sol>=5 and sol<=15) else 'x is in range (15,infinite)'
-    options = json.dumps({'a':'x is in range (-infinite,-15)', 'b':'x is in range [-15,-5]', 'c': 'x is in range (-5,5)', 'd': 'x is in range [5,15]', 'e': 'x is in range (15,infinite)'})
+    options = json.loads(json.dumps({'a':'x is in range (-infinite,-15)', 'b':'x is in range [-15,-5]', 'c': 'x is in range (-5,5)', 'd': 'x is in range [5,15]', 'e': 'x is in range (15,infinite)'}))
     jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse 
 #In a plant, the cost to produce x units is equal to ax^2+bx+c...
@@ -83,7 +83,7 @@ def plantProblem():
     solution2 = (-b-((b*b)-(4*a*(c-y)))**(0.5))/(2*a)
     sol = round(solution1 if solution1>0 else solution2,4)
     solution = 'x is in range (0,1)' if (sol<1) else 'x is in range [1,3]' if (sol>=1 and sol<=3) else 'x is in range (3,6)' if (sol>3 and sol<6) else 'x is in range [6,10]' if (sol>=6 and sol<=10) else 'x is in range (10,infinite)'
-    options = json.dumps({'a':'x is in range (0,1)', 'b':'x is in range [1,3]', 'c': 'x is in range (3,6)', 'd': 'x is in range [6,10]', 'e': 'x is in range (10,infinite)'})
+    options = json.loads(json.dumps({'a':'x is in range (0,1)', 'b':'x is in range [1,3]', 'c': 'x is in range (3,6)', 'd': 'x is in range [6,10]', 'e': 'x is in range (10,infinite)'}))
     jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #for a typical quadratic equation like ax^2 + bx + c determine if it has any solution
@@ -95,7 +95,7 @@ def secondGradeEquation():
     if(((b**2)-4*a*c)<0):
         solution = 'No'
     question = 'On the next function ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')=0. Has x any solution?:'
-    options = json.dumps({"1":"Yes", "2":"No"})
+    options = json.loads(json.dumps({"1":"Yes", "2":"No"}))
     jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
     return jsonResponse
 #given a ax^3 + bx^2 + cx + d get, from the given options, the right factorization (ex^2 + f)(gx + h)

@@ -41,6 +41,26 @@ def createUser(user):
     #a =db.eval(Code('function exec(){var c=JSON.parse(JSON.stringify(db.userData.find({nombre:"andres"})[0])); return c;}'));
     a =db.eval(x, user.documento, user.tipoDocumento, user.nombre, user.apellido, user.usuario, user.password, user.genero, user.ciudadResidencia, user.paisResidencia, user.ciudadNacimiento, user.paisNacimiento, user.correo1, user.correo2, user.fechaNacimiento);
     return a
+def createSimpleUser(user):
+    password = sha256_crypt.encrypt(user.password)
+    #nombre = user.nombre
+    #a=  db.eval(Code('function exec(){var c=db.userData.find(); return c;} exec();'));
+    codCreateUser = str('function(usuario, password){'
+    'var text = "";'
+    'var possible = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789";'
+    'for (var i = 0; i < 100; i++){'
+    'text += possible.charAt(Math.floor(Math.random() * possible.length));'
+    '}'
+    'db.userData.insert('
+    '{usuario:usuario'
+    ', password:password'
+    '});'
+    'return text;'
+    '}')
+    #a =db.eval(Code('function(){db.userData.insert({nombre:"oscar2"}); return "hola mundo";}'));
+    #a =db.eval(Code('function exec(){var c=JSON.parse(JSON.stringify(db.userData.find({nombre:"andres"})[0])); return c;}'));
+    a =db.eval(codCreateUser, user.usuario, password);
+    return a
 
 async def loginUser(user):
     query = str('function(usuario){var userData =JSON.parse(JSON.stringify(db.userData.findOne({usuario:usuario}))); if(userData!=null){return userData["password"];} return "0";}')

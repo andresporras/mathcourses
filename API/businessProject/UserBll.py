@@ -12,5 +12,12 @@ def loginUser(nUsuario):
     #return UserDll.loginUser(nUsuario)
 def getUser(nUsuario):
         return UserDll.getUser(nUsuario)
+def signUp(nUsuario):
+    request= UserDll.getUser(nUsuario)
+    if(request==None):
+        UserDll.createSimpleUser(nUsuario)
+        return loginUser(nUsuario)
+    else:
+        return "-1"
 #class UserBll():
     

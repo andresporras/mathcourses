@@ -10,6 +10,7 @@ from jwt import encode, decode
 import json
 from munch import munchify
 from functools import wraps
+import smtplib
 
 #UserBll.path.append(path.abspath('..\businessProject'))
 
@@ -75,6 +76,19 @@ class UserController(Resource):
         nombre = json_data['nombre']
         password = json_data['password']
         return 'something'
+    #https://stackoverflow.com/questions/26852128/smtpauthenticationerror-when-sending-mail-using-gmail-and-python
+    @app.route(defaultRoute+'/signUp', methods=['POST'])
+    def signUp():
+        try:
+            json_data = request.json
+            nUsuario = munchify(request.json)
+            result = UserBll.signUp(nUsuario)
+        except Exception as er:
+            return er
+        if(result==1):
+            token = encode({'user': nUsuario.usuario+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+            return jsonify({'token':token.decode('UTF-8')})
+        return jsonify({'token':'-1'})
     #@token_required
     @app.route(defaultRoute+'/createUser', methods=['POST'])
     def createUser():
@@ -90,7 +104,7 @@ class UserController(Resource):
         if(result==1):
             token = encode({'user': nUsuario.usuario+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
-        return "login no valido"
+        return jsonify({'token':'-1'})
     #@token_required
     @app.route(defaultRoute+'/getUser', methods=['POST'])
     @token_required

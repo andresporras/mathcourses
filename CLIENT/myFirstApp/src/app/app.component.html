@@ -21,8 +21,8 @@
                 <input type="password" class="form-control" [attr.id]="idPassword" [(ngModel)]="pas" name="pas" placeholder="Password">
     
             </div>
-            <div class="alert alert-danger" role="alert" [hidden]="loginSuccess!=1">
-              login input data is not correct
+            <div class="{{loginFails[currentFail].classes}}" role="alert" [hidden]="loginSuccess!=1">
+              {{loginFails[currentFail].message}}
             </div>
             <div class="forgot">
                 <form action="">

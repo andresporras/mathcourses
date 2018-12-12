@@ -16,6 +16,11 @@ interface choice{
   textChoice:String;
 }
 
+interface loginFails{
+  message:String;
+  classes:String;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -32,14 +37,20 @@ export class AppComponent {
   pas='';
   loginSuccess=0;
   componentSelector="";
+  loginFailMessage="";
   defaultChoice="0";
   choices:choice[]=[];
+  loginFails:loginFails[]=[];
+  currentFail=0;
 
   constructor(private httpClient:HttpClient, private router : Router){
     this.componentSelector=globalData.componentSelector;
     this.choices.push({idChoice:"0", textChoice:"sign in"});
     this.choices.push({idChoice:"1", textChoice:"sign up"});
     this.choices.push({idChoice:"2", textChoice:"recover password"});
+    this.loginFails.push({message:"login input data is not correct", classes:"alert alert-danger"});
+    this.loginFails.push({message:"user already exist", classes:"alert alert-warning"});
+    this.loginFails.push({message:"password most have 8 no less than 8 characters", classes:"alert alert-warning"});
   }
 
   sayHi(){
@@ -65,14 +76,11 @@ export class AppComponent {
     this.pas="";
   }
 
-  doLogin() {
+  
+  login(){
     let options =  
     {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
     ,'Accept': 'application/json'
-//   ,'Access-Control-Allow-Origin':'*'
-//   ,"Access-Control-Allow-Credentials": "true"
-//   ,"Access-Control-Allow-Methods": "GET, HEAD, OPTIONS, POST, PUT, DELETE"
-// ,"Access-Control-Request-Headers": "X-Requested-With, Content-Type, Accept, Origin, Authorization"
 })};
     
     var userData={usuario: this.usuario, password: this.pas};
@@ -81,7 +89,8 @@ export class AppComponent {
       this.serverData = data as JSON;
       globalData.sessionId = this.serverData['token'];
       debugger;
-      if(data=="-1"){
+      if(globalData.sessionId=="-1"){
+       this.currentFail= 0;
        this.loginSuccess=1;
       }
       else{
@@ -91,6 +100,45 @@ export class AppComponent {
       }
 
     })
+  }
+
+  createUser(){
+    let options =  
+    {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
+    ,'Accept': 'application/json'
+})};
+    
+    var userData={usuario: this.usuario, password: this.pas};
+    this.httpClient.post<any>('http://127.0.0.1:5000/user/signUp', userData, options)
+    .subscribe(data => {
+      this.serverData = data as JSON;
+      globalData.sessionId = this.serverData['token'];
+      debugger;
+      if(globalData.sessionId=="-1"){
+        this.currentFail= 1;
+        this.loginSuccess=1;
+      }
+      else{
+        this.loginSuccess=2;
+        console.log(this.serverData);
+        //this.router.navigateByUrl('/menu');
+      }
+
+    })
+  }
+
+  doLogin() {
+    if(this.pas.length<8){
+      this.currentFail= 2;
+      this.loginSuccess=1;
+    }
+    else if(this.defaultChoice=="0"){
+      this.login();
+    }
+    else if(this.defaultChoice=="1"){
+      this.createUser();
+    }
+    
   }
    
 }
