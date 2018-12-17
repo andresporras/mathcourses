@@ -34,6 +34,9 @@
     <Compile Include="PreCalculusBll.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TrigonometryGeometryBll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserBll.py" />
   </ItemGroup>
   <ItemGroup>

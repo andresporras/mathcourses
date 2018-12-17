@@ -251,6 +251,33 @@ def arithmeticAlternatives(sol):
             alternatives.append(nAlternative)
     strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
     return strOptions
+def arithmeticSinAlternatives(sol):
+    alternatives = [sol]
+    for x in range(4):
+        i=random.randint(0,1)
+        j=random.randint(0,3)
+        if(i==0):
+            nAlternative = alternatives[0]-15
+            alternatives.insert(0,nAlternative)
+        else:
+            nAlternative = alternatives[len(alternatives)-1]+15
+            alternatives.append(nAlternative)
+    strOptions =json.loads(json.dumps({'a':str(round(math.sin(math.radians(alternatives[0])),4)), 'b':str(round(math.sin(math.radians(alternatives[1])),4)), 'c': str(round(math.sin(math.radians(alternatives[2])),4)), 'd': str(round(math.sin(math.radians(alternatives[3])),4)), 'e': str(round(math.sin(math.radians(alternatives[4])),4))}))
+    return strOptions
+def fromGivenRange(solution, solutions):
+    alternatives = [solution]
+    for x in range(4):
+        c = random.randint(0,len(solutions)-1)
+        d = random.randint(0,1)
+        if d==0:
+            alternatives.append(solutions[c])
+        else:
+            alternatives.insert(0,solutions[c])
+        del solutions[c]
+    strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
+    return strOptions
+    strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
+    return strOptions
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

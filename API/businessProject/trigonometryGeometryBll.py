@@ -1,0 +1,98 @@
+import random
+import math
+import json
+import coursesFunctionsBll
+
+#find limit when x->0 for the function [(ax+b)(cx+d)-bd*cos(ex)]/(ex)
+def basicIdentityProblem1():
+    try:
+        side_a = ["sin(x)", "cos(x)","[1/sin(x)]","[1/cos(x)]"]
+        side_b = ["[tan^2(x)+1]", "[cot^2(x)+1]"]
+        solutions=["tan(x)sec(x)", "sec(x)","csc(x)sec^2(x)","sec^3(x)","csc(x)","cot(x)csc(x)","csc^3(x)","sec(x)csc^2(x)"]
+        a = random.randint(0,3)
+        b = random.randint(0,1)
+        solution=solutions[a+(b*4)]
+        del solutions[a+b]
+        question="simplify "+side_a[a]+"*"+side_b[b]
+        options =coursesFunctionsBll.fromGivenRange(solution, solutions.copy())
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#find limit when x->0 for the function [(ax+b)(cx+d)-bd*cos(ex)]/(ex)
+def sumIdentityProblem1():
+    try:
+        a = random.randint(1,100)*(random.randint(0,1)*2-1)*15
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)*15
+        c= random.randint(0,3)
+        d= random.randint(0,1)
+        solution=""
+        question=""
+        sol=0
+        #if a==b or math.sin(math.radians(a+b))==0: # avoid solution equals 0 since this will be a problem generating the options
+         #   return sumIdentityProblem1()
+        if c==0: #cos(a-b) = cos(a)cos(b)+sin(a)sin(b)
+            sol=a-b
+            solution=str("" if d==0 else "-")+"sin("+str(a-b)+")"
+            question = "tan(pi"+str(("+" if d==0 else "-"))+"("+str(a-b)+"))*[cos("+str(a)+")cos("+str(b)+")+sin("+str(a)+")sin("+str(b)+")]"
+        elif c==1: #cos(a+b) = cos(a)cos(b)-sin(a)sin(b)
+            sol=a+b
+            solution=str("" if d==0 else "-")+"sin("+str(a+b)+")"
+            question = "tan(pi"+str(("+" if d==0 else "-"))+"("+str(a+b)+"))*[cos("+str(a)+")cos("+str(b)+")-sin("+str(a)+")sin("+str(b)+")]"
+        elif c==2: #sin(a+b) = sin(a)cos(b)+cos(a)sin(b)
+            sol=a+b
+            solution=str("" if d==0 else "-")+"[sec("+str(a+b)+")-cos("+str(a+b)+")]"
+            question = "tan(pi"+str(("+" if d==0 else "-"))+"("+str(a+b)+"))*[sin("+str(a)+")cos("+str(b)+")+cos("+str(a)+")sin("+str(b)+")]"
+        elif c==3: #sin(a-b) = sin(a)cos(b)-cos(a)sin(b)
+            sol=a-b
+            solution=str("" if d==0 else "-")+"[sec("+str(a-b)+")-cos("+str(a-b)+")]"
+            question = "tan(pi"+str(("+" if d==0 else "-"))+"("+str(a+b)+"))*[cos("+str(a)+")cos("+str(b)+")-sin("+str(a)+")sin("+str(b)+")]"
+        options =json.loads(json.dumps({'a':"sin("+str(sol)+")", 'b':"-sin("+str(sol)+")", 'c':"[sec("+str(sol)+")-cos("+str(sol)+")]",'d':"-[sec("+str(sol)+")-cos("+str(sol)+")]"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using double angle property find a solution similar to sin(2x) or cos(2x)
+def doubleAngleProblem1():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c= random.randint(0,1)
+        solution=str(a/2)+"*sin("+str(b/2)+"a)" if c==0 else str(a)+"*cos("+str(b/2)+"a)"
+        question= "simplify "+str(a)+"*sin((pi-"+str(b)+"a)/4)*cos((pi-"+str(b)+"a)/4)" if c==0 else "simplify "+str(a)+"[cos^2((pi-"+str(b)+"a)/4)-sin^2((pi-"+str(b)+"a)/4)]"
+        options =json.loads(json.dumps({'a':str(a/2)+"*sin("+str(b/2)+"a)", 'b':str(a)+"*cos("+str(b/2)+"a)", 'c':str(a)+"*sin("+str(b/2)+"a)", 'd':str(a/2)+"*cos("+str(b/2)+"a)"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def middleAngleProblem1():
+    try:
+        #a = random.randint(2,10)
+        b = random.randint(0,1)
+        c= random.randint(0,1)
+        d = random.randint(2,10)
+        e = random.randint(2,10)
+        if(e==d):
+            return middleAngleProblem1()
+        solution= str("sin" if b==0 else "cos")+str("("+str(((d+e)/2 if c==0 else (d-e)/2))+")")
+        question= "simplify  +-([1"+str("-" if b==0 else "+")+""+str("cos("+str(d)+")cos("+str(e)+") "+str("+" if c==1 else "-")+" sin("+str(d)+")sin("+str(e)+")")+"]/2)^(1/2)"
+        options =json.loads(json.dumps({'a':"sin("+str((d+e)/2)+")", 'b':"sin("+str((d-e)/2)+")", 'c':"cos("+str((d+e)/2)+")", 'd':"cos("+str((d-e)/2)+")"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1]
+exam2 =[]
+listMethods = [exam1, exam2]
+def generateExam(unit):
+    solution=[]
+    lista = listMethods[int(unit)-1]
+    for x in range(12):
+        question =  random.randint(1,len(lista))
+        #numberQuestion='QUESTION '+str(x+1)
+        item = str(lista[question-1]())
+        #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
+        solution.append(json.loads(item))
+    return solution
+

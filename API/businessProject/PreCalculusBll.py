@@ -386,7 +386,7 @@ def trigonometryLimitProblem2():
         d = random.randint(1,10)
         e = random.randint(1,10)*(random.randint(0,1)*2-1)
         if (a*d)+(c*b)==0: # avoid solution equals 0 since this will be a problem generating the options
-            trigonometryLimitProblem2()
+            return trigonometryLimitProblem2()
         sol = round(((a*d)+(b*c))/e,4)
         solution=str(sol)
         question="[lim x->(0)] for [(("+str(a)+"x)+("+str(b)+"))(("+str(c)+"x)+("+str(d)+"))-(("+str(b*d)+")*cos("+str(e)+"x))]/("+str(e)+"x)"

@@ -4,6 +4,7 @@ from FlaskWebProject1 import app
 import BasicAlgebraBll
 import PreCalculusBll
 import coursesBll
+import trigonometryGeometryBll
 from bson import json_util, ObjectId
 import json
 
@@ -23,6 +24,8 @@ class coursesController(object):
             return json.dumps(BasicAlgebraBll.generateExam(unit))
         elif(course=='2'):
             return json.dumps(PreCalculusBll.generateExam(unit))
+        elif(course=='3'):
+            return json.dumps(trigonometryGeometryBll.generateExam(unit))
         return 'course or unit invalid'
     @app.route(defaultRoute+'/getData', methods=['GET'])
     def getData():

@@ -128,15 +128,18 @@ export class AppComponent {
   }
 
   doLogin() {
-    if(this.pas.length<8){
-      this.currentFail= 2;
-      this.loginSuccess=1;
-    }
-    else if(this.defaultChoice=="0"){
+    if(this.defaultChoice=="0"){
       this.login();
     }
     else if(this.defaultChoice=="1"){
-      this.createUser();
+      if(this.pas.length<8){
+        this.currentFail= 2;
+        this.loginSuccess=1;
+      }
+      else{
+        this.createUser();
+      }
+      
     }
     
   }

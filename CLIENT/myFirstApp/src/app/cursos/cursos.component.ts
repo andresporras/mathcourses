@@ -40,6 +40,7 @@ export class CursosComponent implements OnInit {
 })};
     
     var userData={course, unit};
+    debugger;
     this.httpClient.post<JSON>('http://localhost:5000/courses/generateExam', userData, options)
     .subscribe(data => {
       this.examData = data as JSON;
