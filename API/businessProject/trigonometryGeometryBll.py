@@ -82,7 +82,62 @@ def middleAngleProblem1():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1]
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def productSumProblem1():
+    try:
+        a = random.randint(0,3)
+        b = random.randint(2,10)*(random.randint(0,1)*2-1)
+        c= random.randint(2,10)*(random.randint(0,1)*2-1)
+        solution=""
+        question=""
+        if b==c or b==(-c):
+            return productSumProblem1()
+        if a==0:
+            solution="sin("+str(b)+")cos("+str(c)+")"
+            question="simplify (1/2)*[+-((1-cos("+str(2*(b-c))+"))/2)^(1/2)+sin("+str(b+c)+")]"
+        elif a==1:
+            solution="sin("+str(b)+")sin("+str(c)+")"
+            question="simplify (1/2)*[+-((1+cos("+str(2*(b-c))+"))/2)^(1/2)-cos("+str(b+c)+")]"
+        elif a==2:
+            solution="cos("+str(b)+")sin("+str(c)+")"
+            question="simplify (1/2)*[+-((1-cos("+str(2*(b+c))+"))/2)^(1/2)-sin("+str(b-c)+")]"
+        elif a==3:
+            solution="cos("+str(b)+")cos("+str(c)+")"
+            question="simplify (1/2)*[+-((1+cos("+str(2*(b+c))+"))/2)^(1/2)+cos("+str(b-c)+")]"
+        
+        options =json.loads(json.dumps({'a':"sin("+str(b)+")cos("+str(c)+")", 'b':"sin("+str(b)+")sin("+str(c)+")", 'c':"cos("+str(b)+")sin("+str(c)+")", 'd':"cos("+str(b)+")cos("+str(c)+")"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def sumProductProblem1():
+    try:
+        a = random.randint(0,3)
+        b = random.randint(2,10)*(random.randint(0,1)*2-1)
+        c= random.randint(2,10)*(random.randint(0,1)*2-1)
+        solution=""
+        question=""
+        if b==c or b==(-c):
+            return sumProductProblem1()
+        if a==0:
+            solution="sin("+str(b)+")+sin("+str(c)+")"
+            question="simplify 2*[[+-((1-cos("+str(b+c)+"))/2))^(1/2)]cos(("+str((b-c)/2)+")]"
+        elif a==1:
+            solution="sin("+str(b)+")-sin("+str(c)+")"
+            question="simplify 2*[[+-((1+cos("+str(b+c)+"))/2))^(1/2)]sin(("+str((b-c)/2)+")]"
+        elif a==2:
+            solution="cos("+str(b)+")+cos("+str(c)+")"
+            question="simplify 2*[[+-((1+cos("+str(b-c)+"))/2))^(1/2)]cos(("+str((b+c)/2)+")]"
+        elif a==3:
+            solution="cos("+str(b)+")-cos("+str(c)+")"
+            question="simplify 2*[[+-((1-cos("+str(b-c)+"))/2))^(1/2)]sin(("+str((-1)*(b+c)/2)+")]" #remember that sin(-a)=-sin(a)
+        options =json.loads(json.dumps({'a':"sin("+str(b)+")+sin("+str(c)+")", 'b':"sin("+str(b)+")-sin("+str(c)+")", 'c':"cos("+str(b)+")+cos("+str(c)+")", 'd':"cos("+str(b)+")-cos("+str(c)+")"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1, productSumProblem1, sumProductProblem1]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
