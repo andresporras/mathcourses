@@ -137,7 +137,59 @@ def sumProductProblem1():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1, productSumProblem1, sumProductProblem1]
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def basicPropertyProblem1():
+    try:
+        def assignVariable(ab):
+            oddPair = [["sin(-"+str(ab)+")","-sin("+str(ab)+")"],["cos(-"+str(ab)+")","cos("+str(ab)+")"],["tan(-"+str(ab)+")","-tan("+str(ab)+")"],["cot(-"+str(ab)+")","-cot("+str(ab)+")"],["sec(-"+str(ab)+")","sec("+str(ab)+")"],["csc(-"+str(ab)+")","-csc("+str(ab)+")"]]
+            cofunsion =[["sin((pi/2)-"+str(ab)+")","cos("+str(ab)+")"],["cos((pi/2)-"+str(ab)+")","sin("+str(ab)+")"],["tan((pi/2)-"+str(ab)+")","cot("+str(ab)+")"],["cot((pi/2)-"+str(ab)+")","tan("+str(ab)+")"]]
+            inverseIdentity = [["sin(pi-"+str(ab)+")","sin("+str(ab)+")"],["sin(pi+"+str(ab)+")","-sin("+str(ab)+")"],["cos(pi-"+str(ab)+")","-cos("+str(ab)+")"],["cos(pi+"+str(ab)+")","-cos("+str(ab)+")"],["tan(pi-"+str(ab)+")","-tan("+str(ab)+")"],["tan(pi+"+str(ab)+")","tan("+str(ab)+")"]]
+            return [oddPair,cofunsion, inverseIdentity]
+        items=[]
+        characters=["a","b"]
+        for x in range(2):
+            identities = assignVariable(characters[x])
+            a = random.randint(0,2)
+            b = random.randint(0,len(identities[a])-1)
+            items.append(identities[a][b])
+        solution="["+str(items[0][1])+"]+["+str(items[1][1])+"]"
+        question="["+str(items[0][0])+"]+["+str(items[1][0])+"]"
+        options =json.loads(json.dumps({'a':"["+str((items[0][1])[-6:])+"]+["+str((items[1][1])[-6:])+"]", 'b':"[-"+str((items[0][1])[-6:])+"]+["+str((items[1][1])[-6:])+"]", 'c':"["+str((items[0][1])[-6:])+"]+[-"+str((items[1][1])[-6:])+"]", 'd':"[-"+str((items[0][1])[-6:])+"]+[-"+str((items[1][1])[-6:])+"]"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def sumDifTanProblem1():
+    try:
+        def assignVariable(ab):
+            oddPair = [["tan(-"+str(ab)+")","-tan("+str(ab)+")"]]
+            cofunsion =[["cot((pi/2)-"+str(ab)+")","tan("+str(ab)+")"]]
+            inverseIdentity = [["tan(pi-"+str(ab)+")","-tan("+str(ab)+")"],["tan(pi+"+str(ab)+")","tan("+str(ab)+")"]]
+            return [oddPair,cofunsion, inverseIdentity]
+        items=[]
+        characters=["a","b"]
+        solution=""
+        for x in range(2):
+            identities = assignVariable(characters[x])
+            a = random.randint(0,2)
+            b = random.randint(0,len(identities[a])-1)
+            items.append(identities[a][b])
+        if (items[0][1])[0]!="-" and (items[1][1])[0]!="-":
+            solution="tan(a+b)"
+        elif (items[0][1])[0]=="-" and (items[1][1])[0]=="-":
+            solution="-tan(a+b)"
+        elif (items[0][1])[0]!="-" and (items[1][1])[0]=="-":
+            solution="tan(a-b)"
+        elif (items[0][1])[0]=="-" and (items[1][1])[0]!="-":
+            solution="-tan(a-b)"
+        question="(["+str(items[0][0])+"]+["+str(items[1][0])+"])/(1-["+str(items[0][0])+"]["+str(items[1][0])+"])"
+        options =json.loads(json.dumps({'a':"tan(a+b)", 'b':"-tan(a+b)", 'c':"tan(a-b)", 'd':"-tan(a-b)"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1, productSumProblem1, sumProductProblem1, basicPropertyProblem1, sumDifTanProblem1]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
