@@ -278,6 +278,111 @@ def fromGivenRange(solution, solutions):
     return strOptions
     strOptions =json.loads(json.dumps({'a':str(alternatives[0]), 'b':str(alternatives[1]), 'c': str(alternatives[2]), 'd': str(alternatives[3]), 'e': str(alternatives[4])}))
     return strOptions
+def parallelProblemOptions(slope, intersection):
+    try:
+        alternatives = [[slope, intersection]]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("y=("+str(alternatives[y][0])+"x)+("+str(alternatives[y][1])+")")
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
+def circleProblemOptions(perimeter, area):
+    try:
+        alternatives = [[perimeter, area]]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("Perimeter= "+str(alternatives[y][0])+" and Area="+str(alternatives[y][1]))
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
+def ellipseProblemOptions(data):
+    try:
+        alternatives = [data.copy()]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,3)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("[(x-("+str(alternatives[y][0])+"))^2/"+str(alternatives[y][1])+"]+[(y-("+str(alternatives[y][2])+"))^2/"+str(alternatives[y][3])+"]=1")
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
+def parabolaProblemOptions(data):
+    try:
+        alternatives = [data.copy()]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,2)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("y-("+str(alternatives[y][0])+")="+str(alternatives[y][1])+"*(x-("+str(alternatives[y][2])+"))^2")
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
+def hyperbolaProblemOptions(data):
+    try:
+        alternatives = [data.copy()]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,3)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("[(x-("+str(alternatives[y][0])+"))^2/"+str(alternatives[y][1])+"]-[(y-("+str(alternatives[y][2])+"))^2/"+str(alternatives[y][3])+"]=1")
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1
