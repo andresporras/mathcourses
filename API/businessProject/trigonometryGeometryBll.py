@@ -357,7 +357,7 @@ def hyperbolaProblem():
         x01=random.randint(2,20)*(random.randint(0,1)*2-1)
         x02=random.randint(2,20)*(random.randint(0,1)*2-1)
         if abs(x01-x02)<=2:
-            hyperbolaProblem()
+            return hyperbolaProblem()
         y0=random.randint(2,20)*(random.randint(0,1)*2-1)
         x0 = (x01+x02)/2
         vertice = x0
@@ -375,8 +375,47 @@ def hyperbolaProblem():
         return jsonResponse
     except Exception as er:
         return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def circleTanProblem():
+    try:
+        x=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y=random.randint(2,10)*(random.randint(0,1)*2-1)
+        m=random.randint(2,10)*(random.randint(0,1)*2-1)
+        c=random.randint(2,10)*(random.randint(0,1)*2-1)
+        slope = -1/m
+        intersection=y-(x*slope)
+        x1 = (intersection-c)/(m-slope)
+        y1=(x1*m)+c
+        distance = ((x1-x)**2+(y1-y)**2)**(1/2)
+        area = round(distance*distance*3.1416,4)
+        solution = str(area)
+        options =coursesFunctionsBll.generateOptions(area)
+        question = "which is the area of a circle which center is in ("+str(x)+","+str(y)+") and is tangent to the line y=("+str(m)+"x)+("+str(c)+")"
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def ellipseAreaProblem():
+    try:
+        x01=random.randint(2,10)*(random.randint(0,1)*2-1)
+        x02=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y0=random.randint(2,10)*(random.randint(0,1)*2-1)
+        minor=random.randint(2,10)
+        if x01==x02:
+            return ellipseProblem()
+        x0 = (x01+x02)/2 #HERE IS X0
+        major = ((x01-x0)**2+(minor)**2)**(1/2)
+        area = round(3.1416*minor*major,4)
+        solution = str(area)
+        options =coursesFunctionsBll.generateOptions(area)
+        question = "which is the area of ellipse which focus on ("+str(x01)+","+str(y0)+") ("+str(x02)+","+str(y0)+") and minor semiaxis equal to "+str(minor)+""
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1, productSumProblem1, sumProductProblem1, basicPropertyProblem1, sumDifTanProblem1, doubleAngleTanProblem1, middleAngleTanProblem1]
-exam2 =[parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem]
+exam2 =[parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
