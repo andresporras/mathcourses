@@ -249,7 +249,7 @@ def middleAngleTanProblem1():
     except Exception as er:
         return er
 
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find the equation which pass through a given point and is parallel to a given line
 def parallelProblem():
     try:
         x0=random.randint(2,10)*(random.randint(0,1)*2-1)
@@ -269,7 +269,7 @@ def parallelProblem():
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find perpendicular line which connect a given point with a given line
 def perpendicularProblem():
     try:
         x0=random.randint(2,10)*(random.randint(0,1)*2-1)
@@ -289,7 +289,7 @@ def perpendicularProblem():
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find circle equation having one point of the circle an its center
 def circleProblem():
     try:
         x0=random.randint(2,19)*(random.randint(0,1)*2-1)
@@ -301,12 +301,12 @@ def circleProblem():
         area = round(3.1416*r*r,4)
         solution = "Perimeter= "+str(perimeter)+" and Area="+str(area)
         question = "Find the perimeter and area of the circle which center is ("+str(x0)+","+str(y0)+") and pass through the point ("+str(x1)+","+str(y1)+"): "
-        options =coursesFunctionsBll.circleProblemOptions(perimeter, area)
+        options =coursesFunctionsBll.perimeterAreaOptions(perimeter, area)
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find ellipse having the foci and a point of the ellipse
 def ellipseProblem():
     try:
         x01=random.randint(2,10)*(random.randint(0,1)*2-1)
@@ -332,7 +332,7 @@ def ellipseProblem():
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#get parabola equation through focus and directrix
 #this is how you get equation form focus and directrix: https://www.khanacademy.org/math/algebra2/intro-to-conics-alg2/focus-and-directrix-of-a-parabola-alg2/v/equation-for-parabola-from-focus-and-directrix
 def parabolaProblem():
     try:
@@ -351,7 +351,7 @@ def parabolaProblem():
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#given the center and one vertix find the equation of hyperbola
 def hyperbolaProblem():
     try:
         x01=random.randint(2,20)*(random.randint(0,1)*2-1)
@@ -370,12 +370,13 @@ def hyperbolaProblem():
 
         solution = "[(x-("+str(x0)+"))^2/"+str(round(a**2,4))+"]-[(y-("+str(y0)+"))^2/"+str(round(b**2,4))+"]=1"
         options =coursesFunctionsBll.hyperbolaProblemOptions([x0, round(a**2,4), y0, round(b**2,4)])
-        question = "which is the canonical equation of the hyperbola  which focus are ("+str(x01)+","+str(y0)+") ("+str(x02)+","+str(y0)+") and one of vertices is in ("+str(vertice)+","+str(y0)+"): "
+        question = "which is the canonical equation of the hyperbola  which foci are ("+str(x01)+","+str(y0)+") ("+str(x02)+","+str(y0)+") and one of vertices is in ("+str(vertice)+","+str(y0)+"): "
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find the diameter of the circle which a given center and a given tangent line
+#use the perpendicular line between the center an the tangent line
 def circleTanProblem():
     try:
         x=random.randint(2,10)*(random.randint(0,1)*2-1)
@@ -387,15 +388,15 @@ def circleTanProblem():
         x1 = (intersection-c)/(m-slope)
         y1=(x1*m)+c
         distance = ((x1-x)**2+(y1-y)**2)**(1/2)
-        area = round(distance*distance*3.1416,4)
-        solution = str(area)
-        options =coursesFunctionsBll.generateOptions(area)
-        question = "which is the area of a circle which center is in ("+str(x)+","+str(y)+") and is tangent to the line y=("+str(m)+"x)+("+str(c)+")"
+        diameter = round(distance*2,4)
+        solution = str(diameter)
+        options =coursesFunctionsBll.generateOptions(diameter)
+        question = "which is the diameter of a circle where center is in ("+str(x)+","+str(y)+") and is tangent to the line y=("+str(m)+"x)+("+str(c)+")"
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
         return er
-#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+#find the are  havinf the foci and the minor semiaxis, to do this you must find the major semi-axis
 def ellipseAreaProblem():
     try:
         x01=random.randint(2,10)*(random.randint(0,1)*2-1)
@@ -414,8 +415,86 @@ def ellipseAreaProblem():
         return jsonResponse
     except Exception as er:
         return er
+#to the triangle with given three points find the area and perimeter
+#find the perpendicular line between any of the three point and the line build with the other two points
+def triangleProblem():
+    try:
+        x1=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y1=random.randint(2,10)*(random.randint(0,1)*2-1)
+        x2=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y2=random.randint(2,10)*(random.randint(0,1)*2-1)
+        x3=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y3=random.randint(2,10)*(random.randint(0,1)*2-1)
+        if x2==(-1*x1):
+            return triangleProblem()
+        m1=(y2-y1)/(x2-x1)
+        b1=y1-(m1*x1)
+        m2= -1/m1
+        b2= y3-(m2*x3)
+        x4= (b2-b1)/(m1-m2)
+        y4=(m2*x4)+b2
+        base = ((x2-x1)**2+(y2-y1)**2)**(1/2)
+        height = ((x4-x3)**2+(y4-y3)**2)**(1/2)
+        side2 = ((x3-x1)**2+(y3-y1)**2)**(1/2)
+        side3 = ((x3-x2)**2+(y3-y2)**2)**(1/2)
+        area=round(base*height/2,4)
+        perimeter= round(base+side2+side3,4)
+        solution = "Perimeter= "+str(perimeter)+" and Area="+str(area)
+        options =coursesFunctionsBll.perimeterAreaOptions(perimeter, area)
+        question = "which is the perimeter and area of triangle where vertixes are ("+str(x1)+","+str(y1)+") ("+str(x2)+","+str(y2)+") ("+str(x3)+","+str(y3)+"):"
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#for the triangle with the given three vertixes find if is acute, obtuse or right
+#get the biggest line, find perpendicular line which connect biggest line with the lef point
+def triangleAngleProblem():
+    try:
+        x1=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y1=random.randint(2,10)*(random.randint(0,1)*2-1)
+        x2=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y2=random.randint(2,10)*(random.randint(0,1)*2-1)
+        x3=random.randint(2,10)*(random.randint(0,1)*2-1)
+        y3=random.randint(2,10)*(random.randint(0,1)*2-1)
+        if x1==x2 or x1==x3 or x2==x3:
+            return triangleAngleProblem()
+        side1 = ((x2-x1)**2+(y2-y1)**2)**(1/2)
+        side2 = ((x3-x1)**2+(y3-y1)**2)**(1/2)
+        side3 = ((x3-x2)**2+(y3-y2)**2)**(1/2)
+        line=[]
+        point=[]
+        sides=[]
+        if side1>side2 and side1>side3:
+            line=[[x1,y1],[x2,y2]]
+            point=[x3,y3]
+            sides =[side2,side3]
+        elif side2>side3:
+            line=[[x1,y1],[x3,y3]]
+            point=[x2,y2]
+            sides =[side1,side3]
+        else:
+            line=[[x2,y2],[x3,y3]]
+            point=[x1,y1]
+            sides =[side1,side2]
+        m=(line[1][1]-line[0][1])/(line[1][0]-line[0][0])
+        b=line[0][1]-(m*line[0][0])
+        m1=-1/m
+        b1= point[1]-(m1*point[0])
+        x4=(b1-b)/(m-m1)
+        y4 = (m1*x4)+b1
+        side4 = ((x4-point[0])**2+(y4-point[1])**2)**(1/2)
+        angle1=math.degrees(math.asin(side4/sides[0]))
+        angle2=math.degrees(math.asin(side4/sides[1]))
+        maxAngle=180-(angle1+angle2)
+        solution = "right" if (maxAngle>89.99 and maxAngle<90.01) else ("obtuse" if maxAngle>=90.01 else "acute")
+        options =json.loads(json.dumps({'a':'right', 'b':'obtuse', 'c':'acute'}))
+        question = "which is the triangle type if vertix are ("+str(x1)+","+str(y1)+") ("+str(x2)+","+str(y2)+") ("+str(x3)+","+str(y3)+"): "
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[basicIdentityProblem1, sumIdentityProblem1, doubleAngleProblem1, middleAngleProblem1, productSumProblem1, sumProductProblem1, basicPropertyProblem1, sumDifTanProblem1, doubleAngleTanProblem1, middleAngleTanProblem1]
-exam2 =[parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem]
+exam2 =[parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem, triangleProblem, triangleAngleProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]

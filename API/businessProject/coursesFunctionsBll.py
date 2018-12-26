@@ -299,7 +299,7 @@ def parallelProblemOptions(slope, intersection):
         return strOptions
     except Exception as er:
         return er
-def circleProblemOptions(perimeter, area):
+def perimeterAreaOptions(perimeter, area):
     try:
         alternatives = [[perimeter, area]]
         for x in range(4):
