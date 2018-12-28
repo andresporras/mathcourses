@@ -401,7 +401,7 @@ listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
     lista = listMethods[int(unit)-1]
-    for x in range(12):
+    for x in range(10):
         question =  random.randint(1,len(lista))
         #numberQuestion='QUESTION '+str(x+1)
         item = str(lista[question-1]())

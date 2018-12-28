@@ -25,6 +25,9 @@
     <Compile Include="BasicAlgebraBll.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CalculusBll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="coursesBll.py">
       <SubType>Code</SubType>
     </Compile>
