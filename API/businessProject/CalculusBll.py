@@ -71,8 +71,50 @@ def divisionProblem():
         return jsonResponse
     except Exception as er:
         return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def trigonometryProblem():
+    try:
+        def assignVariable(ab): #0 item is the expression, 1 is simplification, 2 is derivation
+            oddPair = [["sin(-"+str(ab)+")","-sin("+str(ab)+")","-cos("+str(ab)+")"],["cos(-"+str(ab)+")","cos("+str(ab)+")","-sin("+str(ab)+")"],["tan(-"+str(ab)+")","-tan("+str(ab)+")","-sec^2("+str(ab)+")"],["cot(-"+str(ab)+")","-cot("+str(ab)+")","csc^2("+str(ab)+")"],["sec(-"+str(ab)+")","sec("+str(ab)+")","sec("+str(ab)+")*tan("+str(ab)+")"],["csc(-"+str(ab)+")","-csc("+str(ab)+")","csc("+str(ab)+")*cot("+str(ab)+")"]]
+            cofunsion =[["sin((pi/2)-"+str(ab)+")","cos("+str(ab)+")","-sin("+str(ab)+")"],["cos((pi/2)-"+str(ab)+")","sin("+str(ab)+")","cos("+str(ab)+")"],["tan((pi/2)-"+str(ab)+")","cot("+str(ab)+")","-csc^2("+str(ab)+")"],["cot((pi/2)-"+str(ab)+")","tan("+str(ab)+")","sec^2("+str(ab)+")"]]
+            inverseIdentity = [["sin(pi-"+str(ab)+")","sin("+str(ab)+")","cos("+str(ab)+")"],["sin(pi+"+str(ab)+")","-sin("+str(ab)+")","-cos("+str(ab)+")"],["cos(pi-"+str(ab)+")","-cos("+str(ab)+")","sin("+str(ab)+")"],["cos(pi+"+str(ab)+")","-cos("+str(ab)+")","sin("+str(ab)+")"],["tan(pi-"+str(ab)+")","-tan("+str(ab)+")","-sec^2("+str(ab)+")"],["tan(pi+"+str(ab)+")","tan("+str(ab)+")","sec^2("+str(ab)+")"]]
+            return [oddPair,cofunsion, inverseIdentity]
+        items=[]
+        characters=["a","b"]
+        for x in range(2):
+            identities = assignVariable(characters[x])
+            a = random.randint(0,2)
+            b = random.randint(0,len(identities[a])-1)
+            items.append(identities[a][b])
+        solution="["+str(items[0][2])+"]+["+str(items[1][2])+"]"
+        question="find f(x)' where f(x)=["+str(items[0][0])+"]+["+str(items[1][0])+"]"
+        options =json.loads(json.dumps({'a':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'b':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'c':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'd':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]"}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 
-exam1 =[lineTanProblem, logarithmProblem, productProblem, divisionProblem]
+def ruleChainProblem():
+    try:
+        a = random.randint(2,10)*(random.randint(0,1)*2-1)
+        b = random.randint(2,10)
+        c = random.randint(2,10)
+        d = random.randint(2,10)
+        e = random.randint(1,5)*2
+        f = random.randint(2,5)
+        a = math.e if a<0 else a
+        comp1=round(b*math.log(a),4)
+        comp2=d*e
+        comp3=round((f-1)/f,4)
+        solution= "f(x)'=["+str(comp1)+"*"+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(comp2)+"x^"+str(e-1)+"]/[("+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(d)+"x^"+str(e)+")^("+str(comp3)+")]"
+        question = "using chain rule find f(x)' where f(x)=("+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(d)+"x^"+str(e)+")^(1/"+str(f)+"): "
+        options = coursesFunctionsBll.ruleChainOptions([comp1,comp2,comp3],a,b,c,d,e,f)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 =[lineTanProblem, logarithmProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
