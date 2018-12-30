@@ -467,6 +467,27 @@ def ruleChainOptions(data,a,b,c,d,e,f):
         return strOptions
     except Exception as er:
         return er
+def implicitOptions(data,c,e,h):
+    try:
+        alternatives = [data.copy()]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,4)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("dy/dx=["+str(alternatives[y][2]*e)+"x"+str("^2" if e==3 else "")+"+"+str(alternatives[y][3])+"y]/["+str(c*alternatives[y][0])+"("+str(alternatives[y][0])+"y+"+str(alternatives[y][1])+")"+str("^2" if c==3 else "")+"-("+str(alternatives[y][3])+"x+"+str(alternatives[y][4]*h)+"y"+str("^2" if h==3 else "")+")]")
+        strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        return strOptions
+    except Exception as er:
+        return er
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

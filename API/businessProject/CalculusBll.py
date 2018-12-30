@@ -87,7 +87,7 @@ def trigonometryProblem():
             b = random.randint(0,len(identities[a])-1)
             items.append(identities[a][b])
         solution="["+str(items[0][2])+"]+["+str(items[1][2])+"]"
-        question="find f(x)' where f(x)=["+str(items[0][0])+"]+["+str(items[1][0])+"]"
+        question="if f(a)=["+str(items[0][0])+"] and g(b)=["+str(items[1][0])+"] find f'(a)+g'(b)"
         options =json.loads(json.dumps({'a':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'b':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'c':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'd':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]"}))
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
@@ -114,7 +114,52 @@ def ruleChainProblem():
     except Exception as er:
         return er
 
-exam1 =[lineTanProblem, logarithmProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem]
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def trigonometryProblem2():
+    try:
+        def assignVariable(ab): #0 item is the expression, 1 is simplification, 2 is derivation
+            oddPair = [["sin(-"+str(ab)+")","-sin("+str(ab)+")","-cos("+str(ab)+")"],["cos(-"+str(ab)+")","cos("+str(ab)+")","-sin("+str(ab)+")"],["tan(-"+str(ab)+")","-tan("+str(ab)+")","-sec^2("+str(ab)+")"],["cot(-"+str(ab)+")","-cot("+str(ab)+")","csc^2("+str(ab)+")"],["sec(-"+str(ab)+")","sec("+str(ab)+")","sec("+str(ab)+")*tan("+str(ab)+")"],["csc(-"+str(ab)+")","-csc("+str(ab)+")","csc("+str(ab)+")*cot("+str(ab)+")"]]
+            cofunsion =[["sin((pi/2)-"+str(ab)+")","cos("+str(ab)+")","-sin("+str(ab)+")"],["cos((pi/2)-"+str(ab)+")","sin("+str(ab)+")","cos("+str(ab)+")"],["tan((pi/2)-"+str(ab)+")","cot("+str(ab)+")","-csc^2("+str(ab)+")"],["cot((pi/2)-"+str(ab)+")","tan("+str(ab)+")","sec^2("+str(ab)+")"]]
+            inverseIdentity = [["sin(pi-"+str(ab)+")","sin("+str(ab)+")","cos("+str(ab)+")"],["sin(pi+"+str(ab)+")","-sin("+str(ab)+")","-cos("+str(ab)+")"],["cos(pi-"+str(ab)+")","-cos("+str(ab)+")","sin("+str(ab)+")"],["cos(pi+"+str(ab)+")","-cos("+str(ab)+")","sin("+str(ab)+")"],["tan(pi-"+str(ab)+")","-tan("+str(ab)+")","-sec^2("+str(ab)+")"],["tan(pi+"+str(ab)+")","tan("+str(ab)+")","sec^2("+str(ab)+")"]]
+            return [oddPair,cofunsion, inverseIdentity]
+        items=[]
+        characters=["a","b"]
+        a=0
+        b=0
+        for x in range(3):
+            identities = assignVariable(characters[x]) if x<2 else assignVariable("["+items[0][1]+"]")
+            a = random.randint(0,2) if x<2 else a
+            b = random.randint(0,len(identities[a])-1) if x<2 else b
+            items.append(identities[a][b])
+        solution="["+str(items[2][2])+"]*["+str(items[0][2])+"]"
+        listOptions = ["["+str(items[2][2])+"]*["+str(items[0][2])+"]", "["+str(items[2][1])+"]*["+str(items[0][2])+"]", "["+str(items[2][2])+"]*["+str(items[0][1])+"]", "["+str(items[2][1])+"]*["+str(items[0][1])+"]"]
+        listOptions.sort()
+        question="if f(a)=["+str(items[0][0])+"] and g(b)=["+str(items[1][0])+"] find g'(f(a))"
+        options =json.loads(json.dumps({'a':listOptions[0], 'b':listOptions[1], 'c':listOptions[2], 'd':listOptions[3]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def implicitProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(2,3)
+        d = random.randint(2,10)
+        e = random.randint(2,3)
+        f = random.randint(2,10)
+        g = random.randint(2,10)
+        h = random.randint(2,3)
+        solution= "dy/dx=["+str(d*e)+"x"+str("^2" if e==3 else "")+"+"+str(f)+"y]/["+str(c*a)+"("+str(a)+"y+"+str(b)+")"+str("^2" if c==3 else "")+"-("+str(f)+"x+"+str(g*h)+"y"+str("^2" if h==3 else "")+")]"
+        question = "find dy/dx from ("+str(a)+"y+"+str(b)+")^"+str(c)+"="+str(d)+"x^"+str(e)+"+"+str(f)+"xy+"+str(g)+"y^"+str(h)+": "
+        options = coursesFunctionsBll.implicitOptions([a,b,d,f,g],c,e,h)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 =[lineTanProblem, logarithmProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):
