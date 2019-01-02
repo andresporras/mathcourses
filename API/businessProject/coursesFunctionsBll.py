@@ -175,14 +175,14 @@ def inequationProblem2(lista):
         else:
             nAlternative = tempAlternatives[len(tempAlternatives)-1].copy()
             nAlternative[0]=(nAlternative[0]+100)/2
-            nAlternative[1]=(nAlternative[1]*2+100)/2
+            nAlternative[1]=(nAlternative[1]+100)/2
             tempAlternatives.append(nAlternative)
     alternatives =[]
     alternatives.append('student already lost the course')
     alternatives.append('student already surpassed the acceptable note (>80)')
-    alternatives.append('('+str(round(tempAlternatives[0][0] if tempAlternatives[0][0]>=0 else 0,4))+','+str(round(tempAlternatives[0][1] if tempAlternatives[0][1]<=100 else 100,4))+')')
-    alternatives.append('('+str(round(tempAlternatives[1][0] if tempAlternatives[1][0]>=0 else 0,4))+','+str(round(tempAlternatives[1][1] if tempAlternatives[1][1]<=100 else 100,4))+')')
-    alternatives.append('('+str(round(tempAlternatives[2][0] if tempAlternatives[2][0]>=0 else 0,4))+','+str(round(tempAlternatives[2][1] if tempAlternatives[2][1]<=100 else 100,4))+')')
+    alternatives.append('['+str(round(tempAlternatives[0][0] if tempAlternatives[0][0]>=0 else 0,4))+','+str(round(tempAlternatives[0][1] if tempAlternatives[0][1]<=100 else 100,4))+')')
+    alternatives.append('['+str(round(tempAlternatives[1][0] if tempAlternatives[1][0]>=0 else 0,4))+','+str(round(tempAlternatives[1][1] if tempAlternatives[1][1]<=100 else 100,4))+')')
+    alternatives.append('['+str(round(tempAlternatives[2][0] if tempAlternatives[2][0]>=0 else 0,4))+','+str(round(tempAlternatives[2][1] if tempAlternatives[2][1]<=100 else 100,4))+')')
     strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
     return strOptions
 def absoluteValue1(solution):

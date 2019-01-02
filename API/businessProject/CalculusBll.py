@@ -27,7 +27,7 @@ def lineTanProblem():
 
 #find the values of x for which slope is 0
 #use this: ln(x^y)=yln(x)
-def logarithmProblem():
+def exponentialProblem():
     try:
         a = random.randint(2,100)
         b = random.randint(2,100)*(random.randint(0,1)*2-1)
@@ -159,7 +159,60 @@ def implicitProblem():
     except Exception as er:
         return er
 
-exam1 =[lineTanProblem, logarithmProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem]
+def inverseTriProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(2,10)
+        d= random.randint(0,5)
+        sol=0
+        question=""
+        if d==0:
+            sol=round(math.log((a*a)/(a*a+c*c))/2,4)
+            question = "on which point the function "+str(c)+"*asin(e^x) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        elif d==1:
+            sol=round(math.log((a*a)/(a*a+c*c))/2,4)
+            question = "on which point the function "+str(c)+"*acos(e^x) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        elif d==2:
+            sol=round(math.log((a*a+c*c)/(a*a))/2,4)
+            question = "on which point the function "+str(c)+"*asec(e^x) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        elif d==3:
+            sol=round(math.log((a*a+c*c)/(a*a))/2,4)
+            question = "on which point the function "+str(c)+"*acsc(e^x) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        elif d==4:
+            sol=round(math.log((16*a**4+8*(a**2)*(c**2)+c**4)/(16*a**4))/4,4)
+            question = "on which point the function "+str(c)+"*atan(e^x+("+str(c)+"/"+str(2*a)+")) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        elif d==5:
+            sol=round(math.log((16*a**4+8*(a**2)*(c**2)+c**4)/(16*a**4))/4,4)
+            question = "on which point the function "+str(c)+"*acot(e^x-("+str(c)+"/"+str(2*a)+")) is parallel to the line "+str(a)+"x+"+str(b)+"?:"
+        solution= str(sol)
+        options = coursesFunctionsBll.generateOptions(sol)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
+def logarithmProblem():
+    try:
+        oddPair = [["sin(-x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(-x)","cos(x)","-sin(x)","tan(x/2)/[tan(x/2)]+1"],["tan(-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["cot(-x)","-cot(x)","csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["sec(-x)","sec(x)","sec(x)*tan(x)","sin(2x)/[1+cos(2x)]"],["csc(-x)","-csc(x)","csc(x)*cot(x)","[cot^2(x)-csc^2(x)]/tan(x)"]]
+        cofunsion =[["sin((pi/2)-x)","cos(x)","-sin(x)","tan(x/2)/[tan(x/2)]+1"],["cos((pi/2)-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["tan((pi/2)-x)","cot(x)","-csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["cot((pi/2)-x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
+        inverseIdentity = [["sin(pi-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["sin(pi+x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(pi-x)","-cos(x)","sin(x)","tan(x/2)/[tan(x/2)]+1"],["cos(pi+x)","-cos(x)","sin(x)","tan(x/2)/[tan(x/2)]+1"],["tan(pi-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["tan(pi+x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
+        identities= [oddPair,cofunsion, inverseIdentity]
+        a = random.randint(0,2)
+        b = random.randint(0,len(identities[a])-1)
+        solution=identities[a][b][3]
+        listOptions = ["2*cos^2(x)/sin(2*x)","tan(x/2)/[tan(x/2)]+1","2/sin(2*x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]","sin(2x)/[1+cos(2x)]","[cot^2(x)-csc^2(x)]/tan(x)"]
+        while len(listOptions)==6:
+            deleteOption = random.randint(0,5)
+            if listOptions[deleteOption]!=solution:
+                del listOptions[deleteOption]
+        question="find the derivative of ln("+str(identities[a][b][0])+"): "
+        options =json.loads(json.dumps({'a':listOptions[0], 'b':listOptions[1], 'c':listOptions[2], 'd':listOptions[3], 'e':listOptions[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem]
 exam2 =[]
 listMethods = [exam1, exam2]
 def generateExam(unit):

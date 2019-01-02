@@ -314,22 +314,22 @@ def inequationProblem1():
 #a student get acceptable note when the final note of the course is betweeen 60% and 80%
 def inequationProblem2():
     try:
-        nota1 = random.randint(1,100)
-        nota2 = random.randint(1,100)
-        percentage = random.randint(40,60)
-        rangoMenor= (12000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
-        rangoMayor= (16000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
+        nota1 = random.randint(0,100)
+        nota2 = random.randint(0,100)
+        percentage = random.randint(20,60)
+        rangoMenor= (60-(nota1+nota2)*((100-percentage)/200))/(percentage/100)
+        rangoMayor= (80-(nota1+nota2)*((100-percentage)/200))/(percentage/100)
+        #rangoMenor= (12000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
+        #rangoMayor= (16000-(100*nota1)+(nota1*percentage)-(100*nota2)+(nota2*percentage))/(2*percentage)
         solution=''
-        if(rangoMayor<0):
-            solution='student already lost the course'
-        elif(rangoMenor>100):
-            solution='student already surpassed the acceptable note (>80)'
+        if(rangoMenor>100):
+            solution='student already lost the course (<60)'
+        elif(rangoMayor<=0):
+            solution='student already surpassed the acceptable note (>=80)'
         else:
-            solution='('+str(round(rangoMenor if rangoMenor>=0 else 0,4))+','+str(round(rangoMayor if rangoMayor<=100 else 100,4))+')'
-        question = 'On a math course, the note is defined for two notes with same value and the final exam which value is '+str(percentage)+'% of the course. If a student get '+str(nota1)+' in the first note and '+str(nota2)+' for the second note, which note student should achieve in the final exam in order to get acceptable note (betwen 60& and 80% of the course)?'
-        rangoMenor = rangoMenor if rangoMenor>0 else 0
-        rangoMayor = rangoMayor if rangoMayor<100 else 100
-        options = coursesFunctionsBll.inequationProblem2([rangoMenor, rangoMayor])
+            solution='['+str(round(rangoMenor if rangoMenor>=0 else 0,4))+','+str(round(rangoMayor if rangoMayor<=100 else 100,4))+')'
+        question = 'On a math course, the note is defined for two notes with same value and the final exam which value is '+str(percentage)+'% of the course. If a student get '+str(nota1)+' in the first note and '+str(nota2)+' for the second note, which range of note the student will achieve C note (100% is A, more or equal than 80% and less than 100% is B, more or equal than 60& and less than 80% is C, less than 60% is D)?'
+        options = coursesFunctionsBll.inequationProblem2([rangoMenor if rangoMenor>0 else 0, 100 if rangoMayor>=100 else (1 if rangoMayor<=0 else rangoMayor)])
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
