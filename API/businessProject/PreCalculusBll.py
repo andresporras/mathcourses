@@ -124,6 +124,7 @@ def convergentSeriesProblem():
         return er
 
 #for a series get the sum of the first n terms
+#https://es.wikipedia.org/wiki/Anexo:Series_matem%C3%A1ticas#Sumatoria_de_potencias
 def gaussSeriesProblem():
     try:
         a = random.randint(10,100)
@@ -204,6 +205,7 @@ def nGeometricProblem():
     except Exception as er:
         return er
 #get the product of the first n numbers of the geometric series
+#clue: the product of the first a items in b*(c^x) is b^a*(c^d) where d is the sum from 1 to a
 def productGeometricProblem():
     try:
         a = random.randint(5,8)

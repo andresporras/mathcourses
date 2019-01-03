@@ -59,14 +59,10 @@ def divisionProblem():
         a = random.randint(2,10)
         b = random.randint(2,10)
         c = random.randint(2,10)
-        d = random.randint(2,10)
-        comp1 = round(a+(math.log(c)*b),4)
-        comp2 = round(math.log(c)*a,4) 
-        comp3 = round(1/math.log(c),4)
-        comp4 = round(math.log(d)/math.log(c),4)
-        solution= "x=ln(|["+str(comp1)+"-("+str(comp2)+"x)]^("+str(comp3)+")|)-"+str(comp4)
-        question = "find equivalent expression to x where f(x)'="+str(d)+" if f(x)=("+str(a)+"x-("+str(b)+"))/"+str(c)+"^x: "
-        options = coursesFunctionsBll.divisionRuleOptions([comp1, comp2, comp3, comp4])
+        sol=round((a*(2*math.log(c)+1)-(math.log(c)*b)-(math.log(c)*math.log(c)*b))/(a*math.log(c)*(math.log(c)+1)),4)
+        solution= str(sol)
+        question = "finds x where f'(x)=f''(x) if f(x)=("+str(a)+"x+"+str(b)+")/("+str(c)+"^x): "
+        options = coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
