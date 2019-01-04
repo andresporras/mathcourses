@@ -180,7 +180,7 @@ def nArithmeticProblem():
         for x in range(5):
             items.append(b+(c*(x+1)))
 
-        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
+        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
@@ -192,12 +192,12 @@ def nGeometricProblem():
     try:
         a = random.randint(10,20)
         b = random.randint(1,5)*(random.randint(0,1)*2-1)
-        c = random.randint(1,5)*(random.randint(0,1)*2-1)
+        c = random.randint(2,5)*(random.randint(0,1)*2-1)
         sol=b+(c**a)
         items=[]
         for x in range(5):
             items.append(b+(c**(x+1)))
-        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the values of the "+str(a)+"th item?:"
+        question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})

@@ -208,8 +208,43 @@ def logarithmProblem():
         return jsonResponse
     except Exception as er:
         return er
+#it has two valid solutions, anyone of those can appear
+def logarithm_a_Problem():
+    try:
+        a = (random.randint(1,5)*2)+1
+        b = random.randint(2,10)
+        c = random.randint(2,10)
+        d = random.randint(2,10)
+        e = random.randint(0,1)
+        comp1 = "["+str(b)+"xy^2+"+str(c)+"y]" if e==0 else "["+str(a)+"^("+str(d)+"x)]"
+        solution = "("+str(round(d*math.log(a),4))+"*"+str(comp1)+"-"+str(b)+"y^2)/("+str(2*b)+"xy+"+str(c)+")"
+        question="find dy/dx if log_"+str(a)+"_("+str(b)+"xy^2+"+str(c)+"y)="+str(d)+"x"
+        options =coursesFunctionsBll.logarithm_a_options([a,b,c,d])
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+def logarithmMethodProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(0,5)
+        c = random.randint(2,10)
+        triOptions=[["sin(x)","cot(x)"],["cos(x)","-tan(x)"],["tan(x)","2*csc(2x)"],["cot(x)","-2*cosc(2x)"],["sec(x)","tan(x)"],["csc(x)","-cot(x)"]]
+        tempTri = triOptions.copy()
+        del tempTri[b]
+        d = random.randint(0,4)
+        del tempTri[d]
+        comp1= round(-1*math.log(a),4)
+        comp2=round(math.log(c),4)
+        question = "find dy/dx where y=log_x_("+str(a)+")*"+str(triOptions[b][0])+"/("+str(c)+"^x): "
+        solution= "dy/dx="+str(comp1)+"*y/x*ln(x)^2 + ["+str(triOptions[b][1])+"*y] - "+str(comp2)+"*y"
+        options =coursesFunctionsBll.logarithmMethodOptions([comp1,comp2,triOptions[b][1]],tempTri)
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem]
-exam2 =[]
+exam2 =[logarithm_a_Problem, logarithmMethodProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
