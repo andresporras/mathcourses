@@ -243,8 +243,54 @@ def logarithmMethodProblem():
         return jsonResponse
     except Exception as er:
         return er
+def positionProblem():
+    try:
+        a = random.randint(2,20)
+        b = random.randint(2,20)
+        c = random.randint(2,20)
+        d = random.randint(2,20)
+        t = random.randint(2,20)
+        a1= a*3
+        b1=b*2
+        a2=a1*2
+        velocity= (a1*t*t)+(b1*t)+c
+        acceleration= (a2*t)+b1
+        question = "A particle position (through time) is given by the function x="+str(a)+"t^3 + "+str(b)+"t^2 + "+str(c)+"t + "+str(d)+". Finds velocity and acceleration when t="+str(t)+"s:"
+        solution= "velocity="+str(velocity)+"m/s and acceleration="+str(acceleration)+"m/s^2"
+        alternatives = coursesFunctionsBll.multipleOptions([velocity, acceleration])
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("velocity="+str(alternatives[y][0])+"m/s and acceleration="+str(alternatives[y][1])+"m/s^2")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+def newtonCoolingProblem():
+    try:
+        tempIni = random.randint(76,100)
+        tempFin = random.randint(51,75)
+        tempFin2 = random.randint(26,50)
+        tempEnvi = random.randint(1,25)
+        t= random.randint(2,30)
+        d = random.randint(2,20)
+        t = random.randint(2,20)
+        k = math.log((tempFin-tempEnvi)/(tempIni-tempEnvi))/t
+        sol=round(math.log((tempFin2-tempEnvi)/(tempIni-tempEnvi))/k,4)
+        sol2=round(k*(tempIni-tempEnvi)*(math.e**(k*sol)),4)
+        question = "A drink with an initial temperature of "+str(tempIni)+"°F is put on a fridge with a environment temperature equals to "+str(tempEnvi)+"°F. After "+str(t)+" minutes the drink's temperature is "+str(tempFin)+"°F. How many minutes will be need until drink has cooled to "+str(tempFin2)+"°F and which will be the rate of change (F/m) in that moment? use the newton law of cooling: "
+        solution= "time="+str(sol)+"m and rate change="+str(sol2)+"°F/m"
+        alternatives = coursesFunctionsBll.multipleOptions([sol,sol2])
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("time="+str(alternatives[y][0])+"m and rate change="+str(alternatives[y][1])+"°F/m")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem]
-exam2 =[logarithm_a_Problem, logarithmMethodProblem]
+exam2 =[logarithm_a_Problem, logarithmMethodProblem, positionProblem, newtonCoolingProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]

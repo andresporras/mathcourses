@@ -2,13 +2,24 @@ import random
 import json
 import math
 from flask import jsonify
+#from mpmath import mp, mpf
+#mp.dps = 100
+#mp.pretty = True
+def yoxterFormat(number):
+    number = format(number,'.100g')
+    numbers = number.split('.')
+    if len(numbers)>1:
+        if len(numbers[1])>4:
+            numbers[1]=numbers[1][:4]
+        number=numbers[0]+'.'+numbers[1]
+    return number
 
 def generateOptions(solution):
     options =[solution]
     for x in range(4):
         i=random.randint(0,1)
         if(i==0):
-            options.insert(0, round(options[0]/2,4))
+            options.insert(0,round(options[0]/2,4))
         else:
             options.append(round(options[len(options)-1]*2,4))
     strOptions =json.loads(json.dumps({'a':str(options[0]), 'b':str(options[1]), 'c': str(options[2]), 'd': str(options[3]), 'e': str(options[4])}))
@@ -533,6 +544,23 @@ def logarithmMethodOptions(data,tempTri):
             tempAlternatives.append("dy/dx="+str(alternatives[y][0])+"*y/x*ln(x)^2 + ["+str(alternatives[y][2])+"*y] - "+str(alternatives[y][1])+"*y")
         strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         return strOptions
+    except Exception as er:
+        return er
+def multipleOptions(data):
+    try:
+        alternatives = [data.copy()]
+        for x in range(4):
+            i=random.randint(0,1)
+            j=random.randint(0,len(data)-1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                alternatives.append(nAlternative)
+        return alternatives
     except Exception as er:
         return er
 def remove(s, indx):

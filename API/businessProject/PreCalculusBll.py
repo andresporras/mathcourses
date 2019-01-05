@@ -211,8 +211,9 @@ def productGeometricProblem():
         a = random.randint(5,8)
         b = random.randint(2,4)*(random.randint(0,1)*2-1)
         c = random.randint(2,5)*(random.randint(0,1)*2-1)
-        sol= (((b*c)*(b*(c**a)))**a)**(0.5)
-        sol =  int(format(sol,'.53g'))
+        #sol= (((b*c)*(b*(c**a)))**a)**(0.5)
+        sol= (b**a)*(c**sum(list(range(1, a+1))))
+        #sol =  int(format(sol,'.53g'))
         items=[]
         for x in range(4):
             items.append(b*(c**(x+1)))
