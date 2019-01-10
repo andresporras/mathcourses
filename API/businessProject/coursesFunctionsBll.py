@@ -505,18 +505,20 @@ def logarithm_a_options(data):
         for x in range(4):
             i=random.randint(0,1)
             j=random.randint(0,3)
+
             if(i==0):
                 nAlternative = alternatives[0].copy()
                 nAlternative[j]=round(nAlternative[j]/2,4)
+                nAlternative[4]= random.randint(0,1)
                 alternatives.insert(0,nAlternative)
             else:
                 nAlternative = alternatives[len(alternatives)-1].copy()
                 nAlternative[j]=round(nAlternative[j]*2,4)
+                nAlternative[4]= random.randint(0,1)
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):
-            e = random.randint(0,1)
-            comp1 = "["+str(alternatives[y][1])+"xy^2+"+str(alternatives[y][2])+"y]" if e==0 else "["+str(alternatives[y][0])+"^("+str(alternatives[y][3])+"x)]"
+            comp1 = "["+str(alternatives[y][1])+"xy^2+"+str(alternatives[y][2])+"y]" if alternatives[y][4]==0 else "["+str(alternatives[y][0])+"^("+str(alternatives[y][3])+"x)]"
             tempAlternatives.append("("+str(round(alternatives[y][3]*math.log(alternatives[y][0]),4))+"*"+str(comp1)+"-"+str(alternatives[y][1])+"y^2)/("+str(2*alternatives[y][1])+"xy+"+str(alternatives[y][2])+")")
         strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         return strOptions
@@ -546,10 +548,10 @@ def logarithmMethodOptions(data,tempTri):
         return strOptions
     except Exception as er:
         return er
-def multipleOptions(data):
+def multipleOptions(data, numberOptions):
     try:
         alternatives = [data.copy()]
-        for x in range(4):
+        for x in range(numberOptions-1):
             i=random.randint(0,1)
             j=random.randint(0,len(data)-1)
             if(i==0):

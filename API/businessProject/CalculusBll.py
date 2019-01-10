@@ -219,7 +219,7 @@ def logarithm_a_Problem():
         comp1 = "["+str(b)+"xy^2+"+str(c)+"y]" if e==0 else "["+str(a)+"^("+str(d)+"x)]"
         solution = "("+str(round(d*math.log(a),4))+"*"+str(comp1)+"-"+str(b)+"y^2)/("+str(2*b)+"xy+"+str(c)+")"
         question="find dy/dx if log_"+str(a)+"_("+str(b)+"xy^2+"+str(c)+"y)="+str(d)+"x"
-        options =coursesFunctionsBll.logarithm_a_options([a,b,c,d])
+        options =coursesFunctionsBll.logarithm_a_options([a,b,c,d,e])
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
         return jsonResponse
     except Exception as er:
@@ -236,7 +236,7 @@ def logarithmMethodProblem():
         del tempTri[d]
         comp1= round(-1*math.log(a),4)
         comp2=round(math.log(c),4)
-        question = "find dy/dx where y=log_x_("+str(a)+")*"+str(triOptions[b][0])+"/("+str(c)+"^x): "
+        question = "Use the logarithm theorem to find dy/dx where y=log_x_("+str(a)+")*"+str(triOptions[b][0])+"/("+str(c)+"^x): "
         solution= "dy/dx="+str(comp1)+"*y/x*ln(x)^2 + ["+str(triOptions[b][1])+"*y] - "+str(comp2)+"*y"
         options =coursesFunctionsBll.logarithmMethodOptions([comp1,comp2,triOptions[b][1]],tempTri)
         jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
@@ -257,7 +257,7 @@ def positionProblem():
         acceleration= (a2*t)+b1
         question = "A particle position (through time) is given by the function x="+str(a)+"t^3 + "+str(b)+"t^2 + "+str(c)+"t + "+str(d)+". Finds velocity and acceleration when t="+str(t)+"s:"
         solution= "velocity="+str(velocity)+"m/s and acceleration="+str(acceleration)+"m/s^2"
-        alternatives = coursesFunctionsBll.multipleOptions([velocity, acceleration])
+        alternatives = coursesFunctionsBll.multipleOptions([velocity, acceleration],5)
         tempAlternatives =[]
         for y in range(5):
             tempAlternatives.append("velocity="+str(alternatives[y][0])+"m/s and acceleration="+str(alternatives[y][1])+"m/s^2")
@@ -280,7 +280,7 @@ def newtonCoolingProblem():
         sol2=round(k*(tempIni-tempEnvi)*(math.e**(k*sol)),4)
         question = "A drink with an initial temperature of "+str(tempIni)+"°F is put on a fridge with a environment temperature equals to "+str(tempEnvi)+"°F. After "+str(t)+" minutes the drink's temperature is "+str(tempFin)+"°F. How many minutes will be need until drink has cooled to "+str(tempFin2)+"°F and which will be the rate of change (F/m) in that moment? use the newton law of cooling: "
         solution= "time="+str(sol)+"m and rate change="+str(sol2)+"°F/m"
-        alternatives = coursesFunctionsBll.multipleOptions([sol,sol2])
+        alternatives = coursesFunctionsBll.multipleOptions([sol,sol2],5)
         tempAlternatives =[]
         for y in range(5):
             tempAlternatives.append("time="+str(alternatives[y][0])+"m and rate change="+str(alternatives[y][1])+"°F/m")
@@ -289,8 +289,154 @@ def newtonCoolingProblem():
         return jsonResponse
     except Exception as er:
         return er
+def balloonProblem():
+    try:
+        volumeChange = random.randint(1,50)
+        diameter = random.randint(50,100)
+        unit= random.randint(0,2)
+        ratio= diameter/2
+        units=[["milimeters","mm",10],["micrometers","um",10000],["nanometers","nm",10000000]]
+        sol=round((units[unit][2]*volumeChange)/(4*math.pi*(ratio**2)),4)
+        question = "A perfectly spherical balloon is inflated and its volume increase by a constant of "+str(volumeChange)+"cm^3/s. How fast changes its ratio when the diameter is "+str(diameter)+"cm? write the answer in "+str(units[unit][0])+"/second ("+str(units[unit][1])+"/s):"
+        solution= str(sol)+str(units[unit][1])+"/s"
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append(str(alternatives[y][0])+str(units[unit][1])+"/s")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+#http://funes.uniandes.edu.co/9564/15/Guasca2018Puntos.pdf
+def densityProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(2,10)
+        d = random.randint(2,10)
+        e = random.randint(11,20)
+        mass= random.randint(2,25)
+        a1= (a*c)-(2*a*c)
+        b1= -(2*c*b)
+        c1= (a*d)
+        if (b1*b1)<=(4*a1*c1):
+            return densityProblem()
+        t1= ((-b1)+math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
+        t2= ((-b1)-math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
+        vol1= (a*t1+b)/(c*t1**2+d)+e
+        vol2= (a*t2+b)/(c*t2**2+d)+e
+        denMax = round((mass/vol1),4) if (mass/vol1)>(mass/vol2) else round((mass/vol2),4)
+        denMin = round((mass/vol1),4) if (mass/vol1)<(mass/vol2) else round((mass/vol2),4)
+        question = "A certain object, which mass is equal to "+str(mass)+"kg, has a volume (in cm^3) equal to ("+str(e*c)+"t^2+"+str(a)+"t+"+str(b+(e*d))+")/("+str(c)+"t^2+"+str(d)+") (t is celcius). Find the maximum and minimum density: "
+        solution= "minimum="+str(denMin)+"kg/cm^3. maximum="+str(denMax)+"kg/cm^3"
+        proportion= denMax/denMin
+        alternatives = coursesFunctionsBll.multipleOptions([denMin],5)
+        tempAlternatives =[]
+        for y in range(5):
+            tempAlternatives.append("minimum="+str(alternatives[y][0])+"kg/cm^3. maximum="+str(round(alternatives[y][0]*proportion,4))+"kg/cm^3")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def intermediateValueProblem():
+    try:
+        a = random.randint(2,10)*(random.randint(0,1)*2-1)
+        b = random.randint(2,10)*(random.randint(0,1)*2-1)
+        c = random.randint(2,10)*(random.randint(0,1)*2-1)
+        d = random.randint(1,5)*(random.randint(0,1)*2-1)
+        a1= a*3
+        b1= b*2
+        c1= c
+        solution=""
+        if (b1*b1)<=(4*a1*c1):
+            solution="1"
+        else:
+            x1=((-b1)+math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
+            x2=((-b1)-math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
+            y1= a*(x1**3)+b*(x1**2)+c*x1+d
+            y2= a*(x2**3)+b*(x2**2)+c*x2+d
+            if y1==0 or y2==0:
+                solution="2"
+            elif y1*y2>0: #happens when both are positive or negative
+                solution="1"
+            else: #y1*y2<0
+                solution="3"
+        options =json.loads(json.dumps({'a':'1', 'b':'2', 'c':'3'}))
+        question = "using the intermediate value theorem find how many roots have the function ("+str(a)+"x^3)+("+str(b)+"x^2)+("+str(c)+"x)+("+str(d)+"):"
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+def concaveConvexProblem():
+    try:
+        functions = [["-e^x","ln(x)","-x^2","-1/x^2"],["e^x","-ln(x)","x^2","1/x^2"],["x^3","-x^3","1/x","-1/x"]]
+        a = random.randint(0,2)
+        b = random.randint(0,3)
+        solution = "concave" if a==0 else ("convex" if a==1 else "none")
+        question ="define, when the function is continues, if f(x)="+str(functions[a][b])+" is concave or convex: "
+        options =json.loads(json.dumps({'a':'concave', 'b':'convex', 'c':'none'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+def lhospitalProblem():
+    try:
+        a1 = random.randint(2,10)
+        b1 = random.randint(2,10)
+        c1 = random.randint(2,11)
+        if a1==b1:
+            return lhospitalProblem()
+        sol1 = "-inf" if (a1/b1<1 and c1%2==1) else "inf"
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(2,10)
+        d = random.randint(2,10)
+        sol=round((a/b)+(c/(d*3)),4)
+        solution=""
+        question=""
+        a0 = random.randint(0,1)
+        if a0==1:
+            question="find the limit(x->0) of ["+str(a*d)+"ln(x+1)*x^3+"+str(b*c)+"xtan(x)-"+str(b*c)+"x^2]/["+str(b*d)+"x^4]"
+            solution=str(sol)
+        else:
+            question="find the limit(x->inf) of ["+str(round(a1/b1,4))+"^x+ln(x)]/[x^"+str(c1)+"]"
+            solution=sol1
+        alternatives = coursesFunctionsBll.multipleOptions([sol],3)
+        tempAlternatives =[]
+        for y in range(3):
+            tempAlternatives.append(str(alternatives[y][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': 'inf', 'e': '-inf'}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
+def optimizationProblem():
+    try:
+        a = random.randint(10,100)
+        b = random.randint(1,10)
+        a1=-2*b
+        b1=-8*(b**2)
+        c1=2*a*b
+        x1=(-b1+math.sqrt((b1**2)-(4*a1*c1)))/(2*a1)
+        x2=(-b1-math.sqrt((b1**2)-(4*a1*c1)))/(2*a1)
+        xMax=  x1 if x1>x2 else x2
+        yMax = (a-(2*b*xMax))/(xMax+(2*b))
+        solution= round(xMax*yMax*b,4)
+        question="A box without top use a total of "+str(a)+"cm^2 of material. Which is the area if box height is "+str(b)+"cm and dimensions of the box allows the biggest area possible: "
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        return jsonResponse
+    except Exception as er:
+        return er
 exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem]
-exam2 =[logarithm_a_Problem, logarithmMethodProblem, positionProblem, newtonCoolingProblem]
+exam2 =[logarithm_a_Problem, logarithmMethodProblem, positionProblem, newtonCoolingProblem, balloonProblem, densityProblem, intermediateValueProblem, concaveConvexProblem, lhospitalProblem, optimizationProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
