@@ -1,3 +1,5 @@
+
+
 <ul>
   <li *ngFor="let c of courseList">
       <button>{{c['name']}}</button>
@@ -8,14 +10,16 @@
 </ul>
 <div *ngIf="show==1">
   <div *ngFor="let e of examData; let i = index">
-      <p>{{i+1}}) {{e['question']}}</p>
+      <p>{{i+1}}) <img src="http://latex.codecogs.com/gif.latex?{{e['question']}}" border="0"/></p>
       <div *ngFor="let op of e['options'] | keys">
          
                   <input type="radio" name="{{i}}" (click)="updateScore(op.value, i)" [(ngModel)]="radioValue[i]" value={{op.value}}>
-                  <label>{{op.key}}) {{op.value}}</label>
+                  <label>{{op.key}})<img src="http://latex.codecogs.com/gif.latex?{{op.value}}" border="0"/></label>
                 
         </div>
         <div [ngClass]="radioValue[i]!=undefined?(radioValue[i]==e['solution']?'greenColor':'redColor'):'blueColor'">{{radioValue[i]!=undefined?(radioValue[i]==e['solution']?'right':'wrong'):'choose an option'}}</div>
   </div>
   current score: {{score}}/{{examData.length}}
 </div>
+<!-- <div [innerHTML]="equation"></div> -->
+

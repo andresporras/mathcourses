@@ -565,6 +565,20 @@ def multipleOptions(data, numberOptions):
         return alternatives
     except Exception as er:
         return er
+def replaceSpace(text0):
+    try:
+        text1 = text0.replace(' ', '\;')
+        return text1
+    except Exception as er:
+        return er
+def replaceOptions(opt):
+    try:
+        letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+        for x in range(len(opt)):
+            opt[letters[x]]=replaceSpace(opt[letters[x]])
+        return opt
+    except Exception as er:
+        return er
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

@@ -12,6 +12,7 @@ export class CursosComponent implements OnInit {
   show: number=0;
   radioValue: String[]=[];
   score:number=0;
+  equation:String='<img src="http://latex.codecogs.com/gif.latex?$$ J(\theta) = \frac{1}{m} \sum^m_{i=1} Cost(h_\theta(x),y) $$" border="0"/>';
   listChars:String[]=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
   constructor(private httpClient:HttpClient) {
     this.getCourses();
