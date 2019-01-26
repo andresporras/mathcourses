@@ -106,7 +106,8 @@ def quadraticFactorization(type_):
     question ='for the next cuadratic function: ('+(str(a*c) if type_==False else remove(str(a*c), len(str(a*c))-1))+'x^2)+('+str((a*d)+(b*c))+'x)+('+str(b*d)+') determine which of the next factorizationn is valid'
     solution = '[('+(str(a) if type_==False else remove(str(a), len(str(a))-1))+'x)+('+str(b)+')]*[('+(str(c) if type_==False else remove(str(c), len(str(c))-1))+'x)+('+str(d)+')]'
     options = generateAlternativesQF([a,b,c,d],type_)
-    return json.dumps({"question":question, "solution":str(solution), "options":options})
+    jsonResponse = json.dumps({"question":replaceSpace(question), "solution":replaceSpace(solution), "options":replaceOptions(options)})
+    return jsonResponse
 def inequationsAlternatives1(sol):
     options =[sol]
     i=random.randint(0,1)
@@ -567,8 +568,11 @@ def multipleOptions(data, numberOptions):
         return er
 def replaceSpace(text0):
     try:
+        text0=str(text0)
         text1 = text0.replace(' ', '\;')
-        return text1
+        text2 = text1.replace('(', '\left(')
+        text3 = text2.replace(')', '\\right)')
+        return text3
     except Exception as er:
         return er
 def replaceOptions(opt):
@@ -579,6 +583,7 @@ def replaceOptions(opt):
         return opt
     except Exception as er:
         return er
+
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1

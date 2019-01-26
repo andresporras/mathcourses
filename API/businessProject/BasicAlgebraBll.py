@@ -8,37 +8,43 @@ import json
 #https://aerodynamics.lr.tudelft.nl/~rdwight/work_multiple_choice_code.html useful link for latex format
 #question type (ax/b)+(c/d)=(e/f) and get the right vaue for x
 def firstGradeEquation():
-    divisor1 =  random.randint(1,10)*(random.randint(0,1)*2-1)
-    dividend1 =  random.randint(1,10)
-    divisor3 =  random.randint(1,10)*(random.randint(0,1)*2-1)
-    dividend3 =  random.randint(1,10)
-    allDividend = (divisor1/dividend1)-(divisor3/dividend3)
-    if(allDividend==0):
-        return firstGradeEquation()
-    divisor2 =  random.randint(1,10)*(random.randint(0,1)*2-1)
-    dividend2 =  random.randint(1,10)
-    divisor4 =  random.randint(1,10)*(random.randint(0,1)*2-1)
-    dividend4 =  random.randint(1,10)
-    allDivisor = (divisor4/dividend4)-(divisor2/dividend2)
+    try:
+        divisor1 =  random.randint(1,10)*(random.randint(0,1)*2-1)
+        dividend1 =  random.randint(1,10)
+        divisor3 =  random.randint(1,10)*(random.randint(0,1)*2-1)
+        dividend3 =  random.randint(1,10)
+        allDividend = (divisor1/dividend1)-(divisor3/dividend3)
+        if(allDividend==0):
+            return firstGradeEquation()
+        divisor2 =  random.randint(1,10)*(random.randint(0,1)*2-1)
+        dividend2 =  random.randint(1,10)
+        divisor4 =  random.randint(1,10)*(random.randint(0,1)*2-1)
+        dividend4 =  random.randint(1,10)
+        allDivisor = (divisor4/dividend4)-(divisor2/dividend2)
+        sol = allDivisor/allDividend
+        question = "("+str(divisor1)+"x/"+str(dividend1)+")+("+str(divisor2)+"/"+str(dividend2)+")=("+str(divisor3)+"x/"+str(dividend3)+")+("+str(divisor4)+"/"+str(dividend4)+")"
+        solution = round(sol,4)
+        options = coursesFunctionsBll.generateOptions(solution)
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
     
-    sol = allDivisor/allDividend
-    question = "("+str(divisor1)+"x/"+str(dividend1)+")+("+str(divisor2)+"/"+str(dividend2)+")=("+str(divisor3)+"x/"+str(dividend3)+")+("+str(divisor4)+"/"+str(dividend4)+")"
-    solution = round(sol,4)
-    options = coursesFunctionsBll.generateOptions(solution)
-    jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-    return jsonResponse
 #giving a function like f(x)=(ax/b)+(c/b) get f(x)^-1
 def firstGradeTwoVariables():
-    xDivisor = random.randint(1,10)*(random.randint(0,1)*2-1)
-    xDividend = random.randint(1,10)
-    cDivisor = random.randint(1,10)*(random.randint(0,1)*2-1)
-    cDividend = random.randint(1,10)
-    components = [xDividend*cDividend, -1*xDividend*cDivisor, cDividend*xDivisor]
-    question = 'for f(x)=('+str(xDivisor)+'x/'+str(xDividend)+')+('+str(cDivisor)+'/'+str(cDividend)+') find f(x)^(-1)'
-    solution = '[('+str(xDividend*cDividend)+'x+('+str(-1*xDividend*cDivisor)+')]/('+str(cDividend*xDivisor)+')=x'
-    options = coursesFunctionsBll.generateTwoVariableOptions(components)
-    jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-    return jsonResponse
+    try:
+        xDivisor = random.randint(1,10)*(random.randint(0,1)*2-1)
+        xDividend = random.randint(1,10)
+        cDivisor = random.randint(1,10)*(random.randint(0,1)*2-1)
+        cDividend = random.randint(1,10)
+        components = [xDividend*cDividend, -1*xDividend*cDivisor, cDividend*xDivisor]
+        question = 'for f(x)=('+str(xDivisor)+'x/'+str(xDividend)+')+('+str(cDivisor)+'/'+str(cDividend)+') find f(x)^(-1)'
+        solution = '[('+str(xDividend*cDividend)+'x+('+str(-1*xDividend*cDivisor)+')]/('+str(cDividend*xDivisor)+')=x'
+        options = coursesFunctionsBll.generateTwoVariableOptions(components)
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 #for a function type ax^2 + bx+ c get the right (dx+e)(fx+g) factorization between the given options
 def quadraticFactorizationType2():
     return coursesFunctionsBll.quadraticFactorization(False)
@@ -47,29 +53,37 @@ def quadraticFactorizationType1():
     return coursesFunctionsBll.quadraticFactorization(True)
 #for an rectangle, with height equals to x and a base equals to cx+d, get the perimeter of the rectangle
 def areaProblem():
-    a = random.randint(1,100)
-    b = random.randint(1,100)*(random.randint(0,1)*2-1)
-    c = random.randint(10,100)*(-1)
-    question = 'if a rectangle area is '+str(-1*c)+', its height is h and its width is equal to ('+str(a)+'h)+('+str(b)+'), which is the perimeter of this rectangle?:'
-    solution1 = (-b+((b*b)-(4*a*c))**(0.5))/(2*a)
-    solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
-    solution = round(solution1*4, 4) if solution1>0 else round(solution2,4)
-    options = coursesFunctionsBll.generateOptions(solution)
-    jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-    return jsonResponse
+    try:
+        a = random.randint(1,100)
+        b = random.randint(1,100)*(random.randint(0,1)*2-1)
+        c = random.randint(10,100)*(-1)
+        question = 'if a rectangle area is '+str(-1*c)+', its height is h and its width is equal to ('+str(a)+'h)+('+str(b)+'), which is the perimeter of this rectangle?:'
+        solution1 = (-b+((b*b)-(4*a*c))**(0.5))/(2*a)
+        solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
+        solution = round(solution1*4, 4) if solution1>0 else round(solution2,4)
+        options = coursesFunctionsBll.generateOptions(solution)
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 #for a function like (ax+b)/(cx+d)= e choose the right range when x falls
 def firstGradeFraction():
-    xUp = random.randint(1,100)*(random.randint(0,1)*2-1)
-    xDown = random.randint(1,100)*(random.randint(0,1)*2-1)
-    cUp = random.randint(1,100)*(random.randint(0,1)*2-1)
-    cDown = random.randint(1,100)*(random.randint(0,1)*2-1)
-    cSolution = random.randint(1,100)*(random.randint(0,1)*2-1)
-    sol = ((cSolution*cDown)-cUp)/(xUp-(cSolution*xDown))
-    question = 'choose right range for x in [('+str(xUp)+'x)+('+str(cUp)+')]/[('+str(xDown)+'x)+('+str(cDown)+')]='+str(cSolution)
-    solution = 'x is in range (-infinite,-15)' if (sol<-15) else 'x is in range [-15,-5]' if (sol>=-15 and sol<=-5) else 'x is in range (-5,5)' if (sol>-5 and sol<5) else 'x is in range [5,15]' if (sol>=5 and sol<=15) else 'x is in range (15,infinite)'
-    options = json.loads(json.dumps({'a':'x is in range (-infinite,-15)', 'b':'x is in range [-15,-5]', 'c': 'x is in range (-5,5)', 'd': 'x is in range [5,15]', 'e': 'x is in range (15,infinite)'}))
-    jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-    return jsonResponse 
+    try:
+        xUp = random.randint(1,100)*(random.randint(0,1)*2-1)
+        xDown = random.randint(1,100)*(random.randint(0,1)*2-1)
+        cUp = random.randint(1,100)*(random.randint(0,1)*2-1)
+        cDown = random.randint(1,100)*(random.randint(0,1)*2-1)
+        cSolution = random.randint(1,100)*(random.randint(0,1)*2-1)
+        sol = ((cSolution*cDown)-cUp)/(xUp-(cSolution*xDown))
+        question = 'choose right range for x in [('+str(xUp)+'x)+('+str(cUp)+')]/[('+str(xDown)+'x)+('+str(cDown)+')]='+str(cSolution)
+        solution = 'x is in range (-infinite,-15)' if (sol<-15) else 'x is in range [-15,-5]' if (sol>=-15 and sol<=-5) else 'x is in range (-5,5)' if (sol>-5 and sol<5) else 'x is in range [5,15]' if (sol>=5 and sol<=15) else 'x is in range (15,infinite)'
+        options = json.loads(json.dumps({'a':'x is in range (-infinite,-15)', 'b':'x is in range [-15,-5]', 'c': 'x is in range (-5,5)', 'd': 'x is in range [5,15]', 'e': 'x is in range (15,infinite)'}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse 
+    except Exception as er:
+        return er
+    
+
 #In a plant, the cost to produce x units is equal to ax^2+bx+c...
 def plantProblem():
     a = random.randint(1,10)*(random.randint(0,1)*2-1)
@@ -109,6 +123,8 @@ def cubicFactorization():
     options = coursesFunctionsBll.generateAlternativesCubicF([a, b, c, d])
     jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
     return jsonResponse
+
+
 #given a fractions like (ax+b)/(cx^2+dx+e) get the right equivalent partial fraction A/(fx+g) + B/(hx+i)
 def partialFractions():
     bx = random.randint(1,10)*(random.randint(0,1)*2-1)
@@ -223,22 +239,25 @@ def inequationTwoSides():
         return er
 #get the valid range for x in the inequation type (ax+b)/c <= (dy+e)/(fy+g)
 def inequations2():
-    a = random.randint(1,10)*(random.randint(0,1)*2-1)
-    b = random.randint(1,10)*(random.randint(0,1)*2-1)
-    c = random.randint(1,10)*(random.randint(0,1)*2-1)
-    d = random.randint(1,10)*(random.randint(0,1)*2-1)
-    e = random.randint(1,10)*(random.randint(0,1)*2-1)
-    f = random.randint(1,10)*(random.randint(0,1)*2-1)
-    g = random.randint(1,10)*(random.randint(0,1)*2-1)
-    sola = (d*c)-(b*f)
-    solb = (e*c)-(b*g)
-    solc = a*f
-    sold = a*g
-    solution = 'x'+('<=' if a*c>0 else '>=')+'[('+str(sola)+'y)+('+str(solb)+')]/[('+str(solc)+'y)+('+str(sold)+')]'
-    question = 'let x alone in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'y)+('+str(e)+')]/[('+str(f)+'y)+('+str(g)+')]'
-    options = coursesFunctionsBll.inequationsAlternatives2([sola, solb, solc, sold])
-    jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-    return jsonResponse
+    try:
+        a = random.randint(1,10)*(random.randint(0,1)*2-1)
+        b = random.randint(1,10)*(random.randint(0,1)*2-1)
+        c = random.randint(1,10)*(random.randint(0,1)*2-1)
+        d = random.randint(1,10)*(random.randint(0,1)*2-1)
+        e = random.randint(1,10)*(random.randint(0,1)*2-1)
+        f = random.randint(1,10)*(random.randint(0,1)*2-1)
+        g = random.randint(1,10)*(random.randint(0,1)*2-1)
+        sola = (d*c)-(b*f)
+        solb = (e*c)-(b*g)
+        solc = a*f
+        sold = a*g
+        solution = 'x'+('<=' if a*c>0 else '>=')+'[('+str(sola)+'y)+('+str(solb)+')]/[('+str(solc)+'y)+('+str(sold)+')]'
+        question = 'let x alone in the next inequality [('+str(a)+'x)+('+str(b)+')]/('+str(c)+') <= [('+str(d)+'y)+('+str(e)+')]/[('+str(f)+'y)+('+str(g)+')]'
+        options = coursesFunctionsBll.inequationsAlternatives2([sola, solb, solc, sold])
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 #given a problem like ax^2 +bx + c>=0 determina the valid range for x
 def inequationGrade2():
     try:

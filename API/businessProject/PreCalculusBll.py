@@ -26,7 +26,7 @@ def seriesProblem():
         sol = sequence[5]
         solution= str(sol)
         options = coursesFunctionsBll.alternativesSequence(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -59,7 +59,7 @@ def typeSeriesProblem():
             solution = "decreasing" if opNumber<0 else "increasing"
         question = "for de next function  "+function+", define the series type when x tends to infinity"
         options =json.loads(json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning', 'd':'undefined'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -92,7 +92,7 @@ def boundedSeriesProblem():
             solution = "not bounded" if a<0 else "bounded"
         question = "for de next function  "+function+", define the series type"
         options =json.loads(json.dumps({'a':'inferior bounded', 'b':'superior bounded', 'c':'not bounded', 'd':'bounded'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -118,7 +118,7 @@ def convergentSeriesProblem():
             question="for de next function: csc(x), defines the function type when x tends to "+str(a)+"*pi/2"
             solution = "convergent" if a%2!=0 else "divergent"
         options =json.loads(json.dumps({'a':'convergent', 'b':'divergent'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -134,7 +134,7 @@ def gaussSeriesProblem():
         question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"+("+str(c)+"x)): "
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -147,7 +147,7 @@ def simpleGaussProblem():
         question="use the gauss formula to get the sum of the natural numbers between 1 and "+str(a)+":"
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -165,7 +165,7 @@ def geometricSeriesProblem():
         question="Which is the sum of the first "+str(a)+" terms (from n=1 to n="+str(a)+") in the function ("+str(b)+"*(("+str(c)+"/"+str(d)+")^x)): "
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -183,7 +183,7 @@ def nArithmeticProblem():
         question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -200,7 +200,7 @@ def nGeometricProblem():
         question="The first five element of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+","+str(items[4])+", which is the value of the "+str(a)+"th item?:"
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -220,7 +220,7 @@ def productGeometricProblem():
         question="The first four elements of a series are "+str(items[0])+","+str(items[1])+","+str(items[2])+","+str(items[3])+", which is the product of the first "+str(a)+" items?:"
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -232,7 +232,7 @@ def simpleLimitProblem():
         solution=(2*a)+b
         question="[lim x->("+str(a)+")] for ((x^2)+("+str(b)+"*x)+("+str((-a*b)-(a**2))+"))/(x-("+str(a)+"))"
         options=coursesFunctionsBll.arithmeticAlternatives(solution)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -247,7 +247,7 @@ def simpleLimitProblem2():
         solution=a+b
         question="[Lim x->("+str(a)+")] for ((x^2)+("+str((-1*a)+b)+"*x)+("+str(-1*a*b)+"))/(x-("+str(a)+"))"
         options=coursesFunctionsBll.arithmeticAlternatives(solution)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -266,7 +266,7 @@ def infiniteLimitProblem():
         solution=str(sol)
         question="[Lim x->inf] for (("+str(a)+"x)+("+str(b)+"))/(("+str(c)+"x)+("+str(d)+")) + (("+str(e)+"x)+("+str(f)+"))/(("+str(g)+"x)+("+str(h)+"))"
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -284,7 +284,7 @@ def infiniteLimitProblem2():
         solution=str(sol)
         question="[Lim x->inf] for [(("+str(a)+"x^"+str(2*g)+")+("+str(b)+"x))^(1/2)](("+str(e)+"x)+("+str(f)+"))/(("+str(c*e)+"x^"+str(g+1)+")+("+str(c*f)+"x^"+str(g)+")+("+str(e*d)+"x)+("+str(d*f)+"))"
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -305,7 +305,7 @@ def toInfiniteLimitProblem():
             c=b
         question="[lim x->("+str(b)+")] for ("+str(a)+")/(x^2+("+str(-b-c)+"x)+("+str(b*c)+"))"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -327,7 +327,7 @@ def toInfiniteLimitProblem2():
             solution='inf' if ((c-a)**b)>0 else '-inf'
         question="[lim x->("+str(c)+")] for [(x-("+str(a)+"))^("+str(b)+")]/[(x-("+str(c)+"))^("+str(d)+")]"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined', 'd': '0'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -348,7 +348,7 @@ def squareLimitProblem():
             solution= 'inf' if a>(c*c) else '-inf'
         question="[lim x->(inf)] for (("+str(a)+"x^2)-("+str(b)+"))^(1/2)-("+str(c)+"x)"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'0'}))
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -362,7 +362,7 @@ def squareLimitProblem2():
         solution=str(sol)
         question="[lim x->(0)] for ((("+str(a)+")+("+str(b)+"x))^(1/2)-("+str(a)+")^(1/2))/("+str(c)+"x)"
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -376,7 +376,7 @@ def trigonometryLimitProblem():
         solution=str(sol)
         question="[lim x->(0)] for (sin("+str(a)+"x)+("+str(b)+"x))/("+str(c)+"x)"
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er
@@ -394,7 +394,7 @@ def trigonometryLimitProblem2():
         solution=str(sol)
         question="[lim x->(0)] for [(("+str(a)+"x)+("+str(b)+"))(("+str(c)+"x)+("+str(d)+"))-(("+str(b*d)+")*cos("+str(e)+"x))]/("+str(e)+"x)"
         options =coursesFunctionsBll.generateOptions(sol)
-        jsonResponse = json.dumps({"question":question, "solution":solution, "options":options})
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
         return er

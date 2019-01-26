@@ -22,4 +22,12 @@
   current score: {{score}}/{{examData.length}}
 </div>
 <!-- <div [innerHTML]="equation"></div> -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML-full" async></script>
+
+<div id="myExpr">`1+x^2`</div>
+<div id="myTeX"></div>
+
+<script type="text/x-mathjax-config" async>
+ MathJax.Hub.Config({ messageStyle: 'none', tex2jax: { preview: 'none'} });
+</script>
 
