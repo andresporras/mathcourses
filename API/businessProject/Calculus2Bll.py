@@ -220,8 +220,55 @@ def substitutionRootProblem():
     except Exception as er:
         return er
 
+def partsPowerProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        comp1= round(math.log(a)*(b-1)*(-1),4)
+        comp2= round(math.log(a)*((b-1)**2),4)
+        question=r"\int \frac{\log_{"+str(a)+r"}(x)}{{x}^{"+str(b)+r"}}"
+        solution=r"\frac{ln(x)}{"+str(comp1)+r"{x}^{"+str(b-1)+r"}}-\frac{1}{"+str(comp2)+r"{x}^{"+str(b-1)+r"}}+C"
+        alternatives = coursesFunctionsBll.multipleOptions([comp1,comp2],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"\frac{ln(x)}{"+str(alternatives[y1][0])+r"{x}^{"+str(b-1)+r"}}-\frac{1}{"+str(alternatives[y1][1])+r"{x}^{"+str(b-1)+r"}}+C")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+#use quotient method to solve this problem
+def quotientProblem():
+    try:
+        a = (random.randint(0,4)*2)+1
+        b = random.randint(0,1)
+        c = random.randint(0,1)
+        d = random.randint(2,10)*(random.randint(0,1)*2-1)
+        comp1=round(2/(a*d),4)
+        comp2=round(2/(a*d*d),4)
+        c1 = [comp1,round(comp1/2,4) if c==0 else round(comp1*2,4)]
+        c2=  [comp2,round(comp2/2,4) if c==0 else round(comp2*2,4)]
+        c1.sort()
+        c2.sort()
+        question=""
+        solution=""
+        if b==0:
+            question=r'\int \frac{sin({'+str(d)+r'x}^{\frac{-'+str(a)+r'}{2}})}{{x}^{'+str(a+1)+r'}}'
+            solution=r'\frac{'+str(comp1)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(comp2)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'
+        elif b==1:
+            question=r'\int \frac{cos({'+str(d)+r'x}^{\frac{-'+str(a)+r'}{2}})}{{x}^{'+str(a+1)+r'}}'
+            solution=r'\frac{'+str(-1*comp1)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(comp2)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'
+        options =json.loads(json.dumps({'a': r'\frac{'+str(c1[0])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[0])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+                                        'b':r'\frac{'+str(c1[1])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[1])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+                                        'c': r'\frac{'+str(-1*c1[0])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[0])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+                                        'd': r'\frac{'+str(-1*c1[1])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[1])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
-exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem]
+
+exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
