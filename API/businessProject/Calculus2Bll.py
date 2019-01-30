@@ -267,9 +267,44 @@ def quotientProblem():
     except Exception as er:
         return er
 
+#use quotient method to solve this problem
+def areaBetweenProblem():
+    try:
+        a1 = random.randint(2,10)*(-1)
+        b1 = random.randint(2,10)*(random.randint(0,1)*2-1)
+        c1 = random.randint(2,10)*(random.randint(0,1)*2-1)
+        a2 = random.randint(2,10)
+        b2 = random.randint(2,10)*(random.randint(0,1)*2-1)
+        c2 = random.randint(2,10)*(random.randint(0,1)*2-1)
+
+        x1= (-b1)/(2*a1)
+        x2= (-b2)/(2*a2)
+        if (a1*(x1**2)+b1*x1+c1)>(a2*(x2**2)+b2*x2+c2):
+            return areaBetweenProblem()
+        p1=random.randint(1,5)
+        p2=random.randint(6,10)
+
+        major1= (a1/3)*(p2**3)+(b1/2)*(p2**2)+c1*p2
+        minor1= (a1/3)*(p1**3)+(b1/2)*(p1**2)+c1*p1
+        major2= (a2/3)*(p2**3)+(b2/2)*(p2**2)+c2*p2
+        minor2= (a2/3)*(p1**3)+(b2/2)*(p1**2)+c2*p1
+
+        solution= round((major2-minor2)-(major1-minor1),4)
+        question = r"find the area between "+str(a1)+r"x^2"+("+" if b1>0 else "")+str(b1)+r"x"+("+" if c1>0 else "")+str(c1)+r" and "+str(a2)+r"x^2"+("+" if b2>0 else "")+str(b2)+r"x"+("+" if c2>0 else "")+str(c2)+r" in the range between x="+str(p1)+r" and x="+str(p2)+r":"
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r""+str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = []
+exam2 = [areaBetweenProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

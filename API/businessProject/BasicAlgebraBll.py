@@ -39,7 +39,7 @@ def firstGradeTwoVariables():
         cDividend = random.randint(1,10)
         components = [xDividend*cDividend, -1*xDividend*cDivisor, cDividend*xDivisor]
         question = 'for f(x)=('+str(xDivisor)+'x/'+str(xDividend)+')+('+str(cDivisor)+'/'+str(cDividend)+') find f(x)^(-1)'
-        solution = '[('+str(xDividend*cDividend)+'x+('+str(-1*xDividend*cDivisor)+')]/('+str(cDividend*xDivisor)+')=x'
+        solution = '[('+str(xDividend*cDividend)+'y+('+str(-1*xDividend*cDivisor)+')]/('+str(cDividend*xDivisor)+')=x'
         options = coursesFunctionsBll.generateTwoVariableOptions(components)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
@@ -60,7 +60,8 @@ def areaProblem():
         question = 'if a rectangle area is '+str(-1*c)+', its height is h and its width is equal to ('+str(a)+'h)+('+str(b)+'), which is the perimeter of this rectangle?:'
         solution1 = (-b+((b*b)-(4*a*c))**(0.5))/(2*a)
         solution2 = (-b-((b*b)-(4*a*c))**(0.5))/(2*a)
-        solution = round(solution1*4, 4) if solution1>0 else round(solution2,4)
+
+        solution = round((solution1+(solution1*a)+b)*2, 4) if solution1>0 else round((solution2+(solution2*a)+b)*2, 4)
         options = coursesFunctionsBll.generateOptions(solution)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse

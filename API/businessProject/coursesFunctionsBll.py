@@ -39,7 +39,7 @@ def generateTwoVariableOptions(options):
             solutions.append(nSolution)
     tempSolutions =[]
     for y in range(5):
-        tempSolutions.append('[('+str(solutions[y][0])+'x+('+str(solutions[y][1])+')]/('+str(solutions[y][2])+')=x')
+        tempSolutions.append('[('+str(solutions[y][0])+'y+('+str(solutions[y][1])+')]/('+str(solutions[y][2])+')=x')
     strOptions =json.loads(json.dumps({'a':tempSolutions[0], 'b':tempSolutions[1], 'c': tempSolutions[2], 'd': tempSolutions[3], 'e': tempSolutions[4]}))
     return strOptions
 def generateAlternativesQF(lista, type_):
