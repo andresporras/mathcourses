@@ -5,14 +5,17 @@ from flask import jsonify
 #from mpmath import mp, mpf
 #mp.dps = 100
 #mp.pretty = True
+from decimal import *
+getcontext().prec = 100
 def yoxterFormat(number):
-    number = format(number,'.100g')
-    numbers = number.split('.')
-    if len(numbers)>1:
-        if len(numbers[1])>4:
-            numbers[1]=numbers[1][:4]
-        number=numbers[0]+'.'+numbers[1]
-    return number
+    #number = format(number,'.100g')
+    #numbers = number.split('.')
+    #if len(numbers)>1:
+    #    if len(numbers[1])>4:
+    #        numbers[1]=numbers[1][:4]
+    #    number=numbers[0]+'.'+numbers[1]
+    nNumber=round(Decimal(number),4)
+    return nNumber
 
 def generateOptions(solution):
     options =[solution]

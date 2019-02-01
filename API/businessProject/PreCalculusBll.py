@@ -77,7 +77,7 @@ def boundedSeriesProblem():
             solution = "superior bounded" if a<0 else "inferior bounded"
         elif(op==2):
             function=str(a)+"*ln("+str(b)+"x)"
-            solution = "superior bounded" if a>0 else "inferior bounded"
+            solution = "not bounded" if a>0 else "inferior bounded"
         elif(op==3):
             function=str(abs(a))+"/((x+("+str(b)+"))^("+str(c)+"))"
             solution = "not bounded" if c%2==0 else "inferior bounded"
@@ -153,6 +153,7 @@ def simpleGaussProblem():
         return er
 
 #sum of the first n terms in the series b((c/d)^x)
+#https://www.youtube.com/watch?v=ZBagdQmAdQw how to deduce te formula s=(1-a^(n+1))/(1-a)
 def geometricSeriesProblem():
     try:
         a = random.randint(5,10)

@@ -302,9 +302,79 @@ def areaBetweenProblem():
     except Exception as er:
         return er
 
+#use quotient method to solve this problem
+def volumeProblem():
+    try:
+        a = random.randint(2,4)
+        b = random.randint(2,4)
+        q = random.randint(0,1)
+        x1=random.randint(1,3)
+        x2=random.randint(4,6)
+        sol=0
+        question=""
+        if q==0:
+            major=((math.log(b*x2)**2)-(2*math.log(b*x2))+(2))*(math.pi*x2)/(math.log(a)**2)
+            minor=((math.log(b*x1)**2)-(2*math.log(b*x1))+(2))*(math.pi*x1)/(math.log(a)**2)
+            sol=round(major-minor,4)
+            question="find the volume that appears when rotate \log _{"+str(a)+r"}("+str(b)+r"x), in x axes, between x="+str(x1)+r" and x="+str(x2)+r":"
+        else:
+            major=(a**(2*b*x2))*math.pi/(math.log(a)*2*b)
+            minor=(a**(2*b*x1))*math.pi/(math.log(a)*2*b)
+            sol=round(major-minor,4)
+            question="find the volume that appears when rotate {"+str(a)+r"}^{"+str(b)+r"x}, in x axes, between x="+str(x1)+r" and x="+str(x2)+r":"
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r""+str(coursesFunctionsBll.yoxterFormat(alternatives[y1][0])))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        solution = str(coursesFunctionsBll.yoxterFormat(sol))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#use quotient method to solve this problem
+def cylinderVolumeProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(1,10)
+        d = random.randint(0,1)
+        x1=random.randint(1,5)
+        x2=random.randint(6,10)
+        solution=0
+        question=""
+        if d==0:
+            major= ((math.sin(a*x2)/(a*a))-(math.cos(a*x2)*x2/a)+((1/((1/b)+2))*(x2**((1/b)+2)))+((c/2)*(x2**2)))*(2*math.pi)
+            minor= ((math.sin(a*x1)/(a*a))-(math.cos(a*x1)*x1/a)+((1/((1/b)+2))*(x1**((1/b)+2)))+((c/2)*(x1**2)))*(2*math.pi)
+            solution=round(major-minor,4)
+            question="for the cylinder which appears when you rotate, in y axis,  the function sin("+str(a)+r"x)+{x}^{1/"+str(b)+r"}+"+str(c)+r" between x="+str(x1)+r" and x="+str(x2)+r". PS: use radians scale:"
+        else:
+            major= ((math.sin(a*x2)*x2/a)+(math.cos(a*x2)/(a*a))+((1/((1/b)+2))*(x2**((1/b)+2)))+((c/2)*(x2**2)))*(2*math.pi)
+            minor= ((math.sin(a*x1)*x1/a)+(math.cos(a*x1)/(a*a))+((1/((1/b)+2))*(x1**((1/b)+2)))+((c/2)*(x1**2)))*(2*math.pi)
+            solution=round(major-minor,4)
+            question="for the cylinder which appears when you rotate, in y axis,  the function cos("+str(a)+r"x)+{x}^{1/"+str(b)+r"}+"+str(c)+r" between x="+str(x1)+r" and x="+str(x2)+r". PS: use radians scale:"
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(alternatives[y1][0])
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
