@@ -372,9 +372,36 @@ def cylinderVolumeProblem():
     except Exception as er:
         return er
 
+#use hooke law for this problem
+def springProblem():
+    try:
+        f = random.randint(20,100)
+        x0 = random.randint(1,50)
+        x1 = random.randint(51,100)
+        x2 = random.randint(51,75)
+        x3 = random.randint(76,100)
+
+        K = f/((x1-x0)/100)
+        J= round((K/2)*(((x3-x0)/100)**2-((x2-x0)/100)**2),4)
+        solution = str(J)+r" J"
+        question=r"A force of "+str(f)+r" N is required to stop a spring which was stretched from his natural length of "+str(x0)+r" cm to "+str(x1)+r" cm. \\How much work is required to stretch this spring from "+str(x2)+r" cm to "+str(x3)+r" cm?: "
+        alternatives = coursesFunctionsBll.multipleOptions([J],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0])+r" J")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
