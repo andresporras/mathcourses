@@ -16,7 +16,7 @@ from sympy import *
 #init_session(use_latex=True)
 
 #calculus quotient rule: https://www.maa.org/sites/default/files/switkes01200543268.pdf
-
+#web site to calculate integrals and derivatives: https://www.wolframalpha.com/input/?i=integrate+cos(2x)*x
 
 #find the values of x for which slope is 0
 
@@ -399,9 +399,82 @@ def springProblem():
     except Exception as er:
         return er
 
+def averageProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+
+        major = (1/math.log(a))*((math.log(x2)*(x2**(b+1))/(b+1))-((x2**(b+1))/((b+1)**2)))
+        minor = (1/math.log(a))*((math.log(x1)*(x1**(b+1))/(b+1))-((x1**(b+1))/((b+1)**2)))
+
+        solution = round((1/(x2-x1))*(major-minor),4)
+        question=r"find the average value of the function ln_{"+str(a)+r"}(x){x}^{"+str(b)+r"} between x="+str(x1)+r" and x="+str(x2)+r": "
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def lengthProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(2,10)
+        c = random.randint(2,10)*(random.randint(0,1)*2-1)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        major= (2/(3*a*c*c))*(((a*c*c*x2)+((b*c*c)+1))**(3/2))
+        minor= (2/(3*a*c*c))*(((a*c*c*x1)+((b*c*c)+1))**(3/2))
+        solution= round(major-minor,4)
+        question=r"find the arc length for the function "+str(round((2*c)/(3*a),4))+r"{("+str(a)+r"x+"+str(b)+r")}^{3/2} between x="+str(x1)+r" and x="+str(x2)+r": "
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def yAreaProblem():
+    try:
+        a = random.randint(2,10)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        major= (math.pi/(27*a))*((1+9*(a*a)*(x2**4))**(3/2))
+        minor= (math.pi/(27*a))*((1+9*(a*a)*(x1**4))**(3/2))
+        solution= round(major-minor,4)
+        question=r"Find the area for the revolution (around x axis) of the function "+str(a)+r"x^3 between x="+str(x1)+r" and x="+str(x2)+r":"
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

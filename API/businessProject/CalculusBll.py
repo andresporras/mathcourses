@@ -218,7 +218,7 @@ def logarithm_a_Problem():
         e = random.randint(0,1)
         comp1 = "["+str(b)+"xy^2+"+str(c)+"y]" if e==0 else "["+str(a)+"^("+str(d)+"x)]"
         solution = "("+str(round(d*math.log(a),4))+"*"+str(comp1)+"-"+str(b)+"y^2)/("+str(2*b)+"xy+"+str(c)+")"
-        question="find dy/dx if log_"+str(a)+"_("+str(b)+"xy^2+"+str(c)+"y)="+str(d)+"x"
+        question="find dy/dx if log_{"+str(a)+r"}("+str(b)+r"xy^2+"+str(c)+r"y)="+str(d)+r"x"
         options =coursesFunctionsBll.logarithm_a_options([a,b,c,d,e])
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
