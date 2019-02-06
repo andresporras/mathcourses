@@ -473,8 +473,40 @@ def yAreaProblem():
     except Exception as er:
         return er
 
+def xAreaProblem():
+    try:
+        a = random.randint(2,10)
+        b = random.randint(0,1)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        major=0
+        minor=0
+        question=""
+        if b==0:
+            major= (math.pi*2/(12*(a**2)))*((1+4*(a**2)*(x2**2))**(3/2))
+            minor= (math.pi*2/(12*(a**2)))*((1+4*(a**2)*(x1**2))**(3/2))
+            question=r"Find the area for the revolution (around y axis) of the function "+str(a)+r"{x}^{2} between x="+str(x1)+r" and x="+str(x2)+r":"
+        if b==1:
+            major= (math.pi*2*16/(81*(a**4)))*(((2/5)*((1+(9/4)*(a**2)*x2)**(5/2)))-((2/3)*((1+(9/4)*(a**2)*x2)**(3/2))))
+            minor= (math.pi*2*16/(81*(a**4)))*(((2/5)*((1+(9/4)*(a**2)*x1)**(5/2)))-((2/3)*((1+(9/4)*(a**2)*x1)**(3/2))))
+            question=r"Find the area for the revolution (around y axis) of the function "+str(a)+r"{x}^{3/2} between x="+str(x1)+r" and x="+str(x2)+r":"
+        solution= round(major-minor,4)
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem, xAreaProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
