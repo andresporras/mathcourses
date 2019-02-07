@@ -505,8 +505,54 @@ def xAreaProblem():
     except Exception as er:
         return er
 
+def centroidProblem():
+    try:
+        a = random.randint(0,1)
+        b = random.randint(2,10)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        x0=0
+        y0=0
+        question=""
+        if a==0: #b^x
+            major= (b**(x2))/math.log(b)
+            minor= (b**(x1))/math.log(b)
+            area = major-minor
+            xmajor=(b**x2)*(x2*math.log(b)-1)/(math.log(b)**2)
+            xminor=(b**x1)*(x1*math.log(b)-1)/(math.log(b)**2)
+            x0=round((1/area)*(xmajor-xminor),4)
+            ymajor=(b**(2*x2))/(2*math.log(b))
+            yminor=(b**(2*x1))/(2*math.log(b))
+            y0=round((1/(2*area))*(ymajor-yminor),4)
+            question=r"Find the centroid for the function {"+str(b)+r"}^{x} between x="+str(x1)+r" and x="+str(x2)+r":"
+        if a==1: #ln_b(x)
+            major= (x2*math.log(x2)-x2)/math.log(b)
+            minor= (x1*math.log(x1)-x1)/math.log(b)
+            area = major-minor
+            xmajor=((x2**2)*(2*math.log(x2)-1))/(4*math.log(b))
+            xminor=((x1**2)*(2*math.log(x1)-1))/(4*math.log(b))
+            x0=round((1/area)*(xmajor-xminor),4)
+            ymajor=(x2)*((math.log(x2)**2)-(2*math.log(x2))+2)/(math.log(b)**2)
+            yminor=(x1)*((math.log(x1)**2)-(2*math.log(x1))+2)/(math.log(b)**2)
+            y0=round((1/(2*area))*(ymajor-yminor),4)
+            question=r"Find the centroid for the function \log _{"+str(b)+r"}(x) between x="+str(x1)+r" and x="+str(x2)+r":"
+        solution= r"x="+str(x0)+r", y="+str(y0)
+        alternatives = coursesFunctionsBll.centroidOptions([x0, y0],5,x1,x2)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"x="+str(alternatives[y1][0])+r", y="+str(alternatives[y1][1]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem, xAreaProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem, xAreaProblem, centroidProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
