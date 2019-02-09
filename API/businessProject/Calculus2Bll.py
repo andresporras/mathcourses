@@ -140,7 +140,7 @@ def trigonometrySubstitutionProblem():
                     [r"\frac{1}{x\sqrt{"+str(ab**2)+r"+{x}^{2}}}",r"\frac{1}{"+str(ab)+r"}(ln(x)-ln(\sqrt{"+str(ab**2)+r"+{x}^{2}}+"+str(ab)+r"))+C",0],
                     [r"\frac{1}{x\sqrt{{x}^{2}-"+str(ab**2)+r"}}",r"\frac{-1}{"+str(ab)+r"}atan(\frac{"+str(ab)+r"}{\sqrt{{x}^{2}-"+str(ab**2)+r"}})+C",0]]
             opt3 = [[r"\frac{1}{x^2\sqrt{"+str(ab**2)+r"-{x}^{2}}}",r"-\frac{\sqrt{"+str(ab**2)+r"-{x}^{2}}}{"+str(ab**2)+r"x}+C",0],
-                    [r"\frac{1}{x^2\sqrt{"+str(ab**2)+r"+{x}^{2}}}",r"\frac{\sqrt{"+str(ab**2)+r"+{x}^{2}}}{"+str(ab**2)+r"x}+C",0],
+                    [r"\frac{1}{x^2\sqrt{"+str(ab**2)+r"+{x}^{2}}}",r"-\frac{\sqrt{"+str(ab**2)+r"+{x}^{2}}}{"+str(ab**2)+r"x}+C",0],
                     [r"\frac{1}{x^2\sqrt{{x}^{2}-"+str(ab**2)+r"}}",r"\frac{\sqrt{{x}^{2}-"+str(ab**2)+r"}}{"+str(ab**2)+r"x}+C",0]]
             return [opt1,opt2, opt3]
         identities = assignVariable(a)
@@ -551,8 +551,89 @@ def centroidProblem():
     except Exception as er:
         return er
 
+def definiteIntegralProblem():
+    try:
+        c = random.randint(0,2)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        d= random.randint(100,1000)
+        solution=0
+        question=""
+        if c==0: #1/(b-ax^2)^(3/2)
+            a = random.randint(2,5)
+            b = random.randint(51,100)
+            major= x2/(b*math.sqrt(b-(a*(x2**2))))
+            minor= x1/(b*math.sqrt(b-(a*(x1**2))))
+            solution=round((major-minor)*d,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \frac{"+str(d)+r"}{("+str(b)+r"-"+str(a)+r"x^2)^{3/2}}"
+        if c==1: #1/(b+ax^2)^(3/2)
+            a = random.randint(2,50)
+            b = random.randint(2,50)
+            major= x2/(b*math.sqrt(b+(a*(x2**2))))
+            minor= x1/(b*math.sqrt(b+(a*(x1**2))))
+            solution=round((major-minor)*d,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \frac{"+str(d)+r"}{("+str(b)+r"+"+str(a)+r"x^2)^{3/2}}"
+        if c==2: #1/(ax^2-b)^(3/2)
+            a = random.randint(11,20)
+            b = random.randint(2,10)
+            major= (-x2)/(b*math.sqrt((a*(x2**2))-b))
+            minor= (-x1)/(b*math.sqrt((a*(x1**2))-b))
+            solution=round((major-minor)*d,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \frac{"+str(d)+r"}{("+str(a)+r"x^2-"+str(b)+r")^{3/2}}"
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#besides being extremly difficult to solve, this exercise have some fails, so beware before trying to add to the project
+def definiteIntegralProblem2():
+    try:
+        a = random.randint(0,2)
+        b = random.randint(2,10)
+        x1 = random.randint(1,5)
+        x2 = random.randint(6,10)
+        solution=0
+        question=""
+        if a==0: #(x+1)^2-b
+            major= (1/2)*(x2+1)*(math.sqrt(((x2+1)**2)-b))-(1/2)*(b*math.log(math.sqrt(((x2+1)**2)-b)+x2+1))
+            minor= (1/2)*(x1+1)*(math.sqrt(((x1+1)**2)-b))-(1/2)*(b*math.log(math.sqrt(((x1+1)**2)-b)+x1+1))
+            solution=round(major-minor,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \sqrt{x^2+2x-"+str(b-1)+r"}"
+        if a==1: #(x+1)^2+b
+            major= (1/2)*(x2+1)*(math.sqrt(((x2+1)**2)+b))+(1/2)*(b*math.log(math.sqrt(((x2+1)**2)+b)+x2+1))
+            minor= (1/2)*(x1+1)*(math.sqrt(((x1+1)**2)+b))+(1/2)*(b*math.log(math.sqrt(((x1+1)**2)+b)+x1+1))
+            solution=round(major-minor,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \sqrt{x^2+2x+"+str(b+1)+r"}"
+        if a==2: #b-(x+1)^2
+            major= (1/2)*(x2+1)*(b-math.sqrt(((x2+1)**2)))+(1/2)*(b*math.asin((x2+1)/(b**(1/2))))
+            minor= (1/2)*(x1+1)*(b-math.sqrt(((x1+1)**2)))+(1/2)*(b*math.asin((x1+1)/(b**(1/2))))
+            solution=round(major-minor,4)
+            question=r"\int_{"+str(x1)+r"}^{"+str(x2)+r"} \sqrt{-x^2-2x+"+str(b-1)+r"}"
+        alternatives = coursesFunctionsBll.multipleOptions([solution],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [basicProblem, sustitutionProblem, symmetryProblem, partsProblem, trigonometryProblem, trigonometrySubstitutionProblem, fractionProblem, substitutionRootProblem, partsPowerProblem, quotientProblem]
-exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem, xAreaProblem, centroidProblem]
+exam2 = [areaBetweenProblem, volumeProblem, cylinderVolumeProblem, springProblem, averageProblem, lengthProblem, yAreaProblem, xAreaProblem, centroidProblem, definiteIntegralProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
