@@ -229,16 +229,19 @@ def logarithmMethodProblem():
         a = random.randint(2,10)
         b = random.randint(0,5)
         c = random.randint(2,10)
-        triOptions=[["sin(x)","cot(x)"],["cos(x)","-tan(x)"],["tan(x)","2*csc(2x)"],["cot(x)","-2*cosc(2x)"],["sec(x)","tan(x)"],["csc(x)","-cot(x)"]]
+        c2 = random.randint(2,10)
+        c3 = random.randint(2,10)
+        triOptions=[["sin(x)","cot(x)"],["cos(x)","-tan(x)"],["tan(x)","2*csc(2x)"],["cot(x)","-2*csc(2x)"],["sec(x)","tan(x)"],["csc(x)","-cot(x)"]]
         tempTri = triOptions.copy()
         del tempTri[b]
         d = random.randint(0,4)
         del tempTri[d]
-        comp1= round(-1*math.log(a),4)
+        #comp1= round(-1*math.log(a),4)
+        comp1= round(math.log(c2),4)
         comp2=round(math.log(c),4)
-        question = "Use the logarithm theorem to find dy/dx where y=log_x_("+str(a)+")*"+str(triOptions[b][0])+"/("+str(c)+"^x): "
-        solution= "dy/dx="+str(comp1)+"*y/x*ln(x)^2 + ["+str(triOptions[b][1])+"*y] - "+str(comp2)+"*y"
-        options =coursesFunctionsBll.logarithmMethodOptions([comp1,comp2,triOptions[b][1]],tempTri)
+        question = r"Use the logarithm theorem to find dy/dx where y=\log_{\frac{x^2+"+str(c2+c3)+r"x+"+str(c2*c3)+r"}{x+"+str(c3)+r"}}("+str(a)+r")*"+str(triOptions[b][0])+r"/("+str(c)+r"^x): "
+        solution= r"dy/dx=-y/ln((x+"+str(c2)+r")^{x+"+str(c2)+r"}) + ["+str(triOptions[b][1])+r"*y] - "+str(comp2)+r"*y"
+        options =coursesFunctionsBll.logarithmMethodOptions([c2,comp2,triOptions[b][1]],tempTri)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:

@@ -321,7 +321,7 @@ def volumeProblem():
             major=(a**(2*b*x2))*math.pi/(math.log(a)*2*b)
             minor=(a**(2*b*x1))*math.pi/(math.log(a)*2*b)
             sol=round(major-minor,4)
-            question="find the volume that appears when rotate {"+str(a)+r"}^{"+str(b)+r"x}, in x axes, between x="+str(x1)+r" and x="+str(x2)+r":"
+            question="find the volume that appears when rotate {"+str(a)+r"}^{"+str(b)+r"x}, in x axes, find the volume between x="+str(x1)+r" and x="+str(x2)+r":"
         alternatives = coursesFunctionsBll.multipleOptions([sol],5)
         tempAlternatives =[]
         for y1 in range(5):
@@ -337,7 +337,7 @@ def volumeProblem():
     except Exception as er:
         return er
 
-#use quotient method to solve this problem
+
 def cylinderVolumeProblem():
     try:
         a = random.randint(2,10)
@@ -357,7 +357,7 @@ def cylinderVolumeProblem():
             major= ((math.sin(a*x2)*x2/a)+(math.cos(a*x2)/(a*a))+((1/((1/b)+2))*(x2**((1/b)+2)))+((c/2)*(x2**2)))*(2*math.pi)
             minor= ((math.sin(a*x1)*x1/a)+(math.cos(a*x1)/(a*a))+((1/((1/b)+2))*(x1**((1/b)+2)))+((c/2)*(x1**2)))*(2*math.pi)
             solution=round(major-minor,4)
-            question="for the cylinder which appears when you rotate, in y axis,  the function cos("+str(a)+r"x)+{x}^{1/"+str(b)+r"}+"+str(c)+r" between x="+str(x1)+r" and x="+str(x2)+r". PS: use radians scale:"
+            question="for the cylinder which appears when you rotate, in y axis,  the function cos("+str(a)+r"x)+{x}^{1/"+str(b)+r"}+"+str(c)+r", find the volume between x="+str(x1)+r" and x="+str(x2)+r". PS: use radians scale:"
         alternatives = coursesFunctionsBll.multipleOptions([solution],5)
         tempAlternatives =[]
         for y1 in range(5):
@@ -561,7 +561,7 @@ def definiteIntegralProblem():
         question=""
         if c==0: #1/(b-ax^2)^(3/2)
             a = random.randint(2,5)
-            b = random.randint(51,100)
+            b = random.randint(501,1000)
             major= x2/(b*math.sqrt(b-(a*(x2**2))))
             minor= x1/(b*math.sqrt(b-(a*(x1**2))))
             solution=round((major-minor)*d,4)

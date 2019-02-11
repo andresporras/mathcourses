@@ -547,7 +547,7 @@ def logarithmMethodOptions(data,tempTri):
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):
-            tempAlternatives.append("dy/dx="+str(alternatives[y][0])+"*y/x*ln(x)^2 + ["+str(alternatives[y][2])+"*y] - "+str(alternatives[y][1])+"*y")
+            tempAlternatives.append(r"dy/dx=-y/ln((x+"+str(alternatives[y][0])+r")^{x+"+str(alternatives[y][0])+r"}) + ["+str(alternatives[y][2])+r"*y] - "+str(alternatives[y][1])+r"*y")
         strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         return strOptions
     except Exception as er:

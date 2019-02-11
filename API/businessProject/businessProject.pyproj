@@ -37,6 +37,9 @@
     <Compile Include="coursesFunctionsBll.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="LinearAlgebraBll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PreCalculusBll.py">
       <SubType>Code</SubType>
     </Compile>
