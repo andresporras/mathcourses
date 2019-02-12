@@ -27,21 +27,13 @@ def matrixProblem():
                       random.randint(1,10) * (random.randint(0,1) * 2 - 1),
                       random.randint(1,10) * (random.randint(0,1) * 2 - 1),
                       random.randint(1,10) * (random.randint(0,1) * 2 - 1)]]
-        Det= (matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))
-        -(matrix[0][1]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))
-        +(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
+        Det= (matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))+(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
 
-        Detx = (matrix[0][3]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))
-        -(matrix[0][1]*((matrix[1][3]*matrix[2][2])-(matrix[1][2]*matrix[2][3])))
-        +(matrix[0][2]*((matrix[1][3]*matrix[2][1])-(matrix[1][1]*matrix[2][3])))
+        Detx = (matrix[0][3]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))-(matrix[0][1]*((matrix[1][3]*matrix[2][2])-(matrix[1][2]*matrix[2][3])))+(matrix[0][2]*((matrix[1][3]*matrix[2][1])-(matrix[1][1]*matrix[2][3])))
 
-        Dety= (matrix[0][0]*((matrix[1][3]*matrix[2][2])-(matrix[1][2]*matrix[2][3])))
-        -(matrix[0][3]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))
-        +(matrix[0][2]*((matrix[1][0]*matrix[2][3])-(matrix[1][3]*matrix[2][0])))
+        Dety= (matrix[0][0]*((matrix[1][3]*matrix[2][2])-(matrix[1][2]*matrix[2][3])))-(matrix[0][3]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))+(matrix[0][2]*((matrix[1][0]*matrix[2][3])-(matrix[1][3]*matrix[2][0])))
 
-        Detz= (matrix[0][0]*((matrix[1][1]*matrix[2][3])-(matrix[1][3]*matrix[2][1])))
-        -(matrix[0][1]*((matrix[1][0]*matrix[2][3])-(matrix[1][3]*matrix[2][0])))
-        +(matrix[0][3]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
+        Detz= (matrix[0][0]*((matrix[1][1]*matrix[2][3])-(matrix[1][3]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][3])-(matrix[1][3]*matrix[2][0])))+(matrix[0][3]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
         solution=""
         if Det==0:
             if Detx==0 and Dety==0 and Detz==0:
@@ -76,7 +68,47 @@ def matrixProblem():
     except Exception as er:
         return er
 
-exam1 = [matrixProblem]
+def matrix_k_Problem():
+    try:
+        #below temp random solutions
+        matrix = [[random.randint(1,10) * (random.randint(0,1) * 2 - 1),
+                   (random.randint(1,10) * (random.randint(0,1) * 2 - 1))/(random.randint(1,10) * (random.randint(0,1) * 2 - 1)),
+                   random.randint(1,10) * (random.randint(0,1) * 2 - 1)],
+                  [random.randint(1,10) * (random.randint(0,1) * 2 - 1),
+                   random.randint(1,10) * (random.randint(0,1) * 2 - 1),
+                   random.randint(1,10) * (random.randint(0,1) * 2 - 1)],
+                   [random.randint(1,10) * (random.randint(0,1) * 2 - 1),
+                      random.randint(1,10) * (random.randint(0,1) * 2 - 1),
+                      random.randint(1,10) * (random.randint(0,1) * 2 - 1)]]
+        solution=""
+        if ((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0]))==0:
+            solution="none"
+        else:
+            matrix[0][1]= round(((matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))+(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0]))))/((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])),4)
+            solution=r"k="+str(matrix[0][1])
+        matrix_=""
+        for row in range(len(matrix)):
+            for col in range(len(matrix[row])):
+                comp1="k" if (row==0 and col==1) else str(matrix[row][col])
+                matrix_=matrix_+r""+comp1+(r" & " if (len(matrix[row])-1)!=col else r"")
+            matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+
+        question = r'find the value of k which make the matrix have not only one solution \begin{bmatrix} '+str(matrix_)+r' \end{bmatrix}'
+        alternatives = coursesFunctionsBll.multipleOptions([matrix[0][1]],4)
+        tempAlternatives =[]
+        for opt in range(4):
+            tempAlternatives.append(r"k="+str(alternatives[opt][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': "none"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [matrixProblem, matrix_k_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
