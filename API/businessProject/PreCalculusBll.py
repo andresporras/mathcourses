@@ -376,7 +376,7 @@ def trigonometryLimitProblem():
         sol = round((b/c)+(1/(c/a)),4)
         solution=str(sol)
         question="[lim x->(0)] for (sin("+str(a)+"x)+("+str(b)+"x))/("+str(c)+"x)"
-        options =coursesFunctionsBll.generateOptions(sol)
+        options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:

@@ -108,7 +108,64 @@ def matrix_k_Problem():
     except Exception as er:
         return er
 
-exam1 = [matrixProblem, matrix_k_Problem]
+def determinant_Problem():
+    try:
+        #below temp random solutions
+        matrix=[]
+        for n in range(4):
+            matrix.append([])
+            for m in range(4):
+                matrix[n].append(random.randint(1,10) * (random.randint(0,1) * 2 - 1))
+        det=round(coursesFunctionsBll.findDeterminant4x4(matrix),4)
+        solution=r"Det="+str(det)
+        matrix_ = coursesFunctionsBll.matrixString(matrix)
+        question = r'find the determinant of the matrix \begin{bmatrix} '+str(matrix_)+r' \end{bmatrix}'
+        alternatives = coursesFunctionsBll.multipleOptions([(det if det!=0 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))/(random.randint(1,10) * (random.randint(0,1) * 2 - 1)))],4)
+        tempAlternatives =[]
+        for opt in range(4):
+            tempAlternatives.append(r"Det="+str(alternatives[opt][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"Det=0"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def crammer_Problem():
+    try:
+        #below temp random solutions
+        matrix=[]
+        for n in range(3):
+            matrix.append([])
+            for m in range(4):
+                matrix[n].append(random.randint(1,10) * (random.randint(0,1) * 2 - 1))
+        det=round(coursesFunctionsBll.findDeterminant(matrix))
+        Detz= (matrix[0][0]*((matrix[1][1]*matrix[2][3])-(matrix[1][3]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][3])-(matrix[1][3]*matrix[2][0])))+(matrix[0][3]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
+        solution=r"A=column, B=DETx/DET, C="+str(round(Detz,4))
+        fakeDetz = 0 if Detz!=0 else round(random.randint(1,10) * (random.randint(0,1) * 2 - 1)*random.randint(1,10) * (random.randint(0,1) * 2 - 1),4)
+        opts =[r"A=row, B=DETx/DET, C="+str(round(Detz,4)),r"A=column, B=DET/DETx, C="+str(round(Detz,4)),r"A=row, B=DET/DETx, C="+str(round(Detz,4)),r"A=row, B=DETx/DET, C="+str(fakeDetz),r"A=column, B=DET/DETx, C="+str(fakeDetz),r"A=row, B=DET/DETx, C="+str(fakeDetz),r"A=column, B=DETx/DET, C="+str(fakeDetz)]
+        tempAlternatives=[r"A=column, B=DETx/DET, C="+str(round(Detz,4))]
+        for i in range(4):
+            rValue = random.randint(0,len(opts)-1)
+            tempAlternatives.append(opts[rValue])
+            del opts[rValue]
+        random.shuffle(tempAlternatives)
+        matrixes = coursesFunctionsBll.matrixStringAndSolution(matrix)
+        question = r'to find the solution for the matrix (by using the cramer law)\\ \begin{bmatrix} '+str(matrixes[0])+r' \end{bmatrix}=\begin{bmatrix} '+str(matrixes[1])+r' \end{bmatrix} \\Find the determinant of the quadratic matrix (which we will call DET), then replace the first A \\for the solution column and find the determinant of this new matrix, this will be DETx\\Now repeat the process for the second A, replace it with column solution and find the determinant\\\mbox{which will be DETy. Repeat for last column. Finally we have that x=B, do the same for y and z.}\\Then the value of DETz=C'
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

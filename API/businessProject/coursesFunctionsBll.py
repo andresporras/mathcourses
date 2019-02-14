@@ -604,7 +604,38 @@ def replaceOptions(opt):
         return opt
     except Exception as er:
         return er
-
+def findDeterminant(matrix):
+    Det= (matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))+(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
+    return Det
+def findDeterminant4x4(matrix):
+    totalDet=0
+    sign=1
+    for n in range(4):
+        subMatrix=[]
+        for m in range(3):
+            subMatrix.append([])
+            for p in range(4):
+                if p!=(n):
+                    subMatrix[m].append(matrix[m+1][p])
+        totalDet+=(matrix[0][n]*sign*findDeterminant(subMatrix))
+        sign=sign*(-1)
+    return totalDet
+def matrixString(matrix):
+    matrix_=""
+    for row in range(len(matrix)):
+            for col in range(len(matrix[row])):
+                matrix_=matrix_+r""+str(matrix[row][col])+(r" & " if (len(matrix[row])-1)!=col else r"")
+            matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+    return matrix_
+def matrixStringAndSolution(matrix):
+    matrix_=""
+    matrix_sol=""
+    for row in range(len(matrix)):
+        for col in range(len(matrix[row])-1):
+            matrix_=matrix_+r""+str(matrix[row][col])+(r" & " if (len(matrix[row])-2)!=col else r"")
+        matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+        matrix_sol=matrix_sol+r""+str(matrix[row][len(matrix[row])-1])+(r"\\" if (len(matrix)-1)!=row else r"")
+    return [matrix_,matrix_sol]
 def remove(s, indx):
     s1 = ''.join(x for x in s if s.index(x) != indx)
     return s1
