@@ -605,37 +605,151 @@ def replaceOptions(opt):
     except Exception as er:
         return er
 def findDeterminant(matrix):
-    Det= (matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))+(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
-    return Det
+    try:
+        Det= (matrix[0][0]*((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1])))-(matrix[0][1]*((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0])))+(matrix[0][2]*((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))
+        return Det
+    except Exception as er:
+        return er
+
+def findDeterminant2x2(matrix):
+    try:
+        Det= (matrix[0][0]*matrix[1][1])-(matrix[0][1]*matrix[1][0])
+        return Det
+    except Exception as er:
+        return er
+
+
+def findCofactorMatrix2x2(matrix):
+    try:
+        nMatrix = [[matrix[1][1],matrix[1][0]*(-1)],[matrix[0][1]*(-1),matrix[0][0]]]
+        return nMatrix
+    except Exception as er:
+        return er
+def findCofactorMatrix(matrix):
+    try:
+        coFactorMatrix =[]
+        pos0=-1
+        for a in range(len(matrix)):
+            pos0=(-1)**a
+            coFactorMatrix.append([])
+            for b in range(len(matrix[a])):
+                val1=0
+                val2=0
+                #pos=1
+                nList=[]
+                for c in range(len(matrix)):
+                    #pos=(-1)**c
+                    for d in range(len(matrix[a])):
+                        if(a!=c and b!=d):
+                            nList.append(matrix[c][d] )
+                            #if pos==1:
+                            #    val1=(val1*matrix[c][d] if val1!=0 else matrix[c][d])
+                            #else:
+                            #    val2=(val2*matrix[c][d] if val2!=0 else matrix[c][d])
+                            #pos=pos*(-1)
+                coFactorMatrix[a].append(pos0*((nList[0]*nList[3])-(nList[1]*nList[2])))
+                pos0=pos0*(-1)
+        return coFactorMatrix
+    except Exception as er:
+        return er
+def findTransposeMatrix(matrix):
+    try:
+        transMatrix =[]
+        for a in range(len(matrix)):
+            transMatrix.append([])
+            for b in range(len(matrix[a])):
+                transMatrix[a].append(matrix[b][a])
+        return transMatrix
+    except Exception as er:
+        return er
+    
+    
+def randomMatrixGenerator(param1, height, width):
+    try:
+        matrix=[]
+        for n in range(height):
+                matrix.append([])
+                for m in range(width):
+                    matrix[n].append((random.randint(1,10) * (random.randint(0,1) * 2 - 1))/(1 if param1==0 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))))
+        return matrix
+    except Exception as er:
+        return er
+    
+def scalarXMatrix(matrix, number):
+    try:
+        nMatrix=[]
+        for a in range(len(matrix)):
+            nMatrix.append([])
+            for b in range(len(matrix[a])):
+                nMatrix[a].append(matrix[a][b]*number)
+        return nMatrix
+    except Exception as er:
+        return er
+    
+#op=1 to sum, op=-1 for substract
+def sumMatrix(matrix1, matrix2, op):
+    try:
+        totalMatrix = []
+        for i in range(len(matrix1)):
+            totalMatrix.append([])
+            for j in range(len(matrix1[i])):
+                totalMatrix[i].append(matrix1[i][j]+(matrix2[i][j]*op))
+        return totalMatrix
+    except Exception as er:
+        return er
+def randomMatrixGenerator(param1, height, width):
+    try:
+        matrix=[]
+        for n in range(height):
+                matrix.append([])
+                for m in range(width):
+                    matrix[n].append((random.randint(1,10) * (random.randint(0,1) * 2 - 1))/(1 if param1==0 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))))
+        return matrix
+    except Exception as er:
+        return er
 def findDeterminant4x4(matrix):
-    totalDet=0
-    sign=1
-    for n in range(4):
-        subMatrix=[]
-        for m in range(3):
-            subMatrix.append([])
-            for p in range(4):
-                if p!=(n):
-                    subMatrix[m].append(matrix[m+1][p])
-        totalDet+=(matrix[0][n]*sign*findDeterminant(subMatrix))
-        sign=sign*(-1)
-    return totalDet
+    try:
+        totalDet=0
+        sign=1
+        for n in range(4):
+            subMatrix=[]
+            for m in range(3):
+                subMatrix.append([])
+                for p in range(4):
+                    if p!=(n):
+                        subMatrix[m].append(matrix[m+1][p])
+            totalDet+=(matrix[0][n]*sign*findDeterminant(subMatrix))
+            sign=sign*(-1)
+        return totalDet
+    except Exception as er:
+        return er
+
 def matrixString(matrix):
-    matrix_=""
-    for row in range(len(matrix)):
-            for col in range(len(matrix[row])):
-                matrix_=matrix_+r""+str(matrix[row][col])+(r" & " if (len(matrix[row])-1)!=col else r"")
-            matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
-    return matrix_
+    try:
+        matrix_=""
+        for row in range(len(matrix)):
+                for col in range(len(matrix[row])):
+                    matrix_=matrix_+r""+str(round(matrix[row][col],4))+(r" & " if (len(matrix[row])-1)!=col else r"")
+                matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+        return r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}'
+    except Exception as er:
+        return er
 def matrixStringAndSolution(matrix):
-    matrix_=""
-    matrix_sol=""
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])-1):
-            matrix_=matrix_+r""+str(matrix[row][col])+(r" & " if (len(matrix[row])-2)!=col else r"")
-        matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
-        matrix_sol=matrix_sol+r""+str(matrix[row][len(matrix[row])-1])+(r"\\" if (len(matrix)-1)!=row else r"")
-    return [matrix_,matrix_sol]
+    try:
+        matrix_=""
+        matrix_sol=""
+        for row in range(len(matrix)):
+            for col in range(len(matrix[row])-1):
+                matrix_=matrix_+r""+str(matrix[row][col])+(r" & " if (len(matrix[row])-2)!=col else r"")
+            matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+            matrix_sol=matrix_sol+r""+str(matrix[row][len(matrix[row])-1])+(r"\\" if (len(matrix)-1)!=row else r"")
+        return [r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}',r'\begin{bmatrix}'+matrix_sol+r'\end{bmatrix}']
+    except Exception as er:
+        return er
+
 def remove(s, indx):
-    s1 = ''.join(x for x in s if s.index(x) != indx)
-    return s1
+    try:
+        s1 = ''.join(x for x in s if s.index(x) != indx)
+        return s1
+    except Exception as er:
+        return er

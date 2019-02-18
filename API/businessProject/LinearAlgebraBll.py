@@ -6,6 +6,7 @@ from fractions import Fraction
 from flask import jsonify
 import json
 from sympy import *
+from copy import copy, deepcopy
 
 
 def matrixProblem():
@@ -119,7 +120,7 @@ def determinant_Problem():
         det=round(coursesFunctionsBll.findDeterminant4x4(matrix),4)
         solution=r"Det="+str(det)
         matrix_ = coursesFunctionsBll.matrixString(matrix)
-        question = r'find the determinant of the matrix \begin{bmatrix} '+str(matrix_)+r' \end{bmatrix}'
+        question = r'find the determinant of the matrix '+str(matrix_)+r''
         alternatives = coursesFunctionsBll.multipleOptions([(det if det!=0 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))/(random.randint(1,10) * (random.randint(0,1) * 2 - 1)))],4)
         tempAlternatives =[]
         for opt in range(4):
@@ -154,7 +155,7 @@ def crammer_Problem():
             del opts[rValue]
         random.shuffle(tempAlternatives)
         matrixes = coursesFunctionsBll.matrixStringAndSolution(matrix)
-        question = r'to find the solution for the matrix (by using the cramer law)\\ \begin{bmatrix} '+str(matrixes[0])+r' \end{bmatrix}=\begin{bmatrix} '+str(matrixes[1])+r' \end{bmatrix} \\Find the determinant of the quadratic matrix (which we will call DET), then replace the first A \\for the solution column and find the determinant of this new matrix, this will be DETx\\Now repeat the process for the second A, replace it with column solution and find the determinant\\\mbox{which will be DETy. Repeat for last column. Finally we have that x=B, do the same for y and z.}\\Then the value of DETz=C'
+        question = r'to find the solution for the matrix (by using the cramer law)\\ '+str(matrixes[0])+r' = '+str(matrixes[1])+r' \\Find the determinant of the quadratic matrix (which we will call DET), then replace the first A \\for the solution column and find the determinant of this new matrix, this will be DETx\\Now repeat the process for the second A, replace it with column solution and find the determinant\\\mbox{which will be DETy. Repeat for last column. Finally we have that x=B, do the same for y and z.}\\Then the value of DETz=C'
         options =json.loads(json.dumps({'a':tempAlternatives[0], 
                                         'b':tempAlternatives[1], 
                                         'c': tempAlternatives[2], 
@@ -165,7 +166,133 @@ def crammer_Problem():
     except Exception as er:
         return er
 
-exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem]
+def arithmetic_Problem():
+    try:
+        matrix1=[]
+        for n in range(3):
+            matrix1.append([])
+            for m in range(2):
+                matrix1[n].append(random.randint(1,10) * (random.randint(0,1) * 2 - 1))
+        matrix2=[]
+        for n in range(2):
+            matrix2.append([])
+            for m in range(3):
+                matrix2[n].append(random.randint(1,10) * (random.randint(0,1) * 2 - 1))
+        a = random.randint(1,10) * (random.randint(0,1) * 2 - 1)
+        b = random.randint(1,10) * (random.randint(0,1) * 2 - 1)
+        matrixSolution=[]
+        for n in range(3):
+            matrixSolution.append([])
+            for m in range(3):
+                matrixSolution[n].append(round((matrix1[n][0]*a)*(matrix2[0][m]/b) + (matrix1[n][1]*a)*(matrix2[1][m]/b),4))
+        numbers = list(range(0, 9))
+        listSolutions =[deepcopy(matrixSolution)]
+        for x in range(3):
+            azar = random.randint(0,len(numbers)-1)
+            operation = 2 if random.randint(0,1)==1 else 0.5
+            nMatrix = deepcopy(matrixSolution)
+            nMatrix[math.floor(numbers[azar]/3)][numbers[azar]%3]=  round(nMatrix[math.floor(numbers[azar]/3)][numbers[azar]%3]*operation,4)
+            listSolutions.append(deepcopy(nMatrix))
+            del numbers[azar]
+        tempAlternatives =[]
+        for x in range(4):
+            tempAlternatives.append(coursesFunctionsBll.matrixString(listSolutions[x]))
+        random.shuffle(tempAlternatives)
+        matrixString1 = coursesFunctionsBll.matrixString(matrix1)
+        matrixString2 = coursesFunctionsBll.matrixString(matrix2)
+        solution = coursesFunctionsBll.matrixString(matrixSolution)
+        question = r'for A = '+str(matrixString1)+r' and B = '+str(matrixString2)+r' \\Find (A*'+str(a)+r')*(B/'+str(b)+r')'
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+#inverse = (1/det)*(trans(cof(A))) where A is the matrix
+def inverse_Problem():
+    try:
+        matrix1=coursesFunctionsBll.randomMatrixGenerator(0, 2,2)
+        matrix2=coursesFunctionsBll.randomMatrixGenerator(0, 2,2)
+        det = coursesFunctionsBll.findDeterminant2x2(matrix2)
+        a = random.randint(1,10) * (random.randint(0,1) * 2 - 1)
+        b = random.randint(1,10) * (random.randint(0,1) * 2 - 1)
+        sol=[]
+        solution=""
+        if det!=0:
+            coMatrix = coursesFunctionsBll.findCofactorMatrix2x2(matrix2)
+            adjMatrix = coursesFunctionsBll.findTransposeMatrix(coMatrix)
+            inverseMatrix = coursesFunctionsBll.scalarXMatrix(adjMatrix, 1/det)
+            newMatrix1 = coursesFunctionsBll.scalarXMatrix(matrix1, a)
+            newMatrix2 = coursesFunctionsBll.scalarXMatrix(inverseMatrix, b)
+            sol = coursesFunctionsBll.sumMatrix(newMatrix1, newMatrix2, 1)
+            solution = coursesFunctionsBll.matrixString(sol)
+        else:
+            sol=coursesFunctionsBll.randomMatrixGenerator(1, 2,2)
+            solution=r"No Solution"
+        numbers = list(range(0, 4))
+        listSolutions =[deepcopy(sol)]
+        for x in range(2):
+            azar = random.randint(0,len(numbers)-1)
+            operation = 2 if random.randint(0,1)==1 else 0.5
+            nMatrix = deepcopy(sol)
+            nMatrix[math.floor(numbers[azar]/2)][numbers[azar]%2]=  round(nMatrix[math.floor(numbers[azar]/2)][numbers[azar]%2]*operation,4)
+            listSolutions.append(deepcopy(nMatrix))
+            del numbers[azar]
+        tempAlternatives =[]
+        for x in range(3):
+            tempAlternatives.append(coursesFunctionsBll.matrixString(listSolutions[x]))
+        random.shuffle(tempAlternatives)
+        matrixString1 = coursesFunctionsBll.matrixString(matrix1)
+        matrixString2 = coursesFunctionsBll.matrixString(matrix2)
+        
+        question = r'for A = '+str(matrixString1)+r' and B = '+str(matrixString2)+r' \\Find (A*'+str(a)+r')+({B}^{-1}*'+str(b)+r')'
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': r"No Solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#both to practice cofactor matrix and transpose matrix
+def cofTrans_Problem():
+    try:
+        matrix1=coursesFunctionsBll.randomMatrixGenerator(0, 3,3)
+        matrix2=coursesFunctionsBll.randomMatrixGenerator(0, 3,3)
+        transMatrix = coursesFunctionsBll.findTransposeMatrix(matrix1)
+        coMatrix = coursesFunctionsBll.findCofactorMatrix(matrix2)
+        sol = coursesFunctionsBll.sumMatrix(transMatrix, coMatrix, -1) #last param, 1 for sum, -1 for substract
+        solution = coursesFunctionsBll.matrixString(sol)
+        
+        numbers = list(range(0, 4))
+        listSolutions =[deepcopy(sol)]
+        for x in range(3):
+            azar = random.randint(0,len(numbers)-1)
+            operation = 2 if random.randint(0,1)==1 else 0.5
+            nMatrix = deepcopy(sol)
+            nMatrix[math.floor(numbers[azar]/2)][numbers[azar]%2]=  round(nMatrix[math.floor(numbers[azar]/2)][numbers[azar]%2]*operation,4)
+            listSolutions.append(deepcopy(nMatrix))
+            del numbers[azar]
+        tempAlternatives =[]
+        for x in range(4):
+            tempAlternatives.append(coursesFunctionsBll.matrixString(listSolutions[x]))
+        random.shuffle(tempAlternatives)
+        matrixString1 = coursesFunctionsBll.matrixString(matrix1)
+        matrixString2 = coursesFunctionsBll.matrixString(matrix2)
+        
+        question = r'for A = '+str(matrixString1)+r' and B = '+str(matrixString2)+r' \\Find {A}^{T}-cof(B):'
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
