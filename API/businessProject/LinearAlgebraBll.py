@@ -292,7 +292,31 @@ def cofTrans_Problem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem]
+
+#both to practice cofactor matrix and transpose matrix
+def crossProduct_Problem():
+    try:
+        matrix=coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        area = round((((matrix[0][0]*matrix[1][1])-(matrix[0][1]*matrix[1][0]))**2+((matrix[0][0]*matrix[1][2])-(matrix[0][2]*matrix[1][0]))**2+((matrix[0][1]*matrix[1][2])-(matrix[1][1]*matrix[0][2]))**2)**(0.5),4)
+        mag1 = (matrix[0][0]**2+matrix[0][1]**2+matrix[0][2]**2)**(0.5)
+        mag2 = (matrix[1][0]**2+matrix[1][1]**2+matrix[1][2]**2)**(0.5)
+        angle = round(math.degrees(math.asin(area/(mag1*mag2))),4)
+        solution= r"area="+str(area)+r", angle="+str(angle)+r"°"
+        question=r"A paralelogram adjacent sides are defined by the origin and the points P=("+str(matrix[0][0])+r","+str(matrix[0][1])+r","+str(matrix[0][2])+r") Q=("+str(matrix[1][0])+r","+str(matrix[1][1])+r","+str(matrix[1][2])+r"). Finds the paralelogram area and the angle (in degrees) between P and Q: "
+        alternatives = coursesFunctionsBll.multipleOptions([area, angle],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"area="+str(alternatives[y1][0])+r", angle="+str(alternatives[y1][1])+r"°")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
