@@ -316,13 +316,92 @@ def crossProduct_Problem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem]
+
+#both to practice cofactor matrix and transpose matrix
+def dotProduct_Problem():
+    try:
+        matrix=coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        mag1 = (matrix[0][0]**2+matrix[0][1]**2+matrix[0][2]**2)**(0.5)
+        mag2 = (matrix[1][0]**2+matrix[1][1]**2+matrix[1][2]**2)**(0.5)
+        dotProduct = ((matrix[0][0]*matrix[1][0])+(matrix[0][1]*matrix[1][1])+(matrix[0][2]*matrix[1][2]))
+        projection=round(dotProduct/mag2,4)
+        angle = round(math.degrees(math.acos(dotProduct/(mag1*mag2))),4)
+        solution= r"projection="+str(projection)+r", angle="+str(angle)+r"°"
+        question=r"Two vectors on a tridimensional space connect the origin and the points A=("+str(matrix[0][0])+r","+str(matrix[0][1])+r","+str(matrix[0][2])+r") B=("+str(matrix[1][0])+r","+str(matrix[1][1])+r","+str(matrix[1][2])+r") respectively. Finds the projection of A over B and the angle between the two vectors: "
+        alternatives = coursesFunctionsBll.multipleOptions([projection, angle],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"projection="+str(alternatives[y1][0])+r", angle="+str(alternatives[y1][1])+r"°")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#adj(A)=(trans(cof(A))) where A is the matrix
+def inverseAdj_Problem():
+    try:
+        matrix1=coursesFunctionsBll.randomMatrixGenerator(0, 3,3)
+        matrix2=coursesFunctionsBll.randomMatrixGenerator(0, 3,3)
+        det = coursesFunctionsBll.findDeterminant(matrix2)
+        a= random.randint(0,2)
+        b= random.randint(0,2)
+        sol=[]
+        solution=""
+        if det!=0:
+            coMatrix0 = coursesFunctionsBll.findCofactorMatrix(matrix1)
+            adjMatrix0 = coursesFunctionsBll.findTransposeMatrix(coMatrix0)
+            coMatrix = coursesFunctionsBll.findCofactorMatrix(matrix2)
+            adjMatrix = coursesFunctionsBll.findTransposeMatrix(coMatrix)
+            inverseMatrix = coursesFunctionsBll.scalarXMatrix(adjMatrix, 1/det)
+            sol = round(coursesFunctionsBll.sumMatrix(adjMatrix0, inverseMatrix, 1)[a][b],4)
+            solution = str(sol)
+        else:
+            sol=round(coursesFunctionsBll.randomMatrixGenerator(1, 2,2)[a][b],4)
+            solution=r"No Solution"
+        
+        #numbers = list(range(0, 4))
+        #listSolutions =[deepcopy(sol)]
+        #for x in range(2):
+        #    azar = random.randint(0,len(numbers)-1)
+        #    operation = 2 if random.randint(0,1)==1 else 0.5
+        #    nMatrix = deepcopy(sol)
+        #    nMatrix[math.floor(numbers[azar]/3)][numbers[azar]%3]=  round(nMatrix[math.floor(numbers[azar]/3)][numbers[azar]%3]*operation,4)
+        #    listSolutions.append(deepcopy(nMatrix))
+        #    del numbers[azar]
+        #tempAlternatives =[]
+        #for x in range(3):
+        #    tempAlternatives.append(coursesFunctionsBll.matrixString(listSolutions[x]))
+        #random.shuffle(tempAlternatives)
+        matrixString1 = coursesFunctionsBll.matrixString(matrix1)
+        matrixString2 = coursesFunctionsBll.matrixString(matrix2)
+        question = r'for A = '+str(matrixString1)+r' and B = '+str(matrixString2)+r' \\.If C=adj(A)+{B}^{-1}, find C'+str(a)+r''+str(b)+r':'
+
+        alternatives = coursesFunctionsBll.multipleOptions([sol],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No Solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
     lista = listMethods[int(unit) - 1]
-    for x in range(10):
+    for x in range(12):
         question = random.randint(1,len(lista))
         #numberQuestion='QUESTION '+str(x+1)
         item = str(lista[question - 1]())

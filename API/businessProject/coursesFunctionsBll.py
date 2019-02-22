@@ -477,7 +477,7 @@ def ruleChainOptions(data,a,b,c,d,e,f):
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):
-            tempAlternatives.append("f(x)'=["+str(alternatives[y][0])+"*"+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(alternatives[y][1])+"x^"+str(e-1)+"]/[("+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(d)+"x^"+str(e)+")^("+str(alternatives[y][2])+")]")
+            tempAlternatives.append("f(x)'=["+str(alternatives[y][0])+"*"+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(alternatives[y][1])+"x^"+str(e-1)+"]/[("+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(d*f)+"x^"+str(e)+")^("+str(alternatives[y][2])+")]")
         strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         return strOptions
     except Exception as er:
