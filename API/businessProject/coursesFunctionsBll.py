@@ -747,7 +747,19 @@ def matrixStringAndSolution(matrix):
         return [r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}',r'\begin{bmatrix}'+matrix_sol+r'\end{bmatrix}']
     except Exception as er:
         return er
-
+def productMatrix(matrix1, matrix2):
+    matrixSolution=[]
+    try:
+        for n in range(len(matrix1)):
+            matrixSolution.append([])
+            for m in range(len(matrix2[0])):
+                sum=0
+                for p in range(len(matrix1[0])):
+                    sum+=matrix1[n][p]*matrix2[p][m]
+                matrixSolution[n].append(sum)
+        return matrixSolution
+    except Exception as er:
+        return er
 def remove(s, indx):
     try:
         s1 = ''.join(x for x in s if s.index(x) != indx)
