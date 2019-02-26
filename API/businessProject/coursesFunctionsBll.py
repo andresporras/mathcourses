@@ -697,14 +697,14 @@ def sumMatrix(matrix1, matrix2, op):
         return totalMatrix
     except Exception as er:
         return er
-#-1 for positive integer, 0 for both positive and negative integer, 1 for rationals numbers
+#-1 for positive and negative integers, 0 for both positive integer, 1 for rationals numbers
 def randomMatrixGenerator(param1, height, width):
     try:
         matrix=[]
         for n in range(height):
                 matrix.append([])
                 for m in range(width):
-                    matrix[n].append((random.randint(1,10) * (1 if param1>=0 else (random.randint(0,1) * 2 - 1)))/(1 if param1<1 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))))
+                    matrix[n].append((random.randint(1,10) * (1 if param1!=-1 else (random.randint(0,1) * 2 - 1)))/(1 if param1!=1 else (random.randint(1,10) * (random.randint(0,1) * 2 - 1))))
         return matrix
     except Exception as er:
         return er

@@ -7,7 +7,8 @@ from flask import jsonify
 import json
 from sympy import *
 from copy import copy, deepcopy
-
+#below a really good book of linear algebra
+#https://books.google.com.co/books?id=DrXiBQAAQBAJ&pg=PA19&lpg=PA19&dq=direction+cosines+linear+algebra&source=bl&ots=ShIsqN8LbO&sig=ACfU3U07qvCiTsVjGDMZPDEnWhJjW49wyA&hl=en&sa=X&ved=2ahUKEwi3sOOKhtfgAhXQwFkKHbAOCS04FBDoATAIegQIAxAB#v=onepage&q=direction%20cosines%20linear%20algebra&f=false
 
 def matrixProblem():
     try:
@@ -418,7 +419,32 @@ def span_Problem():
     except Exception as er:
         return er
 
-exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem]
+#adj(A)=(trans(cof(A))) where A is the matrix
+def directionCos_Problem():
+    try:
+        vectors = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        operation = (random.randint(0,1) * 2 - 1)
+        vector=[[(vectors[0][0]-vectors[1][0])*operation,(vectors[0][1]-vectors[1][1])*operation,((vectors[0][2]-vectors[1][2])*operation)]]
+        hipotenuse = ((vector[0][0]**2)+(vector[0][1]**2)+(vector[0][2]**2))**(1/2)
+        xCos = round(vector[0][0]/hipotenuse,4)
+        yCos = round(vector[0][1]/hipotenuse,4)
+        zCos = round(vector[0][2]/hipotenuse,4)
+        solution=r"cos(x)="+str(xCos)+r", cos(y)="+str(yCos)+r", cos(z)="+str(zCos)+r"."
+        question = r"\mbox{A is the vector (i, j, k) which connects vectors ("+str(vectors[0][0])+r","+str(vectors[0][1])+r","+str(vectors[0][2])+r") and ("+str(vectors[1][0])+r","+str(vectors[1][1])+r","+str(vectors[1][2])+r") and i="+str((vectors[0][0]-vectors[1][0])*operation)+r".} \\ Lets set vectors A tail in the origin, find its directional cosines (unit vector):"
+        alternatives = coursesFunctionsBll.multipleOptions([xCos, yCos, zCos],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"cos(x)="+str(alternatives[y1][0])+r", cos(y)="+str(alternatives[y1][1])+r", cos(z)="+str(alternatives[y1][2])+r".")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem, directionCos_Problem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

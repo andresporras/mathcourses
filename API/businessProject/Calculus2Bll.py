@@ -133,8 +133,8 @@ def trigonometrySubstitutionProblem():
         q1=random.randint(0,2)
         q2=random.randint(0,2)
         def assignVariable(ab): #0 item is the expression, 1 is simplification, 2 is derivation
-            opt1 = [[r"\frac{\sqrt{"+str(ab**2)+r"-{x}^{2}}}{x}",r"\sqrt{"+str(ab**2)+r"-x^2}-"+str(ab)+r"ln(\sqrt{"+str(ab**2)+r"-x^2}+"+str(ab)+r"ln(x))+"+str(ab)+r"+C",0],
-                    [r"\frac{\sqrt{"+str(ab**2)+r"+{x}^{2}}}{x}",r"\sqrt{"+str(ab**2)+r"+x^2}-"+str(ab)+r"ln(\sqrt{"+str(ab**2)+r"+x^2}+"+str(ab)+r"ln(x))+"+str(ab)+r"+C",0],
+            opt1 = [[r"\frac{\sqrt{"+str(ab**2)+r"-{x}^{2}}}{x}",r"\sqrt{"+str(ab**2)+r"-x^2}-"+str(ab)+r"ln(\sqrt{"+str(ab**2)+r"-x^2}+"+str(ab)+r")+"+str(ab)+r"ln(x)+C",0],
+                    [r"\frac{\sqrt{"+str(ab**2)+r"+{x}^{2}}}{x}",r"\sqrt{"+str(ab**2)+r"+x^2}-"+str(ab)+r"ln(\sqrt{"+str(ab**2)+r"+x^2}+"+str(ab)+r")+"+str(ab)+r"ln(x)+C",0],
                     [r"\frac{\sqrt{{x}^{2}-"+str(ab**2)+r"}}{x}",r"\sqrt{x^2-"+str(ab**2)+r"}+"+str(ab)+r"atan(\frac{"+str(ab)+r"}{\sqrt{"+str(ab**2)+r"+x^2}})+C",0]]
             opt2 = [[r"\frac{1}{x\sqrt{"+str(ab**2)+r"-{x}^{2}}}",r"\frac{1}{"+str(ab)+r"}(ln(x)-ln(\sqrt{"+str(ab**2)+r"-{x}^{2}}+"+str(ab)+r"))+C",0],
                     [r"\frac{1}{x\sqrt{"+str(ab**2)+r"+{x}^{2}}}",r"\frac{1}{"+str(ab)+r"}(ln(x)-ln(\sqrt{"+str(ab**2)+r"+{x}^{2}}+"+str(ab)+r"))+C",0],
@@ -179,12 +179,14 @@ def fractionProblem():
         a1=d*f
         b1=(d*g)+(e*f)
         c1=e*g
-
-        A=round(c/(e*g),4)
-        B=round(((b)-(A*g*d)-(A*e*f)-(a*e/d)+(A*d*f*e/d))*(d/((g*d)-(e*f))),4)
-        C=round(((a)-(A*d*f)-(B*f))/d,4)
+        A0=c/(e*g)
+        B0=((b)-(A0*g*d)-(A0*e*f)-(a*e/d)+(A0*d*f*e/d))*(d/((g*d)-(e*f)))
+        C0=((a)-(A0*d*f)-(B0*f))/d
+        A=round(A0,4)
+        B=round(B0/d,4)
+        C=round(C0/f,4)
         solution= r""+str(A)+r"ln|x|+"+str(B)+r"ln|("+str(d)+r"x)+("+str(e)+r")|+"+str(C)+r"ln|("+str(f)+r"x)+("+str(g)+r")|+C"
-        question = r"\int \frac{"+str(a)+r"x^{2}+"+str(b)+r"x+"+str(c)+r"}{"+str(a1)+r"x^{3}+"+str(b1)+r"^{2}x+"+str(c1)+r"x}"
+        question = r"\int \frac{"+str(a)+r"x^{2}+"+str(b)+r"x+"+str(c)+r"}{"+str(a1)+r"x^{3}+"+str(b1)+r"x^{2}+"+str(c1)+r"x}"
         alternatives = coursesFunctionsBll.multipleOptions([A,B,C],5)
         tempAlternatives =[]
         for y1 in range(5):
