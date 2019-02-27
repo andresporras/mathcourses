@@ -444,8 +444,67 @@ def directionCos_Problem():
         return jsonResponse
     except Exception as er:
         return er
+
+#adj(A)=(trans(cof(A))) where A is the matrix
+def vectorialEquationProblem():
+    try:
+        matrix1 = coursesFunctionsBll.randomMatrixGenerator(-1, 3,3)
+        matrix2 = coursesFunctionsBll.randomMatrixGenerator(-1, 3,1)
+        vectorSolution = coursesFunctionsBll.randomMatrixGenerator(-1, 3,1)
+        vectorSolution[0][0]=0
+        det = coursesFunctionsBll.findDeterminant(matrix1)
+        matrixSolution=[]
+        sol=0
+        solution=""
+        if det!=0:
+            coMatrix0 = coursesFunctionsBll.findCofactorMatrix(matrix1)
+            adjMatrix0 = coursesFunctionsBll.findTransposeMatrix(coMatrix0)
+            inverseMatrix = coursesFunctionsBll.scalarXMatrix(adjMatrix0, 1/det)
+            matrixSolution = coursesFunctionsBll.productMatrix(inverseMatrix,vectorSolution)
+            solution =r"("+str(round(matrixSolution[0][0],4))+r","+str(round(matrixSolution[1][0],4))+r","+str(round(matrixSolution[2][0],4))+r")+k("+str(matrix2[0][0])+r","+str(matrix2[1][0])+r","+str(matrix2[2][0])+r")"
+        else:
+            matrixSolution = coursesFunctionsBll.randomMatrixGenerator(1, 3,1)
+            solution=r"No unique solution"
+        question = r"A line has a directional vector (a_{0},a_{1},a_{2}) and it is perpendicular to the line which directional vector is ("+str(matrix1[0][0])+r","+str(matrix1[0][1])+r","+str(matrix1[0][2])+r")}, both lines pass through the point ("+str(matrix2[0][0])+r","+str(matrix2[1][0])+r","+str(matrix2[2][0])+r") \\\mbox{Besides we know that "+str(matrix1[1][0])+r"a_{0}+"+str(matrix1[1][1])+r"a_{1}+"+str(matrix1[1][2])+r"a_{2}="+str(vectorSolution[1][0])+" and "+str(matrix1[2][0])+r"a_{0}+"+str(matrix1[2][1])+r"a_{1}+"+str(matrix1[2][2])+r"a_{2}="+str(vectorSolution[2][0])+". Express line A as vectorial equation:}"
+        alternatives = coursesFunctionsBll.multipleOptions([round(matrixSolution[0][0],4),round(matrixSolution[1][0],4),round(matrixSolution[2][0],4),matrix2[0][0],matrix2[1][0],matrix2[2][0]],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r"("+str(alternatives[y1][0])+r","+str(alternatives[y1][1])+r","+str(alternatives[y1][2])+r")+k("+str(alternatives[y1][3])+r","+str(alternatives[y1][4])+r","+str(alternatives[y1][5])+r")")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No unique solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#adj(A)=(trans(cof(A))) where A is the matrix
+def parametricEquationProblem():
+    try:
+        matrix1 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        tx= matrix1[1][0]-matrix1[0][0]
+        ty= matrix1[1][1]-matrix1[0][1]
+        tz= matrix1[1][2]-matrix1[0][2]
+        solution=r"x="+str(matrix1[0][0])+r"+("+str(tx)+"t), y="+str(matrix1[0][1])+r"+("+str(ty)+"t), z="+str(matrix1[0][2])+r"+("+str(tz)+"t)"
+        question = r"From below options choose the right one who represents the parametric function which connect to points ("+str(matrix1[0][0])+r","+str(matrix1[0][1])+r","+str(matrix1[0][2])+r") and ("+str(matrix1[1][0])+r","+str(matrix1[1][1])+r","+str(matrix1[1][2])+r")"
+        alternatives = coursesFunctionsBll.multipleOptions([tx,ty,tz],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"x="+str(matrix1[0][0])+r"+("+str(alternatives[y1][0])+"t), y="+str(matrix1[0][1])+r"+("+str(alternatives[y1][1])+"t), z="+str(matrix1[0][2])+r"+("+str(alternatives[y1][2])+"t)")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem, directionCos_Problem]
-exam2 = []
+exam2 = [vectorialEquationProblem, parametricEquationProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
