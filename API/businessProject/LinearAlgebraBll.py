@@ -503,8 +503,73 @@ def parametricEquationProblem():
     except Exception as er:
         return er
 
+def symmetricEquationProblem():
+    try:
+        point1 = coursesFunctionsBll.randomMatrixGenerator(-1, 1,3)
+        point2 = coursesFunctionsBll.randomMatrixGenerator(-1, 1,3)
+        direction1 = coursesFunctionsBll.randomMatrixGenerator(-1, 1,3)
+        product = (random.randint(2,10) * (random.randint(0,1) * 2 - 1))/(random.randint(2,10) * (random.randint(0,1) * 2 - 1))
+        direction2 = [[]]
+        #coursesFunctionsBll.productMatrix(direction1,product)
+        directionOptions = []
+        for x1 in range(3):
+            direction2[0].append(round(direction1[0][x1]*product,4))
+        opts = [[0.5,1,1],[1,0.5,1],[1,1,0.5],[2,1,1],[1,2,1],[1,1,2]]
+        for y1 in range(4):
+            chosen = random.randint(0,len(opts)-1)
+            nDirection = [[]]
+            for z1 in range(3):
+                nDirection[0].append(round(direction2[0][z1]*opts[chosen][z1],4))
+            del opts[chosen]
+            directionOptions.append(nDirection[0])
+        directionOptions.append(direction2[0])
+        random.shuffle(directionOptions)
+        question ='The line A pass through the point ('+str(point2[0][0])+r','+str(point2[0][1])+r','+str(point2[0][2])+r') and is parallel to the line ('+str(point1[0][0])+r','+str(point1[0][1])+r','+str(point1[0][2])+r') +K('+str(direction1[0][0])+r','+str(direction1[0][1])+r','+str(direction1[0][2])+r'). From below options choose the one which represent line A:'
+        tempAlternatives=[]
+        solution = r'\frac{x-('+str(point2[0][0])+r')}{'+str(direction2[0][0])+r'} = \frac{y-('+str(point2[0][1])+r')}{'+str(direction2[0][1])+r'} = \frac{z-('+str(point2[0][2])+r')}{'+str(direction2[0][2])+r'}'
+        for y1 in range(5):
+            tempAlternatives.append(r'\frac{x-('+str(point2[0][0])+r')}{'+str(directionOptions[y1][0])+r'} = \frac{y-('+str(point2[0][1])+r')}{'+str(directionOptions[y1][1])+r'} = \frac{z-('+str(point2[0][2])+r')}{'+str(directionOptions[y1][2])+r'}')
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c':tempAlternatives[2], 
+                                        'd':tempAlternatives[3], 
+                                        'e':tempAlternatives[4]}))
+
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def intersectProblem():
+    try:
+        point1 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        point2 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        matrix=[]
+        solution=""
+        for i in range(3):
+            matrix.append([point1[1][i],(point1[0][i]-point2[0][i]),point2[1][i]])
+        if (((matrix[1][1]*matrix[2][2])-(matrix[2][1]*matrix[1][2]))==0):
+            solution=r"no solution"
+        else:
+            matrix[0][0]=round((-(matrix[0][1]*(((matrix[1][0]*matrix[2][2])-(matrix[1][2]*matrix[2][0]))))+(matrix[0][2]*(((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0])))))/(-((matrix[1][1]*matrix[2][2])-(matrix[2][1]*matrix[1][2]))),4)
+            solution = str(matrix[0][0])
+        question = r"having two lines ("+str(point1[0][0])+r","+str(point1[0][1])+r","+str(point1[0][2])+r")+k(A,"+str(point1[1][1])+r","+str(point1[1][2])+r") and ("+str(point2[0][0])+r","+str(point2[0][1])+r","+str(point2[0][2])+r")+k("+str(point2[1][0])+r","+str(point2[1][1])+r","+str(point2[1][2])+r"), find which value of A makes the lines intersect each other: "
+        alternatives = coursesFunctionsBll.multipleOptions([matrix[0][0]],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(str(alternatives[y1][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"no solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem, directionCos_Problem]
-exam2 = [vectorialEquationProblem, parametricEquationProblem]
+exam2 = [vectorialEquationProblem, parametricEquationProblem, symmetricEquationProblem, intersectProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
