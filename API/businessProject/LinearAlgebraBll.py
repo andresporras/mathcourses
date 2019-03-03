@@ -568,8 +568,158 @@ def intersectProblem():
     except Exception as er:
         return er
 
+def planeIntersectProblem():
+    try:
+        planes = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        pSolution1 = (random.randint(2,10) * (random.randint(0,1) * 2 - 1))
+        pSolution2 = (random.randint(2,10) * (random.randint(0,1) * 2 - 1))
+
+        x=round((random.randint(2,10) * (random.randint(0,1) * 2 - 1)),4)
+        y=round((random.randint(2,10) * (random.randint(0,1) * 2 - 1)),4)
+        z=round((random.randint(2,10) * (random.randint(0,1) * 2 - 1)),4)
+        x0=round((random.randint(2,10) * (random.randint(0,1) * 2 - 1))/(random.randint(2,10) * (random.randint(0,1) * 2 - 1)),4)
+        y0=round((random.randint(2,10) * (random.randint(0,1) * 2 - 1))/(random.randint(2,10) * (random.randint(0,1) * 2 - 1)),4)
+        if (planes[0][0]/planes[1][0])==(planes[0][1]/planes[1][1]) and (planes[0][1]/planes[1][1])==(planes[0][2]/planes[1][2]):
+            solution = r'No solution'
+        else:
+            x = (planes[0][1]*planes[1][2])-(planes[1][1]*planes[0][2])
+            y = ((planes[0][0]*planes[1][2])-(planes[1][0]*planes[0][2]))*(-1)
+            z = (planes[0][0]*planes[1][1])-(planes[0][1]*planes[1][0])
+            
+            y0=round(((pSolution1-planes[0][2])/(planes[0][0])-(pSolution2-planes[1][2])/(planes[1][0]))/((planes[0][1]/planes[0][0])-(planes[1][1]/planes[1][0])),4)
+            x0= round((pSolution1-planes[0][2]-(planes[0][1]*y0))/(planes[0][0]),4)
+            z0=1
+            solution = r'\frac{x-('+str(x0)+r')}{'+str(x)+r'}=\frac{y-('+str(y0)+r')}{'+str(y)+r'}=\frac{z-('+str(z0)+r')}{'+str(z)+r'}'
+        question = r"Find the symetric equation for the line of planes intersection between "+str(planes[0][0])+r"x+"+str(planes[0][1])+r"y+"+str(planes[0][2])+r"z="+str(pSolution1)+" and "+str(planes[1][0])+r"x+"+str(planes[1][1])+r"y+"+str(planes[1][2])+r"z="+str(pSolution2)+": "
+        alternatives = coursesFunctionsBll.multipleOptions([x0, x,y0, y,z],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r'\frac{x-('+str(alternatives[y1][0])+r')}{'+str(alternatives[y1][1])+r'}=\frac{y-('+str(alternatives[y1][2])+r')}{'+str(alternatives[y1][3])+r'}=\frac{z-('+str(z0)+r')}{'+str(alternatives[y1][4])+r'}') 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"no solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def skewProblem():
+    try:
+        point1 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3) #first row is the dot, second row is the directional vector
+        point2 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        editPoint2 = random.randint(0,2)
+        if(editPoint2==0): #parallel
+            multiply = random.randint(1,10)*(random.randint(0,1)*2-1)
+            point2[1]=[point1[1][0]*multiply,point1[1][1]*multiply,point1[1][2]*multiply]
+            rotate = random.randint(0,1)
+            if rotate==1:
+                temp=point1[1].copy()
+                point1[1]=point2[1]
+                point2[1]=temp
+        elif(editPoint2==1):
+            multiply = random.randint(1,10)*(random.randint(0,1)*2-1)
+            point2[0]=[point1[0][0]+(point1[1][0]*multiply),point1[0][1]+(point1[1][1]*multiply),point1[0][2]+(point1[1][2]*multiply)]
+
+        matrix=[]
+        solution=r"skew"
+        if (point1[1][0]/point2[1][0])==(point1[1][1]/point2[1][1]) and (point1[1][1]/point2[1][1])==(point1[1][2]/point2[1][2]):
+            solution=r"parallel"
+        else:
+            for i in range(3):
+                matrix.append([point1[1][i],(point1[0][i]-point2[0][i]),-1*point2[1][i]])
+            det = coursesFunctionsBll.findDeterminant(matrix)
+            if det==0:
+                solution=r"intersect"
+        question = r"having two lines ("+str(point1[0][0])+r","+str(point1[0][1])+r","+str(point1[0][2])+r")+k("+str(point1[1][0])+r","+str(point1[1][1])+r","+str(point1[1][2])+r") and ("+str(point2[0][0])+r","+str(point2[0][1])+r","+str(point2[0][2])+r")+k("+str(point2[1][0])+r","+str(point2[1][1])+r","+str(point2[1][2])+r"), define if the line are parallels, they intersect or skew: "
+        
+        options =json.loads(json.dumps({'a':r"parallel",
+                                        'b':r"intersect", 
+                                        'c': r"skew"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def twoLinesProblem():
+    try:
+        point1 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3) #first row is the dot, second row is the directional vector
+        point2 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3)
+        editPoint2 = random.randint(0,1)
+        if(editPoint2==0): #parallel
+            multiply = random.randint(1,10)*(random.randint(0,1)*2-1)
+            point2[1]=[point1[1][0]*multiply,point1[1][1]*multiply,point1[1][2]*multiply]
+            rotate = random.randint(0,1)
+            if rotate==1:
+                temp=point1[1].copy()
+                point1[1]=point2[1]
+                point2[1]=temp
+        else:
+            multiply = random.randint(1,10)*(random.randint(0,1)*2-1)
+            point2[0]=[point1[0][0]+(point1[1][0]*multiply),point1[0][1]+(point1[1][1]*multiply),point1[0][2]+(point1[1][2]*multiply)]
+   
+        dots = [[point1[0][0],point1[0][1],point1[0][2]],
+                [point2[0][0],point2[0][1],point2[0][2]],
+                [point2[0][0]+point2[1][0],point2[0][1]+point2[1][1],point2[0][2]+point2[1][2]]]
+        director1 = [dots[0][0]-dots[1][0],dots[0][1]-dots[1][1],dots[0][2]-dots[1][2]]
+        director2 = [dots[0][0]-dots[2][0],dots[0][1]-dots[2][1],dots[0][2]-dots[2][2]]
+        x = (director1[1]*director2[2])-(director1[2]*director2[1])
+        y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
+        z = (director1[0]*director2[1])-(director1[1]*director2[0])
+        if x==0 and y==0 and z==0:
+            solution=r"No solution"
+            x = random.randint(1,10)*(random.randint(0,1)*2-1)
+            y = random.randint(1,10)*(random.randint(0,1)*2-1)
+            z = random.randint(1,10)*(random.randint(0,1)*2-1)
+            d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
+        else:
+            d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
+            solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r":"
+        
+        solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r":"
+        question = r"Find the plane that contains the lines ("+str(point1[0][0])+r","+str(point1[0][1])+r","+str(point1[0][2])+r")+k("+str(point1[1][0])+r","+str(point1[1][1])+r","+str(point1[1][2])+r") and ("+str(point2[0][0])+r","+str(point2[0][1])+r","+str(point2[0][2])+r")+k("+str(point2[1][0])+r","+str(point2[1][1])+r","+str(point2[1][2])+r"): "
+        alternatives = coursesFunctionsBll.multipleOptions([x,y,z,d],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r"("+str(alternatives[y1][0])+r"x)+("+str(alternatives[y1][1])+r"y)+("+str(alternatives[y1][2])+r"z)="+str(alternatives[y1][3])+r":") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def threeDotsProblem():
+    try:
+        dots = coursesFunctionsBll.randomMatrixGenerator(-1, 3,3)
+        director1 = [dots[0][0]-dots[1][0],dots[0][1]-dots[1][1],dots[0][2]-dots[1][2]]
+        director2 = [dots[0][0]-dots[2][0],dots[0][1]-dots[2][1],dots[0][2]-dots[2][2]]
+        x = (director1[1]*director2[2])-(director1[2]*director2[1])
+        y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
+        z = (director1[0]*director2[1])-(director1[1]*director2[0])
+        d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
+        solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r":"
+        question = r"Find the plane that contains the points ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r"), ("+str(dots[1][0])+r","+str(dots[1][1])+r","+str(dots[1][2])+r") and ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r")"
+        alternatives = coursesFunctionsBll.multipleOptions([x,y,z,d],5)
+        tempAlternatives =[]
+        for y1 in range(5):
+            tempAlternatives.append(r"("+str(alternatives[y1][0])+r"x)+("+str(alternatives[y1][1])+r"y)+("+str(alternatives[y1][2])+r"z)="+str(alternatives[y1][3])+r":") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem, directionCos_Problem]
-exam2 = [vectorialEquationProblem, parametricEquationProblem, symmetricEquationProblem, intersectProblem]
+exam2 = [vectorialEquationProblem, parametricEquationProblem, symmetricEquationProblem, intersectProblem, planeIntersectProblem, skewProblem, threeDotsProblem, twoLinesProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
