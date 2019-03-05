@@ -697,7 +697,7 @@ def sumMatrix(matrix1, matrix2, op):
         return totalMatrix
     except Exception as er:
         return er
-#-1 for positive and negative integers, 0 for both positive integer, 1 for rationals numbers
+#-1 for positive and negative integers, 0 for positive integer, 1 for rationals numbers
 def randomMatrixGenerator(param1, height, width):
     try:
         matrix=[]
@@ -758,6 +758,24 @@ def productMatrix(matrix1, matrix2):
                     sum+=matrix1[n][p]*matrix2[p][m]
                 matrixSolution[n].append(sum)
         return matrixSolution
+    except Exception as er:
+        return er
+
+def matrixStringRowColumnTitles(strings, matrix):
+    try:
+        matrix_=""
+        k=0
+        height=len(matrix)+1
+        width= len(matrix[0])+1
+        for row in range(height):
+                for col in range(width):
+                    if row==0 or col==0:
+                        matrix_=matrix_+r""+strings[k]+(r" & " if (width-1)!=col else r"")
+                        k+=1
+                    else:
+                        matrix_=matrix_+r""+str(round(matrix[row-1][col-1],4))+(r" & " if (width-1)!=col else r"")
+                matrix_=matrix_+(r"\\" if (height-1)!=row else r"")
+        return r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}'
     except Exception as er:
         return er
 def remove(s, indx):

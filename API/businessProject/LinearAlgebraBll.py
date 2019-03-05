@@ -696,18 +696,160 @@ def twoLinesProblem():
 def threeDotsProblem():
     try:
         dots = coursesFunctionsBll.randomMatrixGenerator(-1, 3,3)
+        solution=r""
+        det = coursesFunctionsBll.findDeterminant(dots)
+        if (det==0):
+            solution=r"No solution"
+        else:
+            director1 = [dots[0][0]-dots[1][0],dots[0][1]-dots[1][1],dots[0][2]-dots[1][2]]
+            director2 = [dots[0][0]-dots[2][0],dots[0][1]-dots[2][1],dots[0][2]-dots[2][2]]
+            x = (director1[1]*director2[2])-(director1[2]*director2[1])
+            y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
+            z = (director1[0]*director2[1])-(director1[1]*director2[0])
+            d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
+            solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r""
+        question = r"Find the plane that contains the points ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r"), ("+str(dots[1][0])+r","+str(dots[1][1])+r","+str(dots[1][2])+r") and ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r")"
+        alternatives = coursesFunctionsBll.multipleOptions([x,y,z,d],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r"("+str(alternatives[y1][0])+r"x)+("+str(alternatives[y1][1])+r"y)+("+str(alternatives[y1][2])+r"z)="+str(alternatives[y1][3])+r"") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+
+def normalVectorProblem():
+    try:
+        dots = coursesFunctionsBll.randomMatrixGenerator(-1, 3,3)
         director1 = [dots[0][0]-dots[1][0],dots[0][1]-dots[1][1],dots[0][2]-dots[1][2]]
         director2 = [dots[0][0]-dots[2][0],dots[0][1]-dots[2][1],dots[0][2]-dots[2][2]]
-        x = (director1[1]*director2[2])-(director1[2]*director2[1])
-        y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
-        z = (director1[0]*director2[1])-(director1[1]*director2[0])
-        d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
-        solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r":"
-        question = r"Find the plane that contains the points ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r"), ("+str(dots[1][0])+r","+str(dots[1][1])+r","+str(dots[1][2])+r") and ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r")"
-        alternatives = coursesFunctionsBll.multipleOptions([x,y,z,d],5)
+        det = coursesFunctionsBll.findDeterminant(dots)
+        solution=r""
+        if (det==0):
+            solution=r"No solution"
+        else:
+            x = (director1[1]*director2[2])-(director1[2]*director2[1])
+            y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
+            z = (director1[0]*director2[1])-(director1[1]*director2[0])
+            solution = r"("+str(x)+r","+str(y)+r","+str(z)+r")"
+        
+        question = r"Find the normal vector to the plane that contains the line ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r") + k("+str(director1[0])+r","+str(director1[1])+r","+str(director1[2])+r")  and pass through the point ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r")"
+        alternatives = coursesFunctionsBll.multipleOptions([x,y,z],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r"("+str(alternatives[y1][0])+r","+str(alternatives[y1][1])+r","+str(alternatives[y1][2])+r")") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def parallelepipedProblem():
+    try:
+        dots = coursesFunctionsBll.randomMatrixGenerator(-1, 3,3)
+        superDots=[]
+        #below loop to find if the three points and the origin can be in the same plane, if thats the case the problem has no solution (or solution is 0)
+        for i in range(4):
+            superDots.append([])
+            for j in range(4):
+                if i==0 or j==3:
+                    superDots[i].append(0)
+                else:
+                    superDots[i].append(dots[i-1][j])
+
+        det = coursesFunctionsBll.findDeterminant4x4(superDots)
+        solution=r""
+        sol=0
+        if det==0:
+            solution=r"No solution"
+            sol = random.randint(2,100)
+        else:
+            x= (dots[0][1]*dots[1][2])-(dots[0][2]*dots[1][1])
+            y= -1*((dots[0][0]*dots[1][2])-(dots[0][2]*dots[1][0]))
+            z= (dots[0][0]*dots[1][1])-(dots[0][1]*dots[1][0])
+            sol = round(abs((dots[2][0]*x)+(dots[2][1]*y)+(dots[2][2]*z)),4)
+            solution=r""+str(sol)
+        question = r"Find the volume of the parallelepiped defined by the origin and the vectors ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r"), ("+str(dots[1][0])+r","+str(dots[1][1])+r","+str(dots[1][2])+r") and ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r"): "
+        alternatives = coursesFunctionsBll.multipleOptions([sol],4)
+        tempAlternatives =[]
+        for y1 in range(4):
+            tempAlternatives.append(r""+str(alternatives[y1][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': r"No solution"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#link of matrix algebra laws: https://stattrek.com/matrix-algebra/matrix-theorems.aspx?Tutorial=matrix
+def matrixLawsProblem():
+    try:
+        exercises = [['A+B','B+A','(A+B)A^{-1}'],
+                     ['A + B + C ','A + ( B + C ) = ( A + B ) + C','(A + B + C)^{T}'],
+                     ['ABC','A( BC ) = ( AB )C','BCA'],
+                     ['A( B + C )','AB + AC','BA + CA'],
+                     ['x( A + B )','xA + xB','xAB = xBA'],
+                     ['( A^{T} )^{T}','A','A^{T}'],
+                     ['( A + B )^{T}','A^{T} + B^{T}','( A + B )^{-1}'],
+                     ['( AB )^{T}','B^{T}A^{T}','A^{T}B^{T}'],
+                     ['( ABC )^{T}','C^{T}B^{T}A^{T}','A^{T}B^{T}C^{T}'],
+                     ['AI','IA = A','A^{-1}'],
+                      ['AA^{-1}','A^{-1}A = I','A^{-1}A = A'],
+                     ['(A^{-1})^{-1}','A','I'],
+                     ['( AB )^{-1} ','B^{-1}A^{-1}','A^{-1}B^{-1}'],
+                     ['( ABC )^{-1} ','C^{-1}B^{-1}A^{-1}','A^{-1}B^{-1}C^{-1}'],
+                     ['( A^{T} )^{-1}','( A^{-1} )^{T}','A']
+                     ]
+        a = random.randint(0,14)
+        b = random.randint(0,14)
+        while a==b:
+            b = random.randint(0,14)
+        solution=r""+str(exercises[a][0])+r"="+str(exercises[a][1])+r", "+str(exercises[b][0])+r"="+str(exercises[b][1])
+        tempAlternatives = [solution,
+                        r""+str(exercises[a][0])+r"="+str(exercises[a][2])+r", "+str(exercises[b][0])+r"="+str(exercises[b][1]),
+                        r""+str(exercises[a][0])+r"="+str(exercises[a][1])+r", "+str(exercises[b][0])+r"="+str(exercises[b][2]),
+                        r""+str(exercises[a][0])+r"="+str(exercises[a][2])+r", "+str(exercises[b][0])+r"="+str(exercises[b][2])]
+        random.shuffle(tempAlternatives)
+        question = r"Find the right pair of matrices algebra laws from the options below: "
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def matrixApplicationProblem():
+    try:
+        matrix1 = coursesFunctionsBll.randomMatrixGenerator(0, 2,3)
+        strings1 = ["","jeans","shirts","shoes","store A","store B"]
+        matrix2 = coursesFunctionsBll.randomMatrixGenerator(0, 3,2)
+        strings2 = ["","Bogota","Medellin","jeans","shirts","shoes"]
+        stringMatrix1 = coursesFunctionsBll.matrixStringRowColumnTitles(strings1, matrix1)
+        stringMatrix2 = coursesFunctionsBll.matrixStringRowColumnTitles(strings2, matrix2)
+        solMatrix = coursesFunctionsBll.productMatrix(matrix1, matrix2)
+        strings3 = ["","Bogota","Medellin","store A","store B"]
+        alternatives = coursesFunctionsBll.multipleOptions([solMatrix[0][0],solMatrix[0][1],solMatrix[1][0],solMatrix[1][1]],5)
+        solution=coursesFunctionsBll.matrixStringRowColumnTitles(strings3,solMatrix)
+        question = r" the next matrix show the average number of clothings sells for A and B stores during the last months: "+stringMatrix1+r" and the next show the average price of the clothes, sells by this two stores, per city: "+stringMatrix2+r" from the options below choose which matrix represent the average sells, of each store, by city"
+        alternatives = coursesFunctionsBll.multipleOptions([solMatrix[0][0],solMatrix[0][1],solMatrix[1][0],solMatrix[1][1]],5)
         tempAlternatives =[]
         for y1 in range(5):
-            tempAlternatives.append(r"("+str(alternatives[y1][0])+r"x)+("+str(alternatives[y1][1])+r"y)+("+str(alternatives[y1][2])+r"z)="+str(alternatives[y1][3])+r":") 
+            tempAlternatives.append(coursesFunctionsBll.matrixStringRowColumnTitles(strings3, [[alternatives[y1][0],alternatives[y1][1]],[alternatives[y1][2],alternatives[y1][3]]])) 
         options =json.loads(json.dumps({'a':tempAlternatives[0],
                                         'b':tempAlternatives[1], 
                                         'c': tempAlternatives[2], 
@@ -719,7 +861,7 @@ def threeDotsProblem():
         return er
 
 exam1 = [matrixProblem, matrix_k_Problem, determinant_Problem, crammer_Problem, arithmetic_Problem, inverse_Problem, cofTrans_Problem, crossProduct_Problem, dotProduct_Problem, inverseAdj_Problem, span_Problem, directionCos_Problem]
-exam2 = [vectorialEquationProblem, parametricEquationProblem, symmetricEquationProblem, intersectProblem, planeIntersectProblem, skewProblem, threeDotsProblem, twoLinesProblem]
+exam2 = [vectorialEquationProblem, parametricEquationProblem, symmetricEquationProblem, intersectProblem, planeIntersectProblem, skewProblem, twoLinesProblem, threeDotsProblem, normalVectorProblem, parallelepipedProblem, matrixLawsProblem, matrixApplicationProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
