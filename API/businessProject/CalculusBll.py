@@ -190,14 +190,14 @@ def inverseTriProblem():
 #using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
 def logarithmProblem():
     try:
-        oddPair = [["sin(-x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(-x)","cos(x)","-sin(x)","tan(x/2)/[tan(x/2)]+1"],["tan(-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["cot(-x)","-cot(x)","csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["sec(-x)","sec(x)","sec(x)*tan(x)","sin(2x)/[1+cos(2x)]"],["csc(-x)","-csc(x)","csc(x)*cot(x)","[cot^2(x)-csc^2(x)]/tan(x)"]]
-        cofunsion =[["sin((pi/2)-x)","cos(x)","-sin(x)","tan(x/2)/[tan(x/2)]+1"],["cos((pi/2)-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["tan((pi/2)-x)","cot(x)","-csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["cot((pi/2)-x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
-        inverseIdentity = [["sin(pi-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["sin(pi+x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(pi-x)","-cos(x)","sin(x)","tan(x/2)/[tan(x/2)]+1"],["cos(pi+x)","-cos(x)","sin(x)","tan(x/2)/[tan(x/2)]+1"],["tan(pi-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["tan(pi+x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
+        oddPair = [["sin(-x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(-x)","cos(x)","-sin(x)","2*tan(x/2)/[tan^{2}(x/2)-1]"],["tan(-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["cot(-x)","-cot(x)","csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["sec(-x)","sec(x)","sec(x)*tan(x)","sin(2x)/[1+cos(2x)]"],["csc(-x)","-csc(x)","csc(x)*cot(x)","[cot^2(x)-csc^2(x)]/tan(x)"]]
+        cofunsion =[["sin((pi/2)-x)","cos(x)","-sin(x)","2*tan(x/2)/[tan^{2}(x/2)-1]"],["cos((pi/2)-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["tan((pi/2)-x)","cot(x)","-csc^2(x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]"],["cot((pi/2)-x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
+        inverseIdentity = [["sin(pi-x)","sin(x)","cos(x)", "2*cos^2(x)/sin(2*x)"],["sin(pi+x)","-sin(x)","-cos(x)", "2*cos^2(x)/sin(2*x)"],["cos(pi-x)","-cos(x)","sin(x)","2*tan(x/2)/[tan^{2}(x/2)-1]"],["cos(pi+x)","-cos(x)","sin(x)","2*tan(x/2)/[tan^{2}(x/2)-1]"],["tan(pi-x)","-tan(x)","-sec^2(x)","2/sin(2*x)"],["tan(pi+x)","tan(x)","sec^2(x)","2/sin(2*x)"]]
         identities= [oddPair,cofunsion, inverseIdentity]
         a = random.randint(0,2)
         b = random.randint(0,len(identities[a])-1)
         solution=identities[a][b][3]
-        listOptions = ["2*cos^2(x)/sin(2*x)","tan(x/2)/[tan(x/2)]+1","2/sin(2*x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]","sin(2x)/[1+cos(2x)]","[cot^2(x)-csc^2(x)]/tan(x)"]
+        listOptions = ["2*cos^2(x)/sin(2*x)","2*tan(x/2)/[tan^{2}(x/2)-1]","2/sin(2*x)","[tan^2(x)-sec^2(x)]/[sin(x)*cos(x)]","sin(2x)/[1+cos(2x)]","[cot^2(x)-csc^2(x)]/tan(x)"]
         while len(listOptions)==6:
             deleteOption = random.randint(0,5)
             if listOptions[deleteOption]!=solution:

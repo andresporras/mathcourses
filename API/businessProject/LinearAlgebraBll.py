@@ -707,6 +707,8 @@ def threeDotsProblem():
             y = -1*((director1[0]*director2[2])-(director1[2]*director2[0]))
             z = (director1[0]*director2[1])-(director1[1]*director2[0])
             d = (x*dots[0][0])+(y*dots[0][1])+(z*dots[0][2])
+            if x*y*z*d==0: #if some of those 4 values is 0 the solution will no work, becuase of solution generator
+                return threeDotsProblem()
             solution = r"("+str(x)+r"x)+("+str(y)+r"y)+("+str(z)+r"z)="+str(d)+r""
         question = r"Find the plane that contains the points ("+str(dots[0][0])+r","+str(dots[0][1])+r","+str(dots[0][2])+r"), ("+str(dots[1][0])+r","+str(dots[1][1])+r","+str(dots[1][2])+r") and ("+str(dots[2][0])+r","+str(dots[2][1])+r","+str(dots[2][2])+r")"
         alternatives = coursesFunctionsBll.multipleOptions([x,y,z,d],4)
@@ -799,7 +801,7 @@ def matrixLawsProblem():
     try:
         exercises = [['A+B','B+A','(A+B)A^{-1}'],
                      ['A + B + C ','A + ( B + C ) = ( A + B ) + C','(A + B + C)^{T}'],
-                     ['ABC','A( BC ) = ( AB )C','BCA'],
+                     ['ABC','A( BC ) = ( AB )C','CAB = BCA'],
                      ['A( B + C )','AB + AC','BA + CA'],
                      ['x( A + B )','xA + xB','xAB = xBA'],
                      ['( A^{T} )^{T}','A','A^{T}'],
