@@ -428,7 +428,7 @@ def optimizationProblem():
         xMax=  x1 if x1>x2 else x2
         yMax = (a-(2*b*xMax))/(xMax+(2*b))
         solution= round(xMax*yMax*b,4)
-        question="A box without top use a total of "+str(a)+"cm^2 of material. Which is the area if box height is "+str(b)+"cm and dimensions of the box allows the biggest area possible: "
+        question="A box without top use a total of "+str(a)+"cm^2 of material. Which is the volume if box height is "+str(b)+"cm and dimensions of the box allows the biggest area possible: "
         alternatives = coursesFunctionsBll.multipleOptions([solution],5)
         tempAlternatives =[]
         for y1 in range(5):
