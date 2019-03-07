@@ -570,6 +570,24 @@ def multipleOptions(data, numberOptions):
     except Exception as er:
         return er
 
+def multiAritmeticOptions(data, numberOptions):
+    try:
+        alternatives = [data.copy()]
+        for x in range(numberOptions-1):
+            i=random.randint(0,1)
+            j=random.randint(0,len(data)-1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]-1,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]+1,4)
+                alternatives.append(nAlternative)
+        return alternatives
+    except Exception as er:
+        return er
+
 def centroidOptions(data, numberOptions, x1, x2):
     try:
         alternatives = [data.copy()]

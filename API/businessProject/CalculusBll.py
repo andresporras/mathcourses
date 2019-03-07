@@ -438,13 +438,70 @@ def optimizationProblem():
         return jsonResponse
     except Exception as er:
         return er
-exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem]
-exam2 =[logarithm_a_Problem, logarithmMethodProblem, positionProblem, newtonCoolingProblem, balloonProblem, densityProblem, intermediateValueProblem, concaveConvexProblem, lhospitalProblem, optimizationProblem]
+
+def profitProblem():
+    try:
+        r = random.randint(2, 100)
+        a0 = random.randint(2,100)
+        b = random.randint(2,100)*(-1)
+        c = random.randint(2,100)*(-1)
+        
+        a=1/a0
+        a1= a*2*(-1)
+        b1= b*(-1)
+        c1 = r-c
+
+        tempx1=round((-b1+math.sqrt((b1**2)-(4*a1*c1)))/(2*a1),4)
+        tempx2=round((-b1-math.sqrt((b1**2)-(4*a1*c1)))/(2*a1),4)
+        x1 = -1000 if tempx1<=0 else math.log(tempx1)
+        x2 = -1000 if tempx2<=0 else math.log(tempx2)
+        xMax=  x1 if x1>x2 else x2
+        x01 = math.floor(xMax)
+        x02 = math.ceil(xMax)
+
+        y1 = round((-a*(math.e**(2*x01)))+(-b*(math.e**(x01)))+((r-c)*x01),4)
+        y2 = round((-a*(math.e**(2*x02)))+(-b*(math.e**(x02)))+((r-c)*x02),4)
+
+        xSol=  x01 if y1>y2 else x02
+        ySol = y1 if y1>y2 else y2
+        solution = r"Units="+str(xSol)+r", profit="+str(ySol)+r"."
+        question=r"A shoes fabric produce x units of shoes every day, its total revenue is "+str(r)+r"x (where x es the number of shoes they produce) and the total cost of production is \frac{1}{"+str(a0)+r"}*e^{2x} "+str(b)+r"*e^{x} "+str(c)+r"x. Find the max profit and the units to maximize the profit: "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([xSol, ySol],5)
+        tempAlternatives =[]
+        for m in range(5):
+            tempAlternatives.append(r"Units="+str(alternatives[m][0])+r", profit="+str(alternatives[m][1])+r".")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def coneProblem():
+    try:
+        z = random.randint(2, 10)
+        h = random.randint(75, 100)
+        d = random.randint(50, 75)
+        h0 = random.randint(25, 50)
+        sol = round((z*4*(h**2))/(math.pi*(d**2)*(h0**2)),4)
+        solution = r""+str(sol)+r"\frac{cm}{s}"
+        question=r"A cone turned upside down (so it looks like a v) is being filled with water from the faucet at speed of "+str(z)+r"cm^3/s. If the cone height is "+str(h)+r"cm and base diameter is "+str(d)+r"cm, find the rate change of height of filled cone when this height is "+str(h0)+r"cm: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for m in range(5):
+            tempAlternatives.append(r""+str(alternatives[m][0])+r"\frac{cm}{s}")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem, logarithm_a_Problem, logarithmMethodProblem]
+exam2 =[positionProblem, newtonCoolingProblem, balloonProblem, densityProblem, intermediateValueProblem, concaveConvexProblem, lhospitalProblem, optimizationProblem, profitProblem, coneProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
     lista = listMethods[int(unit)-1]
-    for x in range(10):
+    for x in range(12):
         question =  random.randint(1,len(lista))
         #numberQuestion='QUESTION '+str(x+1)
         item = str(lista[question-1]())
