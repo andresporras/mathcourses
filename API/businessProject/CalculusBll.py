@@ -353,22 +353,39 @@ def intermediateValueProblem():
         a1= a*3
         b1= b*2
         c1= c
-        solution=""
+        #solution=""
+        roots=0
         if (b1*b1)<=(4*a1*c1):
-            solution="1"
+            #solution="1"
+            roots=1
         else:
             x1=((-b1)+math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
             x2=((-b1)-math.sqrt((b1*b1)-(4*a1*c1)))/(2*a1)
             y1= a*(x1**3)+b*(x1**2)+c*x1+d
             y2= a*(x2**3)+b*(x2**2)+c*x2+d
             if y1==0 or y2==0:
-                solution="2"
+                #solution="2"
+                roots=2
             elif y1*y2>0: #happens when both are positive or negative
-                solution="1"
+                #solution="1"
+                roots=1
             else: #y1*y2<0
-                solution="3"
-        options =json.loads(json.dumps({'a':'1', 'b':'2', 'c':'3'}))
-        question = "using the intermediate value theorem find how many roots have the function ("+str(a)+"x^3)+("+str(b)+"x^2)+("+str(c)+"x)+("+str(d)+"):"
+                #solution="3"
+                roots=3
+        a2=a1*2
+        b2=b1
+        sol2=round(-b2/a2,4)
+        fakeSol2 = round(sol2/2,4) if random.randint(0,1)==0 else round(sol2*2,4)
+        solution = r"roots="+str(roots)+r", inflection point="+str(sol2)+r""
+        opts = [r"roots=1, inflection point="+str(sol2)+r"",
+                r"roots=2, inflection point="+str(sol2)+r"",
+                r"roots=3, inflection point="+str(sol2)+r"",
+                r"roots=1, inflection point="+str(fakeSol2)+r"",
+                r"roots=2, inflection point="+str(fakeSol2)+r"",
+                r"roots=3, inflection point="+str(fakeSol2)+r""]
+        random.shuffle(opts)
+        options =json.loads(json.dumps({'a':opts[0], 'b':opts[1], 'c':opts[2],'d':opts[3], 'e':opts[4], 'f':opts[5]}))
+        question = "using the intermediate value theorem find how many roots have the function ("+str(a)+"x^3)+("+str(b)+"x^2)+("+str(c)+"x)+("+str(d)+"), and find the inflection point of the function:"
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
@@ -495,8 +512,81 @@ def coneProblem():
     except Exception as er:
         return er
 
+def balloonFlyProblem():
+    try:
+        z = random.randint(1, 10)/100
+        angleChange = z*math.pi
+        a = random.randint(2, 10)
+        angle = math.pi/a
+        d = random.randint(100, 1000)
+
+        dh = round(((1/math.cos(angle))**2)*angleChange*d,4)
+        h = round(math.tan(angle)*d,4)
+        solution = r"h="+str(h)+r"mt, \frac{dh}{dt}=\frac{"+str(dh)+r"mt}{m}"
+        question=r"A person is watching a balloon, placed in front at "+str(d)+r"mt of distance. Suddenly the balloon begins to fly vertically. The angle between the person and the balloon changes at a constant speed of \frac{"+str(z)+r"\pi}{m}. When angle is \frac{\pi}{"+str(a)+r"}, find height of the balloon and its height change per minute: "
+        alternatives = coursesFunctionsBll.multipleOptions([h, dh],5)
+        tempAlternatives =[]
+        for m in range(5):
+            tempAlternatives.append(r"h="+str(alternatives[m][0])+r"mt, \frac{dh}{dt}=\frac{"+str(alternatives[m][1])+r"mt}{m}")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def carDistanceProblem():
+    try:
+        x = random.randint(250, 500)
+        y = random.randint(250, 500)
+        dx = random.randint(25, 50)
+        dy = random.randint(25, 50)
+        h=((x**2)+(y**2))**(1/2)
+        sol = round(((x*dx)+(y*dy))/h,4)
+        solution = str(sol)+r"\frac{km}{h}"
+        question=r"two police cars left the police station (not necessarily at same time), car A moves to the west at speed of "+str(dx)+r"km/h and car B moves the the north at speed of "+str(dy)+r"km/h. At some point car A is at a distance of "+str(x)+r"km from the police station, while car B is at a distance of "+str(y)+r"km from the police station. How fast is increasing the distance between the two cars?: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for m in range(5):
+            tempAlternatives.append(str(alternatives[m][0])+r"\frac{km}{h}")
+        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#def trigonometricInflectionProblem():
+#    try:
+#        x = random.randint(1, 4)
+#        r = random.randint(1, 6)
+
+#        x1 = (x*math.pi/4)
+#        sol=r""
+#        if r==1:
+#            sol=(r"Yes" if math.cos(x1)!= and ()
+#        elif r==2:
+#        elif r==3:
+#        elif r==4:
+#        elif r==5:
+#        elif r==6:
+
+#        dx = random.randint(25, 50)
+#        dy = random.randint(25, 50)
+#        h=((x**2)+(y**2))**(1/2)
+#        sol = round(((x*dx)+(y*dy))/h,4)
+#        solution = str(sol)+r"\frac{km}{h}"
+#        question=r"two police cars left the police station (not necessarily at same time), car A moves to the west at speed of "+str(dx)+r"km/h and car B moves the the north at speed of "+str(dy)+r"km/h. At some point car A is at a distance of "+str(x)+r"km from the police station, while car B is at a distance of "+str(y)+r"km from the police station. How fast is increasing the distance between the two cars?: "
+#        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+#        tempAlternatives =[]
+#        for m in range(5):
+#            tempAlternatives.append(str(alternatives[m][0])+r"\frac{km}{h}")
+#        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
+#        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+#        return jsonResponse
+#    except Exception as er:
+#        return er
+
 exam1 =[lineTanProblem, exponentialProblem, productProblem, divisionProblem, trigonometryProblem, ruleChainProblem, trigonometryProblem2, implicitProblem, inverseTriProblem, logarithmProblem, logarithm_a_Problem, logarithmMethodProblem]
-exam2 =[positionProblem, newtonCoolingProblem, balloonProblem, densityProblem, intermediateValueProblem, concaveConvexProblem, lhospitalProblem, optimizationProblem, profitProblem, coneProblem]
+exam2 =[positionProblem, newtonCoolingProblem, balloonProblem, densityProblem, intermediateValueProblem, concaveConvexProblem, lhospitalProblem, optimizationProblem, profitProblem, coneProblem, balloonFlyProblem, carDistanceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution=[]
