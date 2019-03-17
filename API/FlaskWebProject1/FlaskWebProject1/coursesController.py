@@ -4,7 +4,7 @@ from FlaskWebProject1 import app
 import BasicAlgebraBll
 import PreCalculusBll
 import coursesBll
-import TrigonometryGeometryBll
+import GeometryBll
 import CalculusBll
 import Calculus2Bll
 import LinearAlgebraBll
@@ -29,7 +29,7 @@ class coursesController(object):
         elif(course=='2'):
             return json.dumps(PreCalculusBll.generateExam(unit))
         elif(course=='3'):
-            return json.dumps(TrigonometryGeometryBll.generateExam(unit))
+            return json.dumps(GeometryBll.generateExam(unit))
         elif(course=='4'):
             return json.dumps(CalculusBll.generateExam(unit))
         elif(course=='5'):

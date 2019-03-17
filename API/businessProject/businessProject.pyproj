@@ -43,7 +43,10 @@
     <Compile Include="PreCalculusBll.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TrigonometryGeometryBll.py">
+    <Compile Include="GeometryBll.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TrigonometryBll.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UserBll.py" />
