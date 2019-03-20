@@ -383,8 +383,136 @@ def tangencyPointProblem():
     except Exception as er:
         return er
 
+def cosineTheoremProblem():
+    try:
+        a= random.randint(16,20)
+        b= random.randint(16,20)
+        c= random.randint(21,30)
+
+        angle_a=round(math.acos(((a**2)-(b**2)-(c**2))/(-2*b*c))*(180/math.pi),4)
+        angle_b=round(math.acos(((b**2)-(a**2)-(c**2))/(-2*a*c))*(180/math.pi),4)
+        angle_c=round(math.acos(((c**2)-(b**2)-(a**2))/(-2*b*a))*(180/math.pi),4)
+
+        optQuestions=[
+            [r"x",angle_a],
+            [r"y",angle_b],
+            [r"z",angle_c]
+            ]
+        quest = optQuestions[random.randint(0,2)]
+
+        solution=r""+str(quest[1])
+        question = r"a triangle have side A of length "+str(a)+r" and opposite angle x, side B of length "+str(b)+r" and opposite angle y, side C of length "+str(c)+r" and opposite angle z. Find the value (in degrees) of "+str(quest[0])+r": "
+        alternatives = coursesFunctionsBll.multipleTrigonometricOptions([quest[1]],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+#centroid is also known as median
+def centroidTriangleProblem():
+    try:
+        
+        point=[]
+        while True:
+            point =[
+            [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)],
+            [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)],
+            [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)]
+            ]
+            if point[0]!=point[1] and point[0]!=point[2] and point[1]!=point[2]:
+                break
+            elif (((point[0][1]+point[1][1])/(point[0][0]+point[1][0]))!=((point[0][1]+point[2][1])/(point[0][0]+point[2][0]))):
+                break
+        y1 = (point[0][1]+point[1][1])/2
+        x1 = (point[0][0]+point[1][0])/2
+        y2 = (point[0][1]+point[2][1])/2
+        x2 = (point[0][0]+point[2][0])/2
+        m1= (y1-point[2][1])/(x1-point[2][0])
+        c1 = point[2][1]-(m1*point[2][0])
+        m2= (y2-point[1][1])/(x2-point[1][0])
+        c2 = point[1][1]-(m2*point[1][0])
+        x = round((c2-c1)/(m1-m2),4)
+        y = round((m2*x)+c2,4)
+
+        solution=r"("+str(x)+r","+str(y)+r")"
+        question = r"Find the centroid (median) of triangle with vertices at ("+str(point[0][0])+r","+str(point[0][1])+r") ("+str(point[1][0])+r","+str(point[1][1])+r") ("+str(point[2][0])+r","+str(point[2][1])+r"): "
+        alternatives = coursesFunctionsBll.multipleOptions([x, y],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"("+str(alternatives[ta][0])+r","+str(alternatives[ta][1])+r")") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def quadrilateralProblem():
+    try:
+        c1 = random.randint(1,45)
+        c2 = random.randint(1,45)
+        a1 = random.randint(2,10)
+        a2 = random.randint(2,10)
+        sol = round((180-(c1+c2))/(a1+a2),4)
+
+        solution=r""+str(sol)
+        question = r"A quadrilateral incribed in a circle has inner opposite angles A and B, where A degrees are "+str(a1)+r"x+"+str(c1)+r" and B degrees are "+str(a2)+r"x+"+str(c2)+r". Which is the value of x?:"
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def ellipsePointProblem():
+    try:
+        x = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        y = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        a=b=0
+        while True:
+            a = random.randint(1,20)
+            b = random.randint(1,20)
+            if a!=b:
+                break
+        h = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        k = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        sol = (((x-h)**2)/(a**2))+(((y-k)**2)/(b**2))
+        solution=""
+        if sol<1:
+            solution=r"Inside"
+        elif sol==1:
+            solution=r"On the edge"
+        else:
+            solution=r"Outside"
+        question = r"For the ellipse with equation \frac{(x-("+str(h)+r"))^{2}}{"+str(a)+r"^{2}}+\frac{(y-("+str(k)+r"))^{2}}{"+str(b)+r"^{2}}=1 find where's fall the point ("+str(x)+r","+str(y)+r"): "
+        
+        options =json.loads(json.dumps({'a':r"Inside",
+                                        'b':r"On the edge", 
+                                        'c':r"Outside"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem, triangleProblem, triangleAngleProblem, apothemProblem, rhombusProblem]
-exam2 = [orthoCenterProblem, tangencyPointProblem]
+exam2 = [orthoCenterProblem, tangencyPointProblem, cosineTheoremProblem, centroidTriangleProblem, quadrilateralProblem, ellipsePointProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
