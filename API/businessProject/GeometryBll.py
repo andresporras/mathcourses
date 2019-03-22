@@ -511,8 +511,66 @@ def ellipsePointProblem():
     except Exception as er:
         return er
 
+def sinTheoremProblem():
+    try:
+        z = random.randint(10,20)
+        a=b=90
+        while True:
+            a = random.randint(1,178)
+            b = random.randint(1,178)
+            if a+b<(180):
+                break
+        c=180-a-b
+        constant = z/math.sin(c*math.pi/180)
+        y = constant*math.sin(b*math.pi/180)
+        x = constant*math.sin(a*math.pi/180)
+        sol = round(x+y+z,4)
+        solution=r""+str(sol)+r"cm"
+        question=r"a triangle has angles A, B and C, where angle A is "+str(a)+r"°, angle B is "+str(b)+r"° and the length of side AB is "+str(z)+r"cm. Find the perimeter of the triangle: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"cm") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def kiteSinAreaProblem():
+    try:
+        z = random.randint(30,150)
+        a=b=0
+        while True:
+            a = random.randint(5,20)
+            b = random.randint(5,20)
+            if a!=b:
+                break
+        area= round(a*b*math.sin(z*math.pi/180),4)
+        long = ((a**2)+(b**2)-(2*a*b*math.cos(z*math.pi/180)))**(1/2)
+        short = round(2*area/long,4)
+        solution=r"area: "+str(area)+r", diagonal: "+str(short)+r""
+        question=r"For a kite with side A with length "+str(a)+r" and side B with length "+str(b)+r", and angle between them equals to "+str(z)+r" degrees, find the area of the kite and the length of diagonal who connects the two congruent angles of the kite: "
+        alternatives = coursesFunctionsBll.multipleOptions([area, short],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"area: "+str(alternatives[ta][0])+r", diagonal: "+str(alternatives[ta][1])+r"") 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem, triangleProblem, triangleAngleProblem, apothemProblem, rhombusProblem]
-exam2 = [orthoCenterProblem, tangencyPointProblem, cosineTheoremProblem, centroidTriangleProblem, quadrilateralProblem, ellipsePointProblem]
+exam2 = [orthoCenterProblem, tangencyPointProblem, cosineTheoremProblem, centroidTriangleProblem, quadrilateralProblem, ellipsePointProblem, sinTheoremProblem, kiteSinAreaProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
