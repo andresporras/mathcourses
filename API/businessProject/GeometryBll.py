@@ -337,7 +337,8 @@ def orthoCenterProblem():
             [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)]
             ]
             if (point[0][0]!=point[1][0] and point[0][1]!=point[1][1]) and (point[0][0]!=point[2][0] and point[0][1]!=point[2][1]) and (point[1][0]!=point[2][0] and point[1][1]!=point[2][1]):
-                break
+                if ((point[0][1]-point[1][1])/(point[0][0]-point[1][0]))!=((point[0][1]-point[2][1])/(point[0][0]-point[2][0])):
+                    break
         m1= -1/((point[0][1]-point[1][1])/(point[0][0]-point[1][0]))
         c1 = point[2][1]-(m1*point[2][0])
         m2= -1/((point[0][1]-point[2][1])/(point[0][0]-point[2][0]))
@@ -426,24 +427,28 @@ def centroidTriangleProblem():
             [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)],
             [random.randint(1,10) * (random.randint(0,1) * 2 - 1),random.randint(1,10) * (random.randint(0,1) * 2 - 1)]
             ]
-            if point[0]!=point[1] and point[0]!=point[2] and point[1]!=point[2]:
+            if (point[0][0]!=point[1][0] and point[0][0]!=point[2][0] and point[1][0]!=point[2][0]) and ((point[0][1]!=point[1][1] and point[0][1]!=point[2][1] and point[1][1]!=point[2][1])):
+                #if (((point[0][1]+point[1][1])/(point[0][0]+point[1][0]))!=((point[0][1]+point[2][1])/(point[0][0]+point[2][0]))):
                 break
-            elif (((point[0][1]+point[1][1])/(point[0][0]+point[1][0]))!=((point[0][1]+point[2][1])/(point[0][0]+point[2][0]))):
-                break
+            
         y1 = (point[0][1]+point[1][1])/2
         x1 = (point[0][0]+point[1][0])/2
         y2 = (point[0][1]+point[2][1])/2
         x2 = (point[0][0]+point[2][0])/2
+        if x1==point[2][0] or x2==point[1][0]:
+            return centroidTriangleProblem()
         m1= (y1-point[2][1])/(x1-point[2][0])
         c1 = point[2][1]-(m1*point[2][0])
         m2= (y2-point[1][1])/(x2-point[1][0])
+        if  m1==m2:
+            return centroidTriangleProblem()
         c2 = point[1][1]-(m2*point[1][0])
         x = round((c2-c1)/(m1-m2),4)
         y = round((m2*x)+c2,4)
 
         solution=r"("+str(x)+r","+str(y)+r")"
         question = r"Find the centroid (median) of triangle with vertices at ("+str(point[0][0])+r","+str(point[0][1])+r") ("+str(point[1][0])+r","+str(point[1][1])+r") ("+str(point[2][0])+r","+str(point[2][1])+r"): "
-        alternatives = coursesFunctionsBll.multipleOptions([x, y],5)
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([x, y],5)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r"("+str(alternatives[ta][0])+r","+str(alternatives[ta][1])+r")") 
@@ -569,8 +574,114 @@ def kiteSinAreaProblem():
     except Exception as er:
         return er
 
+def circleRegularPolygonProblem1():
+    try:
+        x=  random.randint(10,20)
+        s = random.randint(3,10)
+        angle = (s-2)*180/(s*2)
+        h= (x/2)/math.cos(angle*math.pi/180)
+        perimeter = round(2*math.pi*h,4)
+        solution=r""+str(perimeter)
+        question=r"For a regular polygon of "+str(s)+" sides, where each side have a length of "+str(x)+r", find the perimeter of the circle that inscribe this polygon: "
+        alternatives = coursesFunctionsBll.multipleOptions([perimeter],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def pyramidRegularPolygonProblem():
+    try:
+        x=  random.randint(10,20)
+        s = random.randint(3,10)
+        h= random.randint(10,20)
+        angle = (s-2)*180/(s*2)
+        op= (x/2)*math.tan(angle*math.pi/180)
+        base = op*x*s
+        volume = round((1/3)*base*h,4)
+        solution=r""+str(volume)
+        question=r"For a  pyramid where base is a regular polygon of "+str(s)+" sides where each side have a length of "+str(x)+r",and the pyramid height is "+str(h)+r", find the area of the pyramid: "
+        alternatives = coursesFunctionsBll.multipleOptions([volume],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def circleRegularPolygonProblem2():
+    try:
+        x=  random.randint(10,20)
+        s = random.randint(3,10)
+        angle = (s-2)*180/(s*2)
+        h= (x/2)*math.tan(angle*math.pi/180)
+        area = round(math.pi*h*h,4)
+        solution=r""+str(area)
+        question=r"For a regular polygon of "+str(s)+" sides, where each side have a length of "+str(x)+r", find the area of the circle inscribed in this polygon: "
+        alternatives = coursesFunctionsBll.multipleOptions([area],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def circleKiteProblem():
+    try:
+        z = random.randint(30,150)
+        a=b=0
+        while True:
+            a = random.randint(5,20)
+            b = random.randint(5,20)
+            if a<b:
+                break
+        area= a*b*math.sin(z*math.pi/180)
+        c = ((a**2)+(b**2)-(2*a*b*math.cos(z*math.pi/180)))**(1/2)
+        z1=z/2
+        #short = round(2*area/long,4)
+        #height = short/2
+        z2 = math.asin((a/c)*math.sin(z*math.pi/180))*180/math.pi
+        z3 = 180-z1-z2
+        b2= b*math.sin(z1*math.pi/180)/math.sin(z3*math.pi/180)
+        b3 = round(math.sin(z2*math.pi/180)*b2,4)
+
+        solution=r""+str(b3)
+        question=r"For a kite with side A with length "+str(a)+r" and side B with length "+str(b)+r", and angle between them equals to "+str(z)+r" degrees, find the radio of the circle inscribed in the kite: "
+        alternatives = coursesFunctionsBll.multipleOptions([b3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [parallelProblem, perpendicularProblem, circleProblem, ellipseProblem, parabolaProblem, hyperbolaProblem, circleTanProblem, ellipseAreaProblem, triangleProblem, triangleAngleProblem, apothemProblem, rhombusProblem]
-exam2 = [orthoCenterProblem, tangencyPointProblem, cosineTheoremProblem, centroidTriangleProblem, quadrilateralProblem, ellipsePointProblem, sinTheoremProblem, kiteSinAreaProblem]
+exam2 = [orthoCenterProblem, tangencyPointProblem, cosineTheoremProblem, centroidTriangleProblem, quadrilateralProblem, ellipsePointProblem, sinTheoremProblem, kiteSinAreaProblem, circleRegularPolygonProblem1, pyramidRegularPolygonProblem, circleRegularPolygonProblem2, circleKiteProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
@@ -583,3 +694,9 @@ def generateExam(unit):
         solution.append(json.loads(item))
     return solution
 
+#IDEAS FOR GEOMETRY EXAM 3
+#area of circle that inscribe a rectangular
+#area of circle that inscribe a triangle
+#bisector problem
+#area of queadrilateral inscribed in a circle
+#equation of a circle that pass through three points
