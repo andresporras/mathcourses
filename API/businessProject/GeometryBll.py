@@ -274,7 +274,7 @@ def apothemProblem():
 
         a0 = (s0-2)*(math.pi) #total inner angle
         a1 = a0/s0 #angle per corner
-        b0 = l0/math.tan(a1/2) #base per side
+        b0 = (l0*2)/math.tan(a1/2) #base per side
         area = round((l0*b0/2)*s0,4)
         perimeter = round(b0*s0,4)
 
@@ -315,7 +315,7 @@ def rhombusProblem():
        
         optSolutions=["is true","is false"]
         solution=r"A "+str(optSolutions[q1[1]])+r" and B "+str(optSolutions[q2[1]])+r""
-        question = r"A="+str(questOptions[q1[0]][q1[1]])+r", B="+str(questOptions[q2[0]][q2[1]])+r""
+        question = r"for a rhombus define which of the next affirmations are true, A="+str(questOptions[q1[0]][q1[1]])+r", B="+str(questOptions[q2[0]][q2[1]])+r""
         
         options =json.loads(json.dumps({'a':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[0])+r"",
                                         'b':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[1])+r"", 
@@ -700,3 +700,6 @@ def generateExam(unit):
 #bisector problem
 #area of queadrilateral inscribed in a circle
 #equation of a circle that pass through three points
+#suplpementary and complementary angles
+#radians to degrees
+
