@@ -114,6 +114,7 @@ def parabolaProblem():
     except Exception as er:
         return er
 #given the center and one vertix find the equation of hyperbola
+#review asymptotes topic in https://en.wikipedia.org/wiki/Hyperbola 
 def hyperbolaProblem():
     try:
         x01 = random.randint(2,20) * (random.randint(0,1) * 2 - 1)
@@ -308,7 +309,7 @@ def rhombusProblem():
             ["each diagonal bisect a pair of opposite angles","each diagonal bisect a pair of adjacent angles"],
             ["the diagonals are perpendicular","the diagonals are parallel"],
             ["the legs don't bisect each other","the legs bisect each other"],
-            ["the legs are always congruent","the diagonals are not always congruent"],
+            ["the legs are always congruent","the legs are not always congruent"],
             ["each leg consecutive internal angles are suplementary","each leg consecutive internal angles are not suplementary"],
             ["the legs are parallel","the legs are perpendicular"]
             ]

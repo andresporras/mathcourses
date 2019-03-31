@@ -632,9 +632,9 @@ def replaceSpace(text0):
     try:
         text0=str(text0)
         text1 = text0.replace(' ', '\;')
-        text2 = text1.replace('(', '\left(')
-        text3 = text2.replace(')', '\\right)')
-        return text3
+        #text2 = text1.replace('(', '\left(')
+        #text3 = text2.replace(')', '\\right)')
+        return text1
     except Exception as er:
         return er
 def replaceOptions(opt):

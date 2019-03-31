@@ -46,6 +46,12 @@
     <Compile Include="GeometryBll.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ProbabilityBll.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="statisticsBll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TrigonometryBll.py">
       <SubType>Code</SubType>
     </Compile>

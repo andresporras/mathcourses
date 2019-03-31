@@ -8,6 +8,8 @@ import GeometryBll
 import CalculusBll
 import Calculus2Bll
 import LinearAlgebraBll
+import TrigonometryBll
+import ProbabilityBll
 from bson import json_util, ObjectId
 import json
 
@@ -36,6 +38,10 @@ class coursesController(object):
             return json.dumps(Calculus2Bll.generateExam(unit))
         elif(course=='6'):
             return json.dumps(LinearAlgebraBll.generateExam(unit))
+        elif(course=='7'):
+            return json.dumps(TrigonometryBll.generateExam(unit))
+        elif(course=='8'):
+            return json.dumps(ProbabilityBll.generateExam(unit))
         return 'course or unit invalid'
     @app.route(defaultRoute+'/getData', methods=['GET'])
     def getData():
