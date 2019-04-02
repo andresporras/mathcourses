@@ -825,3 +825,15 @@ def remove(s, indx):
         return s1
     except Exception as er:
         return er
+def countBy(list1):
+    try:
+        nList = list(set(list1))
+        listCount = []
+        for i in range(len(nList)):
+            listCount.append([nList[i],0])
+            for j in range(len(list1)):
+                if listCount[i][0]==list1[j]:
+                    listCount[i][1]=listCount[i][1]+1
+        return listCount
+    except Exception as er:
+        return er

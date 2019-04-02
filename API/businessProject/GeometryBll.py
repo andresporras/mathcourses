@@ -605,7 +605,7 @@ def pyramidRegularPolygonProblem():
         h= random.randint(10,20)
         angle = (s-2)*180/(s*2)
         op= (x/2)*math.tan(angle*math.pi/180)
-        base = op*x*s
+        base = op*x*s/2
         volume = round((1/3)*base*h,4)
         solution=r""+str(volume)
         question=r"For a  pyramid where base is a regular polygon of "+str(s)+" sides where each side have a length of "+str(x)+r",and the pyramid height is "+str(h)+r", find the area of the pyramid: "
