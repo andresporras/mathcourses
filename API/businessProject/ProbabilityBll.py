@@ -101,7 +101,86 @@ def cpRepetitionProblem():
     except Exception as er:
         return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem]
+def coinProblem():
+    try:
+        f=  random.randint(6,9)
+        e=  random.randint(2,5)
+        ne=  random.randint(2,5)
+        sol1 = round(math.factorial(f)/(math.factorial(e)*math.factorial(f-e)*(2**f)),4)
+        sol2=0
+        for i in range(ne):
+            sol2+=round(math.factorial(f)/(math.factorial(i)*math.factorial(f-i)*(2**f)),4)
+        solution=r"a) "+str(sol1)+r" b)"+str(sol2)
+        question=r"from flipping a fair coin  "+str(f)+r" times, a) what is the probability of get exactly "+str(e)+r" heads b) less than "+str(ne)+r" heads: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r" b)"+str(alternatives[ta][1])) 
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def throwProblem():
+    try:
+        p = (random.randint(1,4)/10)+(random.randint(0,1)/2)
+        f=  random.randint(5,8)
+        e=  random.randint(1,4)
+        ne=  random.randint(1,4)
+        sol1 = round(math.factorial(f)*(p**e)*((1-p)**(f-e))*100/(math.factorial(e)*math.factorial(f-e)),4)
+        sol2=0
+        for i in range(ne):
+            sol2+=round(math.factorial(f)*(p**i)*((1-p)**(f-i))*100/(math.factorial(i)*math.factorial(f-i)),4)
+        sol2 = 100- sol2
+        solution=r"a) "+str(sol1)+r"\% b)"+str(sol2)+r"\%"
+        question=r"For certain basketall player, the probability of throwing the ball to the basket and score is "+str(p*100)+"\%. For throwing "+str(f)+r" times, a) what is the probability of score exactly "+str(e)+r" times b) at least "+str(ne)+r" times: "
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\% b)"+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#for b part use bayesian theorem
+def coinUnfairProblem():
+    try:
+        up = (random.randint(3,4)/10)+(random.randint(0,1)*3/10)
+        c=  random.randint(6,9)
+        uc =  random.randint(2,5)
+        e1=  random.randint(2,5)
+        e2=  random.randint(2,5)
+        sol1 = round((((uc/c)*(up**e1))+(((c-uc)/c)*(0.5**e1)))*100,4)
+        sol2 = round(((uc/c)*(up**e2))*100/(((uc/c)*(up**e2))+(((c-uc)/c)*(0.5**e2))),4)
+
+        solution=r"a) "+str(sol1)+r"\% b)"+str(sol2)+r"\%"
+        question=r"having "+str(c)+r" coins in a bag, where "+str(uc)+r" are unfair coins with "+str(up*100)+r"\% chance of head.  If you randomly choose one coin from the bag, a) which is the probability of get  "+str(e1)+r" heads in same number of flips b)  probability of have the unfair coin if you get "+str(e2)+r" heads in same number of flips: "
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\% b)"+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
