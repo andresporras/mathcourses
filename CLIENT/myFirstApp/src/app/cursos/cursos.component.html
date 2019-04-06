@@ -1,21 +1,30 @@
+<nav class="navigation center">
+  <ul class="mainmenu">
+    <li *ngFor="let c of courseList">
+      <a href="">{{c['name']}}</a>
+      <ul class="submenu" *ngFor="let u of c['units']; let i = index">
+        <li><a href="#" (click)="generateExam(c['cod'], u['cod'])">- unit {{i+1}}: {{u['name']}}</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
-
-<ul>
+<!-- <ul>
   <li *ngFor="let c of courseList">
       <button>{{c['name']}}</button>
       <div *ngFor="let u of c['units']; let i = index">
         <button style="color:white;background-color:steelblue;" (click)="generateExam(c['cod'], u['cod'])">- unit {{i+1}}: {{u['name']}}</button>
       </div>
   </li>
-</ul>
+</ul> -->
 <div *ngIf="show==1">
   <div *ngFor="let e of examData; let i = index">
       <p>{{i+1}}) <img src="http://latex.codecogs.com/gif.latex?{{e['question']}}" border="0"/></p>
       <div *ngFor="let op of e['options'] | keys">
-         
+
                   <input type="radio" name="{{i}}" (click)="updateScore(op.value, i)" [(ngModel)]="radioValue[i]" value={{op.value}}>
                   <label>{{op.key}})<img src="http://latex.codecogs.com/gif.latex?{{op.value}}" border="0"/></label>
-                
+
         </div>
         <div [ngClass]="radioValue[i]!=undefined?(radioValue[i]==e['solution']?'greenColor':'redColor'):'blueColor'">{{radioValue[i]!=undefined?(radioValue[i]==e['solution']?'right':'wrong'):'choose an option'}}</div>
   </div>
@@ -24,10 +33,10 @@
 <!-- <div [innerHTML]="equation"></div> -->
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML-full" async></script>
 
-<div id="myExpr">`1+x^2`</div>
-<div id="myTeX"></div>
+<!-- <div id="myExpr">`1+x^2`</div> -->
+<!-- <div id="myTeX"></div>
 
 <script type="text/x-mathjax-config" async>
  MathJax.Hub.Config({ messageStyle: 'none', tex2jax: { preview: 'none'} });
-</script>
+</script> -->
 

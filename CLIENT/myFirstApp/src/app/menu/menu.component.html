@@ -1,10 +1,15 @@
 
-<p>
+<!-- <p>
   menu works!
-</p>
+</p> -->
 
+<ul>
+    <li><a class="active" href="#" (click)="abrirSeccion('usuario')">usuario</a></li>
+    <li><a href="#" (click)="abrirSeccion('cursos')">cursos</a></li>
+  </ul>
+<!-- 
 <button (click)="abrirSeccion('usuario')">usuario</button>
-<button (click)="abrirSeccion('cursos')">cursos</button>
+<button (click)="abrirSeccion('cursos')">cursos</button> -->
 
 <div>
   <app-cursos *ngIf="gd.componentSeccion=='cursos'"></app-cursos>

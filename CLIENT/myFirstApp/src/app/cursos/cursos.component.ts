@@ -18,9 +18,13 @@ export class CursosComponent implements OnInit {
     this.getCourses();
    }
 
+   
+
   ngOnInit() {
 
   }
+
+ 
 
   getCourses() {
     this.httpClient.get<JSON>('http://localhost:5000/courses/getData')

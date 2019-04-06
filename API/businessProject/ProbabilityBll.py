@@ -109,7 +109,8 @@ def coinProblem():
         sol1 = round(math.factorial(f)/(math.factorial(e)*math.factorial(f-e)*(2**f)),4)
         sol2=0
         for i in range(ne):
-            sol2+=round(math.factorial(f)/(math.factorial(i)*math.factorial(f-i)*(2**f)),4)
+            sol2+=math.factorial(f)/(math.factorial(i)*math.factorial(f-i)*(2**f))
+        sol2 = round(sol2)
         solution=r"a) "+str(sol1)+r" b)"+str(sol2)
         question=r"from flipping a fair coin  "+str(f)+r" times, a) what is the probability of get exactly "+str(e)+r" heads b) less than "+str(ne)+r" heads: "
         alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
@@ -180,7 +181,31 @@ def coinUnfairProblem():
     except Exception as er:
         return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem]
+#for b part use bayesian theorem
+def binomialDistributionProblem():
+    try:
+        p = (random.randint(1,4)/10)+(random.randint(0,1)/2)
+        n = random.randint(10,30)
+        mean = round(n*p,4)
+        mode = round(math.floor((n+1)*p),4)
+        variance = round(n*p*(1-p),4)
+        solution=r"mean: "+str(mean)+r", mode: "+str(mode)+r", variance: "+str(variance)
+        question=r"a soccer player practice throw penaltis everyday. His percentage of scoring is "+str(p*100)+r"\%. If this soccer player throw "+str(n)+r" penaltis every day, find: mean, mode and variance: "
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([mean, mode, variance],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"mean: "+str(alternatives[ta][0])+r", mode: "+str(alternatives[ta][1])+r", variance: "+str(alternatives[ta][2]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
