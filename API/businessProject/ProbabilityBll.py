@@ -136,8 +136,8 @@ def throwProblem():
         sol1 = round(math.factorial(f)*(p**e)*((1-p)**(f-e))*100/(math.factorial(e)*math.factorial(f-e)),4)
         sol2=0
         for i in range(ne):
-            sol2+=round(math.factorial(f)*(p**i)*((1-p)**(f-i))*100/(math.factorial(i)*math.factorial(f-i)),4)
-        sol2 = 100- sol2
+            sol2+=math.factorial(f)*(p**i)*((1-p)**(f-i))*100/(math.factorial(i)*math.factorial(f-i))
+        sol2 = round(100- sol2,4)
         solution=r"a) "+str(sol1)+r"\% b)"+str(sol2)+r"\%"
         question=r"For certain basketall player, the probability of throwing the ball to the basket and score is "+str(p*100)+"\%. For throwing "+str(f)+r" times, a) what is the probability of score exactly "+str(e)+r" times b) at least "+str(ne)+r" times: "
         alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
@@ -181,7 +181,6 @@ def coinUnfairProblem():
     except Exception as er:
         return er
 
-#for b part use bayesian theorem
 def binomialDistributionProblem():
     try:
         p = (random.randint(1,4)/10)+(random.randint(0,1)/2)
@@ -205,7 +204,35 @@ def binomialDistributionProblem():
     except Exception as er:
         return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem]
+def poissonDistributionProblem():
+    try:
+        n = random.randint(1,8)
+        k1=n
+        while k1==n:
+            k1 = random.randint(0,7)
+        k2 = random.randint(0,3)
+        sol1 = round((math.e**(-n))*(n**k1)*100/math.factorial(k1),4)
+        sol2 = 0
+        for i in range(k2+1):
+            sol2 = sol2 +(math.e**(-n))*(n**i)*100/math.factorial(i)
+        sol2 = round(100-sol2,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"A pharmacy receive around "+str(n)+r" customers per hour. a) which is the probability to receive "+str(k1)+r" customers in an hour b) receive more than "+str(k2)+r" customers: "
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
