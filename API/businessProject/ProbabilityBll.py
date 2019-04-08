@@ -232,7 +232,34 @@ def poissonDistributionProblem():
     except Exception as er:
         return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem]
+def vennDiagramProblem():
+    try:
+        p = random.randint(100,150)
+        n1 = random.randint(25,50)
+        n2 = random.randint(25,50)
+        n3 = random.randint(25,50)
+        n4 = random.randint(25,50)
+        m1 = random.randint(10,20)
+        m2 = random.randint(10,20)
+        sol1 = n1+n2-m1
+        sol2 = p - (n3+n4-m2)
+        solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r""
+        question=r"A class have "+str(p)+r" students. After scholar year has finished the teacher provide the next report: "+str(n1)+r" students pass maths, "+str(n2)+r" students pass english, "+str(n3)+r" students pass science, "+str(n4)+r" students pass spanish,\\ "+str(m1)+r" students pass both math and english, "+str(m2)+r" students pass both science and spanish. \\a) how many students pass either math or english?, b) how many students fail both science and spanish?: "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b) "+str(alternatives[ta][1])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
