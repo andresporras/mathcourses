@@ -4,14 +4,15 @@
 </p> -->
 
 <ul>
-    <li><a class="active" href="#" (click)="abrirSeccion('usuario')">usuario</a></li>
-    <li><a href="#" (click)="abrirSeccion('cursos')">cursos</a></li>
+    <li><a class="active" href="#" (click)="abrirSeccion('usuario')">user</a></li>
+    <li><a href="#" (click)="abrirSeccion('cursos')">courses</a></li>
+    <li><a href=""(click)="abrirSeccion('salida')">exit</a></li>
   </ul>
 <!-- 
 <button (click)="abrirSeccion('usuario')">usuario</button>
 <button (click)="abrirSeccion('cursos')">cursos</button> -->
 
-<div>
+<div style="margin-top:25px;">
   <app-cursos *ngIf="gd.componentSeccion=='cursos'"></app-cursos>
   <app-usuario *ngIf="gd.componentSeccion=='usuario'"></app-usuario> 
 </div>
