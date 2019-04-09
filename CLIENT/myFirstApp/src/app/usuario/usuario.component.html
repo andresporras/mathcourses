@@ -1,3 +1,39 @@
 <p>
   usuario works!
 </p>
+
+<nav class="navigation center">
+    <ul class="mainmenu">
+      <li>
+          <a href="#" (click)="showForm(1)">change password</a>
+      </li>
+      <li>
+          <a href="#" (click)="showForm(2)">change email</a>
+      </li>
+    </ul>
+  </nav>
+
+  <form *ngIf="show==1">
+    Old password:<br>
+    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idPassword1" [(ngModel)]="pas1" name="pas1" placeholder="">
+    <br>
+    New password:<br>
+    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idPassword2" [(ngModel)]="pas2" name="pas2" placeholder="">
+    <br><br>
+    <button type="submit" class="btn btn-primary" (click)="updatePassword()">update</button>
+  </form> 
+
+  <form *ngIf="show==2">
+      Old password:<br>
+      <!-- https://gist.github.com/niksumeiko/360164708c3b326bd1c8 thank to cimoskill  for give the trick to avoid the auto complete -->
+      <input type="password" readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idFieldP" [(ngModel)]="fieldP" name="fieldP" value="">
+      <br>
+       New email:<br>
+      <input type="text" readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idFieldE" [(ngModel)]="fieldE" name="fieldE" value="">
+      <br><br>
+      <button type="submit" class="btn btn-primary" (click)="updateEmail()">update</button>
+    </form> 
+
+  <div class="{{updateFails[currentFail].classes}}" role="alert" [hidden]="updateSuccess!=1">
+      {{updateFails[currentFail].message}}
+    </div>
