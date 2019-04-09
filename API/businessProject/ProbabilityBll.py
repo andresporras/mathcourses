@@ -259,7 +259,35 @@ def vennDiagramProblem():
     except Exception as er:
         return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem]
+def unionThreeEventsProblem():
+    try:
+        p = random.randint(200,250)
+        n1 = random.randint(50,75)
+        n2 = random.randint(50,75)
+        n3 = random.randint(50,75)
+        m12 = random.randint(15,25)
+        m13 = random.randint(15,25)
+        m23 = random.randint(15,25)
+        m123 = random.randint(5,10)
+        sol1 = p-(n1+n2+n3-m12-m13-m23+m123)
+        sol2 = n1-m12-m13+m123
+        solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r""
+        question=r"A class have "+str(p)+r" students. After scholar year has finished the teacher provide the next report:  "+str(n1)+r" students pass maths, "+str(n2)+r" students pass english, "+str(n3)+r" students pass science, "+str(m12)+r" students pass both math and english,\\ "+str(m13)+r" students pass both math and science, "+str(m23)+r" students pass both english and science,  "+str(m123)+r" students pass three courses,\\ a) how many students fail all the three courses?, b) how many students fail both english and science but pass math?: "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b) "+str(alternatives[ta][1])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
