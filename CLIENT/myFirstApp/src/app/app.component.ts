@@ -96,11 +96,11 @@ export class AppComponent {
        this.loginSuccess=1;
       }
       else{
+        globalData.userEmail=this.usuario;
         this.loginSuccess=2;
         console.log(this.serverData);
         //this.router.navigateByUrl('/menu');
       }
-
     })
   }
 

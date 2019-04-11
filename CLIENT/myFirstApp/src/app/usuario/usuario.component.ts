@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders  } from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
+import {globalData} from '../../utils/globalClasses';
 
 interface updateFails{
   message:String;
@@ -19,10 +22,11 @@ export class UsuarioComponent implements OnInit {
   pas2='';
   fieldE='';
   fieldP='';
+  serverData: JSON;
   updateFails:updateFails[]=[];
   currentFail=0;
   updateSuccess=0;
-  constructor() {
+  constructor(private httpClient:HttpClient, private router : Router) {
     this.updateFails.push({message:"login input data is not correct", classes:"alert alert-danger"});
     this.updateFails.push({message:"user already exist", classes:"alert alert-warning"});
     this.updateFails.push({message:"password must have 8 or more characters", classes:"alert alert-warning"});
@@ -49,6 +53,24 @@ export class UsuarioComponent implements OnInit {
     //   this.createUser();
     // }
     
+  }
+
+  updateEmail(){
+    let options =  
+    {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
+    ,'Accept': 'application/json'
+})};
+     
+    var userData={newEmail: this.fieldE, password: this.fieldP, oldEmail:globalData.userEmail};
+    debugger; 
+    this.httpClient.post<JSON>('http://localhost:5000/user/updateUser', userData, options)
+    .subscribe(data => {
+      // this.examData = data as JSON;
+      // this.show=1;
+      // this.radioValue=[];
+      // this.score=0;
+      console.log(data);
+    })
   }
 
 }

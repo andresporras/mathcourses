@@ -244,14 +244,12 @@ def quotientProblem():
     try:
         a = (random.randint(0,4)*2)+1
         b = random.randint(0,1)
-        c = random.randint(0,1)
+        c = random.randint(0,3)
         d = random.randint(2,10)*(random.randint(0,1)*2-1)
         comp1=round(2/(a*d),4)
         comp2=round(2/(a*d*d),4)
-        c1 = [comp1,round(comp1/2,4) if c==0 else round(comp1*2,4)]
-        c2=  [comp2,round(comp2/2,4) if c==0 else round(comp2*2,4)]
-        c1.sort()
-        c2.sort()
+        c1 = comp1 if c>1 else (round(comp1/2,4) if c==0 else round(comp1*2,4))
+        c2=  comp2 if c<2 else (round(comp2/2,4) if c==2 else round(comp2*2,4))
         question=""
         solution=""
         if b==0:
@@ -260,10 +258,17 @@ def quotientProblem():
         elif b==1:
             question=r'\int \frac{cos({'+str(d)+r'x}^{\frac{-'+str(a)+r'}{2}})}{{x}^{'+str(a+1)+r'}}'
             solution=r'\frac{'+str(-1*comp1)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(comp2)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'
-        options =json.loads(json.dumps({'a': r'\frac{'+str(c1[0])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[0])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
-                                        'b':r'\frac{'+str(c1[1])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[1])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
-                                        'c': r'\frac{'+str(-1*c1[0])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[0])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
-                                        'd': r'\frac{'+str(-1*c1[1])+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2[1])+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'}))
+        listOptions = [
+            r'\frac{'+str(comp1)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(comp2)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+            r'\frac{'+str(c1)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+            r'\frac{'+str(-1*comp1)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(comp2)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C', 
+            r'\frac{'+str(-1*c1)+r'sin({'+str(d)+r'x}^{'+str(-1*a/2)+r'})}{{x}^{'+str(a/2)+r'}}-'+str(c2)+r'cos({'+str(d)+r'x}^{'+str(-1*a/2)+r'})+C'
+            ]
+        random.shuffle(listOptions)
+        options =json.loads(json.dumps({'a': listOptions[0], 
+                                        'b': listOptions[1], 
+                                        'c': listOptions[2], 
+                                        'd': listOptions[3]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:

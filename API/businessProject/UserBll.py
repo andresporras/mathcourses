@@ -3,6 +3,8 @@ import asyncio
 
 def createUser(nUsuario):
         return UserDll.createUser(nUsuario)
+def updateUser(nUsuario):
+        return UserDll.updateUser(nUsuario)
 def loginUser(nUsuario):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)

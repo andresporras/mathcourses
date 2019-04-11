@@ -286,8 +286,33 @@ def unionThreeEventsProblem():
         return jsonResponse
     except Exception as er:
         return er
+#-a U -b U -c = a + a-b + ab-c
+def mutuallyExclusiveProblem():
+    try:
+        p = random.randint(325,350)
+        na = random.randint(125,150)
+        anb = random.randint(75,100)
+        abnc = random.randint(25,50)
+        sol1 = na+anb+abnc
+        a= p-na
+        sol2 = a-anb
+        solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r""
+        question=r"Microsoft choose a sample of "+str(p)+" employees in order to understand their main habits. They found the next information, "+str(na)+r" employees of the group don't read books,\\ "+str(anb)+r" employees read books but don't play an instrument, "+str(abnc)+r" employees read books and play an instrument but don't exercise.Using the provide information answer the next questions, \\a) how many employees don't read or don't play an instrument or don't exercise?, b) how many employees both read books and play an instrument?: "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b) "+str(alternatives[ta][1])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
-exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem]
+exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

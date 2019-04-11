@@ -21,6 +21,7 @@ export  class userClass
 
 export abstract class globalData {    
   public static sessionId:string="";     
+  public static userEmail:string="";  
   public static componentSelector:string="app-menu";
   public static componentSeccion:string="app-cursos";
 

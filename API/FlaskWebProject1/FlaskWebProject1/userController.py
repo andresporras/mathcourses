@@ -95,6 +95,11 @@ class UserController(Resource):
         #nUsuario = UserModel
         nUsuario = munchify(request.json)
         return str(UserBll.createUser(nUsuario))
+    @app.route(defaultRoute+'/updateUser', methods=['POST'])
+    def updateUser():
+        #nUsuario = UserModel
+        nUsuario = munchify(request.json)
+        return str(UserBll.updateUser(nUsuario))
     @app.route(defaultRoute+'/loginUser', methods=['POST'])
     def loginUser():
         #nUsuario = UserModel
