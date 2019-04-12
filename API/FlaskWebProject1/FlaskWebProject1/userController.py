@@ -86,7 +86,7 @@ class UserController(Resource):
         except Exception as er:
             return er
         if(result==1):
-            token = encode({'user': nUsuario.usuario+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+            token = encode({'user': nUsuario.email+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
         return jsonify({'token':'-1'})
     #@token_required
@@ -97,9 +97,14 @@ class UserController(Resource):
         return str(UserBll.createUser(nUsuario))
     @app.route(defaultRoute+'/updateUser', methods=['POST'])
     def updateUser():
-        #nUsuario = UserModel
-        nUsuario = munchify(request.json)
-        return str(UserBll.updateUser(nUsuario))
+        try:
+            #nUsuario = UserModel
+            nUsuario = munchify(request.json)
+            result = UserBll.updateUser(nUsuario)
+            r = jsonify({'result':str(result)})
+            return r
+        except Exception as er:
+            return er
     @app.route(defaultRoute+'/loginUser', methods=['POST'])
     def loginUser():
         #nUsuario = UserModel
@@ -107,7 +112,7 @@ class UserController(Resource):
         x=2+2
         result = UserBll.loginUser(nUsuario)
         if(result==1):
-            token = encode({'user': nUsuario.usuario+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+            token = encode({'user': nUsuario.email+'+'+nUsuario.password, 'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
         return jsonify({'token':'-1'})
     #@token_required

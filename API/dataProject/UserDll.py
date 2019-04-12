@@ -13,7 +13,7 @@ def createUser(user):
     user.password = sha256_crypt.encrypt(user.password)
     #nombre = user.nombre
     #a=  db.eval(Code('function exec(){var c=db.userData.find(); return c;} exec();'));
-    x = str('function(documento, tipoDocumento, nombre, apellido, usuario, password, genero, ciudadResidencia, paisResidencia, ciudadNacimiento, paisNacimiento, correo1, correo2, fechaNacimiento){'
+    x = str('function(documento, tipoDocumento, nombre, apellido, email, password, genero, ciudadResidencia, paisResidencia, ciudadNacimiento, paisNacimiento, correo1, correo2, fechaNacimiento){'
     'var text = "";'
     'var possible = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789";'
     'for (var i = 0; i < 100; i++){'
@@ -24,7 +24,7 @@ def createUser(user):
     'documento: {codigo: documento, tipo:tipoDocumento}'
     ',nombre:nombre'
     ', apellido:apellido'
-    ', usuario:usuario'
+    ', email:email'
     ', password:password'
     ', idlogeo: text'
     ', genero: genero'
@@ -39,23 +39,28 @@ def createUser(user):
     '}')
     #a =db.eval(Code('function(){db.userData.insert({nombre:"oscar2"}); return "hola mundo";}'));
     #a =db.eval(Code('function exec(){var c=JSON.parse(JSON.stringify(db.userData.find({nombre:"andres"})[0])); return c;}'));
-    a =db.eval(x, user.documento, user.tipoDocumento, user.nombre, user.apellido, user.usuario, user.password, user.genero, user.ciudadResidencia, user.paisResidencia, user.ciudadNacimiento, user.paisNacimiento, user.correo1, user.correo2, user.fechaNacimiento);
+    a =db.eval(x, user.documento, user.tipoDocumento, user.nombre, user.apellido, user.email, user.password, user.genero, user.ciudadResidencia, user.paisResidencia, user.ciudadNacimiento, user.paisNacimiento, user.correo1, user.correo2, user.fechaNacimiento);
     return a
-def updateUser(user):
-    query = str('function(usuario){var userData =JSON.parse(JSON.stringify(db.userData.findOne({usuario:usuario}))); if(userData!=null){return userData["password"];} return "0";}')
-    password= db.eval(query, user.oldEmail)
-    if(password=="0"):
-        return 0
-    elif(sha256_crypt.verify(user.password, password)):
-        result = collection.replace_one({"usuario":user.oldEmail}, 
-        { 
-                "usuario":user.newEmail
-                } )
-        return result
-    else:
-        return -1
+async def updateUser(user):
+    try:
+        query = str('function(email){var userData =JSON.parse(JSON.stringify(db.userData.findOne({email:email}))); if(userData!=null){return userData["password"];} return "0";}')
+        password= db.eval(query, user.oldEmail)
+        if(getUser(user.newEmail)!=None):
+            return -1
+        elif(password=="0"):
+            return 0
+        elif(sha256_crypt.verify(user.password, password)):
+            result = collection.update_one({"email":user.oldEmail}, 
+            { "$set":{"email":user.newEmail}
+                    } )
+            return 1
+        else:
+            return 2
+    except Exception as er:
+        return er
+    
     #codCreateUser = str('function(newEmail, oldEmail, pas){'
-    #'db.userData.update({usuario: oldEmail,password: pas},{$set:{"usuario":newEmail}})'
+    #'db.userData.update({email: oldEmail,password: pas},{$set:{"email":newEmail}})'
     #'return text;'
     #'}')
     #a =db.eval(codCreateUser, user.newEmail, user.oldEmail, password);
@@ -63,35 +68,35 @@ def createSimpleUser(user):
     password = sha256_crypt.encrypt(user.password)
     #nombre = user.nombre
     #a=  db.eval(Code('function exec(){var c=db.userData.find(); return c;} exec();'));
-    codCreateUser = str('function(usuario, password){'
+    codCreateUser = str('function(email, password){'
     'var text = "";'
     'var possible = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789";'
     'for (var i = 0; i < 100; i++){'
     'text += possible.charAt(Math.floor(Math.random() * possible.length));'
     '}'
     'db.userData.insert('
-    '{usuario:usuario'
+    '{email:email'
     ', password:password'
     '});'
     'return text;'
     '}')
     #a =db.eval(Code('function(){db.userData.insert({nombre:"oscar2"}); return "hola mundo";}'));
     #a =db.eval(Code('function exec(){var c=JSON.parse(JSON.stringify(db.userData.find({nombre:"andres"})[0])); return c;}'));
-    a =db.eval(codCreateUser, user.usuario, password);
+    a =db.eval(codCreateUser, user.email, password);
     return a
 
 async def loginUser(user):
-    query = str('function(usuario){var userData =JSON.parse(JSON.stringify(db.userData.findOne({usuario:usuario}))); if(userData!=null){return userData["password"];} return "0";}')
-    password= db.eval(query, user.usuario)
+    query = str('function(email){var userData =JSON.parse(JSON.stringify(db.userData.findOne({email:email}))); if(userData!=null){return userData["password"];} return "0";}')
+    password= db.eval(query, user.email)
     if(password=="0"):
         return 0
     elif(not sha256_crypt.verify(user.password, password)):
         return -1
     else:
         return 1
-def getUser(user):
-    x = str('function(usuario){var userData =JSON.parse(JSON.stringify(db.userData.findOne({usuario:usuario}))); return userData;}')
-    a=db.eval(x, user.usuario)
+def getUser(email):
+    x = str('function(email){var userData =JSON.parse(JSON.stringify(db.userData.findOne({email:email}))); return userData;}')
+    a=db.eval(x, email)
     return a
 
     #    nombre=""

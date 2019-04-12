@@ -186,7 +186,7 @@ def binomialDistributionProblem():
         p = (random.randint(1,4)/10)+(random.randint(0,1)/2)
         n = random.randint(10,30)
         mean = round(n*p,4)
-        mode = round(math.floor((n+1)*p),4)
+        mode = math.floor((n+1)*p)
         variance = round(n*p*(1-p),4)
         solution=r"mean: "+str(mean)+r", mode: "+str(mode)+r", variance: "+str(variance)
         question=r"a soccer player practice throw penaltis everyday. His percentage of scoring is "+str(p*100)+r"\%. If this soccer player throw "+str(n)+r" penaltis every day, find: mean, mode and variance: "

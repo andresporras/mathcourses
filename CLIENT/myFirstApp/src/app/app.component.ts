@@ -33,7 +33,7 @@ export class AppComponent {
   title = 'welcome to math courses';
   // nameValue='';
   // passValue='';
-  usuario='';
+  email='';
   pas='';
   loginSuccess=0;
   componentSelector="";
@@ -74,7 +74,7 @@ export class AppComponent {
   }
 
   cleanLogin() {
-    this.usuario="";
+    this.email="";
     this.pas="";
   }
 
@@ -85,7 +85,7 @@ export class AppComponent {
     ,'Accept': 'application/json'
 })};
     
-    var userData={usuario: this.usuario, password: this.pas};
+    var userData={email: this.email, password: this.pas};
     this.httpClient.post<any>('http://127.0.0.1:5000/user/loginUser', userData, options)
     .subscribe(data => {
       this.serverData = data as JSON;
@@ -96,7 +96,7 @@ export class AppComponent {
        this.loginSuccess=1;
       }
       else{
-        globalData.userEmail=this.usuario;
+        globalData.userEmail=this.email;
         this.loginSuccess=2;
         console.log(this.serverData);
         //this.router.navigateByUrl('/menu');
@@ -110,7 +110,7 @@ export class AppComponent {
     ,'Accept': 'application/json'
 })};
     
-    var userData={usuario: this.usuario, password: this.pas};
+    var userData={email: this.email, password: this.pas};
     this.httpClient.post<any>('http://127.0.0.1:5000/user/signUp', userData, options)
     .subscribe(data => {
       this.serverData = data as JSON;
@@ -138,7 +138,7 @@ export class AppComponent {
         this.currentFail= 2;
         this.loginSuccess=1;
       }
-      else if(this.regexpEmail.test(this.usuario)==false){
+      else if(this.regexpEmail.test(this.email)==false){
         this.currentFail= 3;
         this.loginSuccess=1;
       }
