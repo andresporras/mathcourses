@@ -86,7 +86,7 @@ def cpRepetitionProblem():
         combi = f**c
         permu = math.factorial(f+p-1)/(math.factorial(f-1)*math.factorial(p))
         solution=r"a) "+str(combi)+r" b)"+str(permu)
-        question=r"from the first "+str(f)+r" characters of alphabet, a) how many ways of choose "+str(c)+r" characters can be done b) how many words of "+str(p)+r" characters can be done: "
+        question=r"from the first "+str(f)+r" characters of alphabet (for ale to repeat for each character), a) how many ways of choose "+str(c)+r" characters can be done b) how many words of "+str(p)+r" characters can be done: "
         alternatives = coursesFunctionsBll.multiAritmeticOptions([combi, permu],5)
         tempAlternatives =[]
         for ta in range(5):
