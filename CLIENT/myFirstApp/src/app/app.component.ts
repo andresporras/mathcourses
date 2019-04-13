@@ -42,7 +42,7 @@ export class AppComponent {
   choices:choice[]=[];
   loginFails:loginFails[]=[];
   currentFail=0;
-  regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+  // regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
 
   constructor(private httpClient:HttpClient, private router : Router){
     this.componentSelector=globalData.componentSelector;
@@ -138,7 +138,7 @@ export class AppComponent {
         this.currentFail= 2;
         this.loginSuccess=1;
       }
-      else if(this.regexpEmail.test(this.email)==false){
+      else if(globalData.regexpEmail.test(this.email)==false){
         this.currentFail= 3;
         this.loginSuccess=1;
       }

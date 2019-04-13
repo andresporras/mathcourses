@@ -15,16 +15,16 @@
 
   <form *ngIf="show==1">
     Old password:<br>
-    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idPassword1" [(ngModel)]="pas1" name="pas1" placeholder="">
+    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idOldPas" [(ngModel)]="oldPas" name="oldPas" placeholder="">
     <br>
     New password:<br>
-    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idPassword2" [(ngModel)]="pas2" name="pas2" placeholder="">
+    <input type="password"  readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idNewPas" [(ngModel)]="newPas" name="newPas" placeholder="">
     <br><br>
     <button type="submit" class="btn btn-primary" (click)="updatePassword()">update</button>
   </form> 
 
   <form *ngIf="show==2">
-      Old password:<br>
+      Password:<br>
       <!-- https://gist.github.com/niksumeiko/360164708c3b326bd1c8 thank to cimoskill  for give the trick to avoid the auto complete -->
       <input type="password" readonly="readonly" onfocus="javascript: this.removeAttribute('readonly')" class="form-control col-md-3" [attr.id]="idFieldP" [(ngModel)]="fieldP" name="fieldP" value="">
       <br>

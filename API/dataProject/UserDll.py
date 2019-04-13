@@ -58,6 +58,23 @@ async def updateUser(user):
             return 2
     except Exception as er:
         return er
+
+async def updatePas(user):
+    try:
+        query = str('function(email){var userData =JSON.parse(JSON.stringify(db.userData.findOne({email:email}))); if(userData!=null){return userData["password"];} return "0";}')
+        password= db.eval(query, user.email)
+        if(password=="0"):
+            return 0
+        elif(sha256_crypt.verify(user.oldPas, password)):
+            newPassword = sha256_crypt.encrypt(user.newPas)
+            result = collection.update_one({"password":password, "email":user.email}, 
+            { "$set":{"password":newPassword}
+                    } )
+            return 1
+        else:
+            return 2
+    except Exception as er:
+        return er
     
     #codCreateUser = str('function(newEmail, oldEmail, pas){'
     #'db.userData.update({email: oldEmail,password: pas},{$set:{"email":newEmail}})'

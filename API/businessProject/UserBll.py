@@ -9,6 +9,12 @@ def updateUser(nUsuario):
     result = loop.run_until_complete(UserDll.updateUser(nUsuario))
     loop.close()
     return result
+def updatePas(nUsuario):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    result = loop.run_until_complete(UserDll.updatePas(nUsuario))
+    loop.close()
+    return result
 def loginUser(nUsuario):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)

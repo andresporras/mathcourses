@@ -24,7 +24,7 @@ export abstract class globalData {
   public static userEmail:string="";  
   public static componentSelector:string="app-menu";
   public static componentSeccion:string="app-cursos";
-
+  public static regexpEmail:RegExp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
   public static makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

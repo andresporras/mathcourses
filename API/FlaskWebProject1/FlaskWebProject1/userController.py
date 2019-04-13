@@ -105,6 +105,16 @@ class UserController(Resource):
             return r
         except Exception as er:
             return er
+    @app.route(defaultRoute+'/updatePas', methods=['POST'])
+    def updatePas():
+        try:
+            #nUsuario = UserModel
+            nUsuario = munchify(request.json)
+            result = UserBll.updatePas(nUsuario)
+            r = jsonify({'result':str(result)})
+            return r
+        except Exception as er:
+            return er
     @app.route(defaultRoute+'/loginUser', methods=['POST'])
     def loginUser():
         #nUsuario = UserModel
