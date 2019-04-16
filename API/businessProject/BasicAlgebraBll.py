@@ -186,35 +186,18 @@ def rationalInequations():
         b = random.randint(1,100)*(random.randint(0,1)*2-1)
         c = random.randint(1,100)*(random.randint(0,1)*2-1)
         d = random.randint(1,100)*(random.randint(0,1)*2-1)
-        range = []
-        range1 = [-1000, -b/a] if a>0 else [-b/a, 1000]
-        range2 = [-1000, -d/c] if c>0 else [-d/c, 1000]
-        range3 = [-b/a, 1000] if a>0 else [-1000, -b/a]
-        range4 = [-d/c, 1000] if c>0 else [-1000, -d/c]
-        intersect_range1 = [range1[0] if range1[0]>range2[0] else range2[0], range1[1] if range1[1]<range2[1] else range2[1]]
-        intersect_range2 = [range3[0] if range3[0]>range4[0] else range4[0], range3[1] if range3[1]<range4[1] else range4[1]]
-        union_range= []
-        solution=""
-        if(intersect_range1[0]<intersect_range1[1]):
-            union_range.append(intersect_range1)
-        if(intersect_range2[0]<intersect_range2[1]):
-            union_range.append(intersect_range2)
-        if(len(union_range)==0):
-            solution="no solution"
-        if(len(union_range)==1):
-            solution='('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')'
-        if(len(union_range)==2):
-            min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
-            if(min_range[0]>min_range[1]):
-                if(union_range[0][0]<union_range[1][0]):
-                    solution = '('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')'
-                else:
-                    solution = '('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')'
-            else:
-                max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
-                solution='('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')'
-        question = 'Which is the right range for x in the next inequality?: [('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]>0'
-        options = coursesFunctionsBll.rationalInequations([intersect_range1, intersect_range2])
+        opt1=round(-b/a,4)
+        opt2 = round(-d/c,4)
+        max = opt1 if opt1>opt2 else opt2
+        min = opt1 if opt1<opt2 else opt2
+        mid = (min+max)/2
+        solution=r""
+        if(((a*mid)+(b))/((c*mid)+(d))>0):
+            solution=r"("+str(min)+r", "+str(max)+r")"
+        else:
+            solution=r"(-\infty, "+str(min)+r") U ("+str(max)+r", \infty)"
+        question = 'Which is the right domain for x in the next inequality?: [('+str(a)+'x)+('+str(b)+')]/[('+str(c)+'x)+('+str(d)+')]>0'
+        options = coursesFunctionsBll.inequationsDomain(min, max)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse
     except Exception as er:
@@ -284,7 +267,7 @@ def inequationGrade2():
                 solution= '('+str(round(sol1 if sol1<sol2 else sol2, 4))+','+str(round(sol1 if sol1>sol2 else sol2, 4))+')'
             else:
                 solution = '(-inf, '+str(round(sol1 if sol1<sol2 else sol2, 4))+') U ('+str(round(sol1 if sol1>sol2 else sol2, 4))+',inf)'
-        question = 'for the next inequation, define the valid range for x: ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')>=0'
+        question = 'for the next inequation, define the valid domain for x: ('+str(a)+'x^2)+('+str(b)+'x)+('+str(c)+')>=0'
         options = coursesFunctionsBll.inequationGrade2([deriv, sol1, sol2])
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return jsonResponse

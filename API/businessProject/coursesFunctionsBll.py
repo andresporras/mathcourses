@@ -125,21 +125,36 @@ def inequationsAlternatives1(sol):
     tempAlternatives.append('x<='+str(options[1]))
     strOptions =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3]}))
     return strOptions
-def rationalInequations(union_range):
+#def rationalInequations(union_range):
+#    try:
+#        alternatives = []
+#        alternatives.append("no solution")
+#        alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
+#        alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
+#        min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
+#        if(min_range[0]>min_range[1]):
+#            if(union_range[0][0]<union_range[1][0]):
+#                alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
+#            else:
+#                alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
+#        max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
+#        alternatives.append('('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')')
+#        strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
+#        return strOptions
+#    except Exception as er:
+#        return er
+def inequationsDomain(min, max):
     try:
+        multiplier = (random.randint(0,1)*(1.5))+0.5
+        min2= round(min*multiplier,4)
+        max2= round(max*multiplier,4)
         alternatives = []
-        alternatives.append("no solution")
-        alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
-        alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
-        min_range = [union_range[0][0] if union_range[0][0]>union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]<union_range[1][1] else union_range[1][1]]
-        if(min_range[0]>min_range[1]):
-            if(union_range[0][0]<union_range[1][0]):
-                alternatives.append('('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+')')
-            else:
-                alternatives.append('('+(str(round(union_range[1][0],4)) if union_range[1][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[1][1],4)) if union_range[1][1]!=1000 else str(math.inf))+') U ('+(str(round(union_range[0][0],4)) if union_range[0][0]!=-1000 else '-'+str(math.inf))+','+(str(round(union_range[0][1],4)) if union_range[0][1]!=1000 else str(math.inf))+')')
-        max_range = [union_range[0][0] if union_range[0][0]<union_range[1][0] else union_range[1][0], union_range[0][1] if union_range[0][1]>union_range[1][1] else union_range[1][1]]
-        alternatives.append('('+(str(round(max_range[0],4)) if max_range[0]!=-1000 else '-'+str(math.inf))+','+(str(round(max_range[1],4)) if max_range[1]!=1000 else str(math.inf))+')')
-        strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3], 'e': alternatives[4]}))
+        alternatives.append(r"("+str(min)+r", "+str(max)+r")")
+        alternatives.append(r"(-\infty, "+str(min)+r") U ("+str(max)+r", \infty)")
+        alternatives.append(r"("+str(min2)+r", "+str(max2)+r")")
+        alternatives.append(r"(-\infty, "+str(min2)+r") U ("+str(max2)+r", \infty)")
+        random.shuffle(alternatives)
+        strOptions =json.loads(json.dumps({'a':alternatives[0], 'b':alternatives[1], 'c': alternatives[2], 'd': alternatives[3]}))
         return strOptions
     except Exception as er:
         return er
@@ -301,11 +316,11 @@ def parallelProblemOptions(slope, intersection):
             j=random.randint(0,1)
             if(i==0):
                 nAlternative = alternatives[0].copy()
-                nAlternative[j]=round(nAlternative[j]/2,4)
+                nAlternative[j]=round(nAlternative[j]-1,4)
                 alternatives.insert(0,nAlternative)
             else:
                 nAlternative = alternatives[len(alternatives)-1].copy()
-                nAlternative[j]=round(nAlternative[j]*2,4)
+                nAlternative[j]=round(nAlternative[j]+1,4)
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):

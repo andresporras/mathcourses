@@ -83,10 +83,10 @@ def cpRepetitionProblem():
         f=  random.randint(7,11)
         c=  random.randint(2,6)
         p=  random.randint(2,6)
-        combi = f**c
-        permu = math.factorial(f+p-1)/(math.factorial(f-1)*math.factorial(p))
+        combi = math.factorial(f-1+c)/(math.factorial(f-1)*math.factorial(c))
+        permu = f**p
         solution=r"a) "+str(combi)+r" b)"+str(permu)
-        question=r"from the first "+str(f)+r" characters of alphabet (for ale to repeat for each character), a) how many ways of choose "+str(c)+r" characters can be done b) how many words of "+str(p)+r" characters can be done: "
+        question=r"from the first "+str(f)+r" characters of alphabet, if you can repeat each character as many times as you want, a) how many ways of choose "+str(c)+r" characters can be done b) how many words of "+str(p)+r" characters can be done: "
         alternatives = coursesFunctionsBll.multiAritmeticOptions([combi, permu],5)
         tempAlternatives =[]
         for ta in range(5):
@@ -110,7 +110,7 @@ def coinProblem():
         sol2=0
         for i in range(ne):
             sol2+=math.factorial(f)/(math.factorial(i)*math.factorial(f-i)*(2**f))
-        sol2 = round(sol2)
+        sol2 = round(sol2,4)
         solution=r"a) "+str(sol1)+r" b)"+str(sol2)
         question=r"from flipping a fair coin  "+str(f)+r" times, a) what is the probability of get exactly "+str(e)+r" heads b) less than "+str(ne)+r" heads: "
         alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
@@ -126,7 +126,7 @@ def coinProblem():
         return jsonResponse
     except Exception as er:
         return er
-
+#binomialdistribution
 def throwProblem():
     try:
         p = (random.randint(1,4)/10)+(random.randint(0,1)/2)
@@ -139,7 +139,7 @@ def throwProblem():
             sol2+=math.factorial(f)*(p**i)*((1-p)**(f-i))*100/(math.factorial(i)*math.factorial(f-i))
         sol2 = round(100- sol2,4)
         solution=r"a) "+str(sol1)+r"\% b)"+str(sol2)+r"\%"
-        question=r"For certain basketall player, the probability of throwing the ball to the basket and score is "+str(p*100)+"\%. For throwing "+str(f)+r" times, a) what is the probability of score exactly "+str(e)+r" times b) at least "+str(ne)+r" times: "
+        question=r"For certain basketball player, the probability of throwing the ball to the basket and score is "+str(p*100)+"\%. For throwing "+str(f)+r" times, a) what is the probability of score exactly "+str(e)+r" times b) at least "+str(ne)+r" times: "
         alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
         tempAlternatives =[]
         for ta in range(5):
@@ -312,8 +312,81 @@ def mutuallyExclusiveProblem():
     except Exception as er:
         return er
 
+def conditionalProbabilityProblem():
+    try:
+        f = random.randint(41,60)
+        ft = random.randint(21,40)
+        i = random.randint(41,60)
+        fi = random.randint(21,40)
+        sol1=round(ft*100/f,4)
+        sol2 = round(fi*100/(f+i-fi),4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"A government made a poll to find the citizens preferences about social networks, they get the next conclusions, "+str(f)+r"\% of citizens use facebook,\\ "+str(ft)+r"\% of citizens use both twitter and facebook, "+str(i)+r"\% of citizens use instagram, "+str(fi)+r"\% of citizens use both instagram and facebook. Using this information solve the next questions\\ a) which is the probability of citizen use twitter if we know he use facebook?, b) which is the probability a citizen use both facebook and instagram if we know he use one of those two social networks?:"
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def conditionalProbabilityProblem():
+    try:
+        f = random.randint(41,60)
+        ft = random.randint(21,40)
+        i = random.randint(41,60)
+        fi = random.randint(21,40)
+        sol1=round(ft*100/f,4)
+        sol2 = round(fi*100/(f+i-fi),4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"A government made a poll to find the citizens preferences about social networks, they get the next conclusions, "+str(f)+r"\% of citizens use facebook,\\ "+str(ft)+r"\% of citizens use both twitter and facebook, "+str(i)+r"\% of citizens use instagram, "+str(fi)+r"\% of citizens use both instagram and facebook. Using this information solve the next questions\\ a) which is the probability of citizen use twitter if we know he use facebook?, b) which is the probability a citizen use both facebook and instagram if we know he use one of those two social networks?:"
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+
+
+def conditionalProbabilityProblem2():
+    try:
+        a = random.randint(41,60)/100
+        ba = random.randint(41,60)/100
+        cab = random.randint(41,60)/100
+        sol1=round(a*ba*cab*100,4)
+        sol2=round(100-(a*ba*100),4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"if A,B,C are events in S, P(A)="+str(round(a*100))+r"\%,P(B|A)="+str(round(ba*100))+r"\%,P(C|AB)="+str(round(cab*100))+r"\%, then find the value of a) P(ABC) b) P(\neg A U \neg B): "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = []
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
