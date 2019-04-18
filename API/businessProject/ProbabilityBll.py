@@ -370,7 +370,7 @@ def conditionalProbabilityProblem2():
         sol1=round(a*ba*cab*100,4)
         sol2=round(100-(a*ba*100),4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
-        question=r"if A,B,C are events in S, P(A)="+str(round(a*100))+r"\%,P(B|A)="+str(round(ba*100))+r"\%,P(C|AB)="+str(round(cab*100))+r"\%, then find the value of a) P(ABC) b) P(\neg A U \neg B): "
+        question=r"if A,B,C are events in S, where P(A)="+str(round(a*100))+r"\%,P(B|A)="+str(round(ba*100))+r"\%,P(C|AB)="+str(round(cab*100))+r"\%, then find the value of a) P(ABC) b) P(\neg A \cup \neg B): "
         alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
         tempAlternatives =[]
         for ta in range(5):
@@ -385,8 +385,59 @@ def conditionalProbabilityProblem2():
     except Exception as er:
         return er
 
+#https://www.quora.com/How-do-I-prove-P-A-cap-B-c-P-A-P-A-cap-B
+#https://www.quora.com/Does-P-B-C-A-1-P-B-A
+def conditionalProbabilityProblem3():
+    try:
+        a = random.randint(41,60)/100
+        b = random.randint(41,60)/100
+        ab = random.randint(21,40)/100
+        sol1=round((a-ab)*100,4)
+        pba = ab/a
+        sol2=round((1-pba)*100,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"if A,B are events in S, where P(A)="+str(round(a*100))+r"\%,P(B)="+str(round(b*100))+r"\%,P(AB)="+str(round(ab*100))+r"\%, then find the value of a) P(A \cap B^{c}) b) P(B^{c}|A): "
+        alternatives = coursesFunctionsBll.multiAritmeticOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+#for two variables
+def uniformDistributionProblem():
+    try:
+        t = random.randint(0,30)
+        w = random.randint(15,45)
+        square = w**2
+        h0 = (2*(w**2))**(1/2)
+        h = (2*(((60+t)-w)**2))**(1/2)
+        rectangle = h0*h
+        sol=round((square+rectangle)*100/((60+t)**2),4)
+        solution=r""+str(sol)+r"\%"
+        question=r"Carl and Neil decide to meet between 1:00 pm and 2:"+(str(t) if t>9 else "0"+str(t))+r" pm. They agree the one who arrive first will wait "+str(w)+" minutes for the other one.\\ If the probability to arrive in any moment, in the according range of time, is equal, which is the probability they meet?: "
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
