@@ -436,6 +436,8 @@ def uniformDistributionProblem():
     except Exception as er:
         return er
 
+
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
 exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem]
 listMethods = [exam1, exam2]
@@ -449,3 +451,5 @@ def generateExam(unit):
         #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
         solution.append(json.loads(item))
     return solution
+
+#https://www.quora.com/In-how-many-ways-can-5-letters-be-taken-from-the-word-Mississippi take letters for a word with repeated letters

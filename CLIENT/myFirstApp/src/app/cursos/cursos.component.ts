@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders  } from "@angular/common/http";
 
+
+class courses{
+  name: Text;
+  selected: boolean;
+}
+
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -32,9 +38,30 @@ export class CursosComponent implements OnInit {
       console.log(data);
       debugger;
       this.courseList = data as JSON;
-
-      console.log(this.courseList);
+      // var listCourses = JSON.parse(JSON.stringify(data));
+      // for(let c in this.courseList){
+      //   var h =c;
+      //   for(let u in c['units']){
+      //     console.log(u['cod']);
+      //   }
+      // }
       //globalData.sessionId = this.serverData['token'];
+    })
+  }
+
+  mixExam() {
+    let options =  
+    {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
+    ,'**Accept**': 'application/json'
+})};
+    debugger;
+    this.httpClient.post<JSON>('http://localhost:5000/courses/mixExam', this.courseList, options)
+    .subscribe(data => {
+      this.examData = data as JSON;
+      this.show=1;
+      this.radioValue=[];
+      this.score=0;
+      console.log(this.examData);
     })
   }
 

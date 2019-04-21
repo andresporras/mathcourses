@@ -45,9 +45,13 @@ class coursesController(object):
         return 'course or unit invalid'
     @app.route(defaultRoute+'/getData', methods=['GET'])
     def getData():
-        cursos = json.loads(json_util.dumps(coursesBll.getData()))
+        cursos = coursesBll.getData()
         return json.dumps(cursos)
-
+    @app.route(defaultRoute+'/mixExam', methods=['POST'])
+    def mixExam():
+        json_data = request.json
+        selected = coursesBll.getQuetions(json_data)
+        return json.dumps(selected)
 
 if __name__ == '__main__':
     app.run(debug=True)

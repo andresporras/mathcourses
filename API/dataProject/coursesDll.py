@@ -12,6 +12,10 @@ def getData():
     #query = str('db.courseData.find({})')
     #a =db.eval(query)
     a=collection.find({})
+    #for i in range(a):
+    #    b = a[i]['units']
+    #    for j in range(b):
+    #        b[j].append("'selected': 0")
     return a
 
 #db.courseData.insert({"cod" : "1", "name" : "basic algebra", "units" :[{"name":"equations", "cod":"1"}, {"name":"inequations", "cod":"2"}]})

@@ -3,12 +3,13 @@
     <li *ngFor="let c of courseList">
       <a href="">{{c['name']}}</a>
       <ul class="submenu" *ngFor="let u of c['units']; let i = index">
-        <li><a href="#" (click)="generateExam(c['cod'], u['cod'])">- unit {{i+1}}: {{u['name']}}</a></li>
+        <li><a href="#"><input type="checkbox" id="checkbox1" [(ngModel)]="u['selected']"> unit {{i+1}}: {{u['name']}}</a></li>
+        <!-- <li><a href="#" (click)="generateExam(c['cod'], u['cod'])"><input type="checkbox" id="checkbox1" v-model="u['selected']">- unit {{i+1}}: {{u['name']}}</a></li> -->
       </ul>
     </li>
   </ul>
 </nav>
-
+<button (click)="mixExam()">generate exam</button>
 <!-- <ul>
   <li *ngFor="let c of courseList">
       <button>{{c['name']}}</button>
