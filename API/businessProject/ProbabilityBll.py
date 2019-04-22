@@ -436,10 +436,81 @@ def uniformDistributionProblem():
     except Exception as er:
         return er
 
+def varianceProblem():
+    try:
+        cards =[]
+        for i in range(5):
+            cards.append(random.randint(1,20))
+        sums=[]
+        for x in range(5):
+            y=x+1
+            while y<5:
+                sums.append(cards[x]+cards[y])
+                #sum+=cards[x]+cards[y]
+                y+=1
+        sol1 = round((sum(s for s in sums))/10,4)
+        sol2= round((sum((s-sol1)**2 for s in sums))/10,4)
+        sol3 = round(sol2**(1/2),4)
 
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"In a card game a player has a hand of 5 cards with cards of next values: "+str(cards[0])+r","+str(cards[1])+r","+str(cards[2])+r","+str(cards[3])+r","+str(cards[4])+r". For taking two of this 5 cards find the expected value, variation and standard deviation: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def continuousVarianceProblem():
+    try:
+        problem = random.randint(1,3)
+        sol1=0
+        sol2=0
+        sol3=0
+        if problem==1:
+            choose = random.randint(0,5)
+            ran = (2**(choose))/8
+            product = 128/(4**(choose))
+            sol1= round(product*(ran**3)/3,4)
+            sol2 = round((product*(ran**4)/4)-(2*product*sol1*(ran**3)/3)+(product*(sol1**2)*(ran**2)/2),4)
+        elif problem==2:
+            choose = random.randint(0,4)
+            ran = (2**(choose))/8
+            product = 1536/(8**(choose))
+            sol1= round(product*(ran**4)/4,4)
+            sol2 = round((product*(ran**5)/5)-(2*product*sol1*(ran**4)/4)+(product*(sol1**2)*(ran**3)/3),4)
+        elif problem==3:
+            choose = random.randint(0,3)
+            ran = (2**(choose))/4
+            product = 1024/(16**(choose))
+            sol1= round(product*(ran**5)/5,4)
+            sol2 = round((product*(ran**6)/6)-(2*product*sol1*(ran**5)/5)+(product*(sol1**2)*(ran**4)/4),4)
+        sol3 = round(sol2**(1/2),4)
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"For the function f(x)="+str(product)+r"x"+(r"" if problem==1 else r"^{"+str(problem)+r"}")+" between 0<x<"+str(ran)+", find the expected value, variation and standard deviation: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

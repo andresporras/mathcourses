@@ -703,4 +703,4 @@ def generateExam(unit):
 #equation of a circle that pass through three points
 #suplpementary and complementary angles
 #radians to degrees
-
+#https://www.dummies.com/education/math/trigonometry/find-the-area-of-a-triangle-using-asa/ sas, asa methods to calculate triangle area
