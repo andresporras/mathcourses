@@ -509,8 +509,59 @@ def continuousVarianceProblem():
     except Exception as er:
         return er
 
+#use chevishev theorem
+#sigma is standard deviation, mu is average value
+def chebyshevProblem():
+    try:
+        av = random.randint(41,80)
+        sd = random.randint(10,20)
+        ran = random.randint(21,40)
+        k = ran/sd
+        prob = 1-(1/(k**2))
+        sol = round(prob*100,4)
+        solution=r""+str(sol)
+        question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def uniformVarianceProblem():
+    try:
+        a = random.randint(5,10)
+        b = random.randint(20,40)
+        sol1 = (a+b)/2
+        sol2 = round((((b-a+1)**2)-1)/12,4)
+        sol3 = round(sol2**(1/2),4)
+        
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"Random variable x have a discrete uniform distribution between integers "+str(a)+r"$\leq$x$\leq$"+str(b)+r". Find a) \mu b) \sigma^{2} c) \sigma: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
