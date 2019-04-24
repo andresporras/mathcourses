@@ -559,9 +559,58 @@ def uniformVarianceProblem():
     except Exception as er:
         return er
 
+def geometryDistributionProblem():
+    try:
+        x = random.randint(2,10)
+        y = random.randint(2,10)
+        p = random.randint(1,9)/100
+        q=1-p
+        sol1 = round((q**(x-1))*p*100,4)
+        sol2=0
+        for i in range(y):
+            sol2+=(q**(i-1))*p*100
+        sol2=round(sol2,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"The probability to call a station radio and get a response is "+str(round(p*100))+r"\%. a) which is the probability to call and only get a response until the call number "+str(x)+r", b) get your first response on less than "+str(y)+r" calls:"
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def geometryVarianceProblem():
+    try:
+        p = random.randint(11,50)/100
+        q=1-p
+        sol1 = round(1/p,4)
+        sol2= round(q/(p**2),4)
+        sol3 = round(sol2**(1/2),4)
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"The probability to call a station radio and get a response is "+str(round(p*100))+r"\%. Find a) \mu b) \sigma^{2} c) \sigma: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem, geometryDistributionProblem, geometryVarianceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
