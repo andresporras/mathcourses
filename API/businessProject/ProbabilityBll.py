@@ -609,8 +609,63 @@ def geometryVarianceProblem():
     except Exception as er:
         return er
 
+def pascalDistributionProblem():
+    try:
+        x = random.randint(11,15)
+        r = random.randint(6,10)
+        p = random.randint(1,9)/10
+        q=1-p
+        sol1 = round(math.factorial(x-1)*(q**(x-r))*(p**(r))*100/(math.factorial(r-1)*math.factorial(x-r)),4)
+        x2 = random.randint(7,10)
+        r2 = random.randint(6,x2-1)
+        sol2=0
+        i=r2
+        while i<=x2:
+            sol2+=round(math.factorial(x2-1)*(q**(x2-i))*(p**(i))*100/(math.factorial(i-1)*math.factorial(x2-i)),4)
+            i+=1
+        sol2=round(100-sol2,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"The probability of a soccer player to score in a match is "+str(round(p*100))+r"\%. a) which is the probability that the player achieve his "+str(r)+r" match scoring in the "+str(x)+r" game b) for achieve his "+str(r2)+r" match scoring he needs more than "+str(x2)+r" games:"
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def pascalVarianceProblem():
+    try:
+        r = random.randint(6,15)
+        p = random.randint(1,9)/10
+        q=1-p
+        sol1 = round(r/p,4)
+        sol2= round(r*q/(p**2),4)
+        sol3 = round(sol2**(1/2),4)
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"Probability for a soccer player to score in a match is "+str(round(p*100))+r"\%. For scoring in "+str(r)+r" matches, find a) \mu b) \sigma^{2} c) \sigma: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem, geometryDistributionProblem, geometryVarianceProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
