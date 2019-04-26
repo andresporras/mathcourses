@@ -410,31 +410,7 @@ def conditionalProbabilityProblem3():
         return jsonResponse
     except Exception as er:
         return er
-#for two variables
-def uniformDistributionProblem():
-    try:
-        t = random.randint(0,30)
-        w = random.randint(15,45)
-        square = w**2
-        h0 = (2*(w**2))**(1/2)
-        h = (2*(((60+t)-w)**2))**(1/2)
-        rectangle = h0*h
-        sol=round((square+rectangle)*100/((60+t)**2),4)
-        solution=r""+str(sol)+r"\%"
-        question=r"Carl and Neil decide to meet between 1:00 pm and 2:"+(str(t) if t>9 else "0"+str(t))+r" pm. They agree the one who arrive first will wait "+str(w)+" minutes for the other one.\\ If the probability to arrive in any moment, in the according range of time, is equal, which is the probability they meet?: "
-        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol],5)
-        tempAlternatives =[]
-        for ta in range(5):
-            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
-        options =json.loads(json.dumps({'a':tempAlternatives[0],
-                                        'b':tempAlternatives[1], 
-                                        'c': tempAlternatives[2], 
-                                        'd': tempAlternatives[3], 
-                                        'e': tempAlternatives[4]}))
-        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
-    except Exception as er:
-        return er
+
 
 def varianceProblem():
     try:
@@ -468,46 +444,7 @@ def varianceProblem():
     except Exception as er:
         return er
 
-def continuousVarianceProblem():
-    try:
-        problem = random.randint(1,3)
-        sol1=0
-        sol2=0
-        sol3=0
-        if problem==1:
-            choose = random.randint(0,5)
-            ran = (2**(choose))/8
-            product = 128/(4**(choose))
-            sol1= round(product*(ran**3)/3,4)
-            sol2 = round((product*(ran**4)/4)-(2*product*sol1*(ran**3)/3)+(product*(sol1**2)*(ran**2)/2),4)
-        elif problem==2:
-            choose = random.randint(0,4)
-            ran = (2**(choose))/8
-            product = 1536/(8**(choose))
-            sol1= round(product*(ran**4)/4,4)
-            sol2 = round((product*(ran**5)/5)-(2*product*sol1*(ran**4)/4)+(product*(sol1**2)*(ran**3)/3),4)
-        elif problem==3:
-            choose = random.randint(0,3)
-            ran = (2**(choose))/4
-            product = 1024/(16**(choose))
-            sol1= round(product*(ran**5)/5,4)
-            sol2 = round((product*(ran**6)/6)-(2*product*sol1*(ran**5)/5)+(product*(sol1**2)*(ran**4)/4),4)
-        sol3 = round(sol2**(1/2),4)
-        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
-        question=r"For the function f(x)="+str(product)+r"x"+(r"" if problem==1 else r"^{"+str(problem)+r"}")+" between 0<x<"+str(ran)+", find the expected value, variation and standard deviation: "
-        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
-        tempAlternatives =[]
-        for ta in range(5):
-            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
-        options =json.loads(json.dumps({'a':tempAlternatives[0],
-                                        'b':tempAlternatives[1], 
-                                        'c': tempAlternatives[2], 
-                                        'd': tempAlternatives[3], 
-                                        'e': tempAlternatives[4]}))
-        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
-    except Exception as er:
-        return er
+
 
 #use chevishev theorem
 #sigma is standard deviation, mu is average value
@@ -519,36 +456,12 @@ def chebyshevProblem():
         k = ran/sd
         prob = 1-(1/(k**2))
         sol = round(prob*100,4)
-        solution=r""+str(sol)
+        solution=r""+str(sol)+r"\%"
         question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
         tempAlternatives =[]
         for ta in range(5):
-            tempAlternatives.append(r""+str(alternatives[ta][0]))
-        options =json.loads(json.dumps({'a':tempAlternatives[0],
-                                        'b':tempAlternatives[1], 
-                                        'c': tempAlternatives[2], 
-                                        'd': tempAlternatives[3], 
-                                        'e': tempAlternatives[4]}))
-        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
-    except Exception as er:
-        return er
-
-def uniformVarianceProblem():
-    try:
-        a = random.randint(5,10)
-        b = random.randint(20,40)
-        sol1 = (a+b)/2
-        sol2 = round((((b-a+1)**2)-1)/12,4)
-        sol3 = round(sol2**(1/2),4)
-        
-        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
-        question=r"Random variable x have a discrete uniform distribution between integers "+str(a)+r"$\leq$x$\leq$"+str(b)+r". Find a) \mu b) \sigma^{2} c) \sigma: "
-        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
-        tempAlternatives =[]
-        for ta in range(5):
-            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
         options =json.loads(json.dumps({'a':tempAlternatives[0],
                                         'b':tempAlternatives[1], 
                                         'c': tempAlternatives[2], 
@@ -664,8 +577,64 @@ def pascalVarianceProblem():
     except Exception as er:
         return er
 
+def hyperGeometricDistributionProblem():
+    try:
+        nk = random.randint(32,64)
+        nx = random.randint(8,16)
+        k = random.randint(8,16)
+        x = random.randint(2,4)
+        x2 = random.randint(2,4)
+        sol1 = round(coursesFunctionsBll.binomialCoefficient(k,x)*(coursesFunctionsBll.binomialCoefficient(nk-k,nx-x)*100/coursesFunctionsBll.binomialCoefficient(nk,nx)),4)
+        sol2=0
+        i=0
+        while i<x2:
+            sol2+=coursesFunctionsBll.binomialCoefficient(k,i)*(coursesFunctionsBll.binomialCoefficient(nk-k,nx-i)*100/coursesFunctionsBll.binomialCoefficient(nk,nx))
+            i+=1
+        sol2=round(sol2,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"A glasses factory for this month make "+str(nk)+r" glasses, the quality engineer finds that "+str(k)+r" glasses are broken. for a group of "+str(nx)+r" glasses randomly chosen a) which is the probability that "+str(x)+r" glasses are broken b) less than "+str(x2)+r" glasses are broken: "
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def hyperGeometricVarianceProblem():
+    try:
+        nk = random.randint(32,64)
+        nx = random.randint(8,16)
+        k = random.randint(8,16)
+        p = k/nk
+        q=1-p
+        sol1 = round(nx*p,4)
+        sol2= round(nx*p*q*(nk-nx)/(nk-1),4)
+        sol3 = round(sol2**(1/2),4)
+        solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
+        question=r"A glasses factory for this month make "+str(nk)+r" glasses, the quality engineer finds that "+str(k)+r" glasses are broken. for a group of "+str(nx)+r" glasses randomly chosen, find a) \mu b) \sigma^{2} c) \sigma: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"Expected value="+str(alternatives[ta][0])+r", variance="+str(alternatives[ta][1])+r", standard deviation="+str(alternatives[ta][2])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, uniformDistributionProblem, varianceProblem, continuousVarianceProblem, chebyshevProblem, uniformVarianceProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, chebyshevProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

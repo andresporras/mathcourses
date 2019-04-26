@@ -901,3 +901,10 @@ def countBy(list1):
         return listCount
     except Exception as er:
         return er
+
+def binomialCoefficient(m, n):
+    try:
+        sol = math.factorial(m)/(math.factorial(m-n)*math.factorial(n))
+        return sol
+    except Exception as er:
+        return er

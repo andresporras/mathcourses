@@ -489,16 +489,16 @@ def quadrilateralProblem():
 
 def ellipsePointProblem():
     try:
-        x = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
-        y = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        x = random.randint(1,20)
+        y = random.randint(1,20)
         a=b=0
         while True:
             a = random.randint(1,20)
             b = random.randint(1,20)
             if a!=b:
                 break
-        h = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
-        k = random.randint(1,20) * (random.randint(0,1) * 2 - 1)
+        h = random.randint(1,20)
+        k = random.randint(1,20)
         sol = (((x-h)**2)/(a**2))+(((y-k)**2)/(b**2))
         solution=""
         if sol<1:
