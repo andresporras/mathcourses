@@ -526,7 +526,7 @@ def pascalDistributionProblem():
     try:
         x = random.randint(11,15)
         r = random.randint(6,10)
-        p = random.randint(1,9)/10
+        p = (random.randint(3,4)+(random.randint(0,1)*3))/10
         q=1-p
         sol1 = round(math.factorial(x-1)*(q**(x-r))*(p**(r))*100/(math.factorial(r-1)*math.factorial(x-r)),4)
         x2 = random.randint(7,10)
@@ -633,8 +633,39 @@ def hyperGeometricVarianceProblem():
     except Exception as er:
         return er
 
+def bayesTheoremProblem():
+    try:
+        a = 0.1
+        b = 0.1
+        c = 0.1
+        for i in range(70):
+            d=random.randint(0,2)
+            a =a+(0.01 if d==0 else 0)
+            b =b+(0.01 if d==1 else 0)
+            c =c+(0.01 if d==2 else 0)
+        fa = random.randint(10,20)/100
+        fb = random.randint(10,20)/100
+        fc = random.randint(10,20)/100
+        sol1 = round(100*(1-(fc*c/((fa*a)+(fb*b)+(fc*c)))),4)
+        sol2= round(100*((1-fb)*b/(1-(fa*a)-(fb*b)-(fc*c))),4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"Three machines, A, B and C produce "+str(round(a*100))+r"\%, "+str(round(b*100))+r"\% and "+str(round(c*100))+r"\% of total items. Percentage of broken production for this machines are "+str(round(fa*100))+r"\%, "+str(round(fb*100))+r"\% and "+str(round(fc*100))+r"\%.\\ If you choose a random produced item  a) which is the probability of don't get a machine C item if the item is broken, b) get a machine B item if the item is not broken:"
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, chebyshevProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, chebyshevProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem, bayesTheoremProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

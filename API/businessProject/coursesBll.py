@@ -12,6 +12,7 @@ import Calculus2Bll
 import LinearAlgebraBll
 import TrigonometryBll
 import ProbabilityBll
+import statisticsBll
 
 allExams = [
     [BasicAlgebraBll.exam1, BasicAlgebraBll.exam2],
@@ -22,6 +23,7 @@ allExams = [
     [LinearAlgebraBll.exam1, LinearAlgebraBll.exam2],
     [TrigonometryBll.exam1, TrigonometryBll.exam2],
     [ProbabilityBll.exam1, ProbabilityBll.exam2],
+    [statisticsBll.exam1, statisticsBll.exam2],
     ]
 
 def getData():

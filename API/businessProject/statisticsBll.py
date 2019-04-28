@@ -111,7 +111,49 @@ def uniformVarianceProblem():
     except Exception as er:
         return er
 
-exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem]
+def categoricalQuantitativeProblem():
+    try:
+        opts = ["discrete quantitative","continuous quantitative","ordinal categorical","nominal categorial"]
+        biOpts = []
+        for i in range(4):
+            for j in range(4):
+                biOpts.append(r"a) "+str(opts[i])+r", b) "+str(opts[j]))
+        quest = [
+            ["coin flips", 0],
+            ["temperature",1],
+            ["scholar grade",2],
+            ["colors",3],
+            ["goals scored", 0],
+            ["speed",1],
+            ["race position",2],
+            ["gender",3]
+            ]
+        
+        a0=random.randint(0,7)
+        a = quest[a0]
+        del quest[a0]
+        b0=random.randint(0,6)
+        b = quest[b0]
+        solution = biOpts[(4*a[1])+b[1]]
+        tempAlternatives =[biOpts[(4*a[1])+b[1]]]
+        del biOpts[(4*a[1])+b[1]]
+        for x in range(4):
+            r1=random.randint(0,len(biOpts)-1)
+            tempAlternatives.append(biOpts[r1])
+            del biOpts[r1]
+        random.shuffle(tempAlternatives)
+        question=r"define the type for the next variables a)"+str(a[0])+r" b)"+str(b[0])+r": "
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
