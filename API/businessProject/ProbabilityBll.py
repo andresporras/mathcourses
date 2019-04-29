@@ -534,7 +534,7 @@ def pascalDistributionProblem():
         sol2=0
         i=r2
         while i<=x2:
-            sol2+=round(math.factorial(x2-1)*(q**(x2-i))*(p**(i))*100/(math.factorial(i-1)*math.factorial(x2-i)),4)
+            sol2+=round(math.factorial(i-1)*(q**(i-r2))*(p**(r2))*100/(math.factorial(r2-1)*math.factorial(i-r2)),4)
             i+=1
         sol2=round(100-sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"

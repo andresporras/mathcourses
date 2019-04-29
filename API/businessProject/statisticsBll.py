@@ -142,7 +142,7 @@ def categoricalQuantitativeProblem():
             tempAlternatives.append(biOpts[r1])
             del biOpts[r1]
         random.shuffle(tempAlternatives)
-        question=r"define the type for the next variables a)"+str(a[0])+r" b)"+str(b[0])+r": "
+        question=r"State the type for the next variables a)"+str(a[0])+r" b)"+str(b[0])+r": "
         options =json.loads(json.dumps({'a':tempAlternatives[0],
                                         'b':tempAlternatives[1], 
                                         'c': tempAlternatives[2], 
@@ -153,7 +153,82 @@ def categoricalQuantitativeProblem():
     except Exception as er:
         return er
 
-exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem]
+def samplingProblem():
+    try:
+        opts = ["simple random","convenience","systematic","cluster", "stratified"]
+        biOpts = []
+        for i in range(5):
+            for j in range(5):
+                biOpts.append(r"a) "+str(opts[i])+r", b) "+str(opts[j]))
+        quest = [
+            ["Teacher randomly choose three papers from a bag. The bag contains 30 sheets, each one with a different student name.", 0],
+            ["The company assign sequential numbers for each employee(1,2,3...n), then use a software to generate random numbers and choose a sample of 10 employees",0],
+            ["A student task is to make a poll to 10 random people about political view. He make the poll to the closest students he find in the classroom.",1],
+            ["A college research wants to make a poll about local citizens preferences to traveling. They use students volunteers as sample",1],
+            ["A teacher wants to choose a sample of 5 students from 30 students class. He use an alphabetical sorted list and choose 1th student in the list, then 7th student, 13th...", 2],
+            ["In the chopping center entrance each 20th person to enter is chosen to make a poll about customer satisfaction.",2],
+            ["A research about spain hobbies randomly choose a city to make the polls",3],
+            ["A college wants to research citizens perception about local traffic. They randomly choose one of city local neighbors as sample the make the research.",3],
+            ["An statistic company wants to make a presidential popularity survey. They randomly choose 1000 adults americans from every state to make a total of 50000 surveys.",4],
+            ["To make a poll in a college to research group randomly choose 5 students from each college program",4]
+            ]
+        
+        a0=random.randint(0,9)
+        a = quest[a0]
+        del quest[a0]
+        b0=random.randint(0,8)
+        b = quest[b0]
+        solution = biOpts[(5*a[1])+b[1]]
+        tempAlternatives =[biOpts[(5*a[1])+b[1]]]
+        del biOpts[(5*a[1])+b[1]]
+        for x in range(4):
+            r1=random.randint(0,len(biOpts)-1)
+            tempAlternatives.append(biOpts[r1])
+            del biOpts[r1]
+        random.shuffle(tempAlternatives)
+        question=r"State the type of sampling method \\ a)"+str(a[0])+r" \\ b)"+str(b[0])+r": "
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+    #https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
+def plotBoxOutlierProblem():
+    try:
+        n = random.randint(11,16)
+        listValues=[]
+        for i in range(n):
+            m = random.randint(0,4)
+            listValues.append(random.randint(1,100) if m==0 else random.randint(55,65))
+        listValues.sort()
+        q1 = (listValues[math.floor((1/4)*(n+1))-1]+listValues[math.ceil((1/4)*(n+1))-1])/2 
+        q3 = (listValues[math.floor((3/4)*(n+1))-1]+listValues[math.ceil((3/4)*(n+1))-1])/2
+        iqr=q3-q1
+        ll = q1-(1.5*iqr)
+        ul = q3+(1.5*iqr)
+        sol=0
+        sol+= sum((1 if s>ul or s<ll else 0) for s in listValues)
+        solution=r""+str(sol)
+        question=r"Use the plot box outlier test to find how many potencial outliers are in "+", ".join(str(x) for x in listValues)+r":"
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
