@@ -196,7 +196,13 @@ def samplingProblem():
         return jsonResponse
     except Exception as er:
         return er
-    #https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
+
+# simple random: each object is equally likely to be selected.
+# convenience: you make it easy, the easiest sample you can get.
+# systematic: selection of every k object for your sample, where k=m/n, where m is population and n is sample size.
+# cluster: population is divide in clusters and one of the clusters, randomly selected, is chosen as the sample.
+# stratified: the sample is formed by choosing objects from different stratified clusters.
+#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
 def plotBoxOutlierProblem():
     try:
         n = random.randint(11,16)
@@ -228,7 +234,59 @@ def plotBoxOutlierProblem():
     except Exception as er:
         return er
 
-exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem]
+#use chevishev theorem
+#sigma is standard deviation, mu is average value
+def chebyshevProblem():
+    try:
+        av = random.randint(41,80)
+        sd = random.randint(10,20)
+        ran = random.randint(21,40)
+        k = ran/sd
+        prob = 1-(1/(k**2))
+        sol = round(prob*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+def linearRegressionProblem():
+    try:
+        rows = random.randint(4,8)
+        matrix = coursesFunctionsBll.tableGenerator1(rows)
+        completeMatrix = coursesFunctionsBll.completeTableGenerator1(matrix)
+        b = ((len(completeMatrix)*sum(c[2] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)*sum(c[1] for c in completeMatrix)))/((len(completeMatrix)*sum(c[3] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)**2))
+        a = (sum(c[1] for c in completeMatrix)-(b*sum(c[0] for c in completeMatrix)))/len(completeMatrix)
+        b = round(b,4)
+        a = round(a,4)
+        solution=r"y="+str(b)+r"x+"+str(a)
+        matrix_ = coursesFunctionsBll.tableString(matrix)
+        question=r'A marketing department wants to understand the success of a tv daily broadcast commercial to increase sells. The collect the next data\\ '+str(matrix_)+r' \\ Find the simple lienar regression to express the relationship between number os commercials (independent variable) and millions of sells (dependent variable): '
+        alternatives = coursesFunctionsBll.multipleOptions([b, a],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"y="+str(alternatives[ta][0])+r"x+"+str(alternatives[ta][1]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

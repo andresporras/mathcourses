@@ -358,11 +358,11 @@ def ellipseProblemOptions(data):
             j=random.randint(0,3)
             if(i==0):
                 nAlternative = alternatives[0].copy()
-                nAlternative[j]=round(nAlternative[j]/2,4)
+                nAlternative[j]=round(nAlternative[j]/2 if j%2!=0 else nAlternative[j]-1,4)
                 alternatives.insert(0,nAlternative)
             else:
                 nAlternative = alternatives[len(alternatives)-1].copy()
-                nAlternative[j]=round(nAlternative[j]*2,4)
+                nAlternative[j]=round(nAlternative[j]*2 if j%2!=0 else nAlternative[j]+1,4)
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):
@@ -400,11 +400,11 @@ def hyperbolaProblemOptions(data):
             j=random.randint(0,3)
             if(i==0):
                 nAlternative = alternatives[0].copy()
-                nAlternative[j]=round(nAlternative[j]/2,4)
+                nAlternative[j]=round(nAlternative[j]/2 if j%2!=0 else nAlternative[j]-1,4)
                 alternatives.insert(0,nAlternative)
             else:
                 nAlternative = alternatives[len(alternatives)-1].copy()
-                nAlternative[j]=round(nAlternative[j]*2,4)
+                nAlternative[j]=round(nAlternative[j]*2 if j%2!=0 else nAlternative[j]+1,4)
                 alternatives.append(nAlternative)
         tempAlternatives =[]
         for y in range(5):
@@ -906,5 +906,44 @@ def binomialCoefficient(m, n):
     try:
         sol = math.factorial(m)/(math.factorial(m-n)*math.factorial(n))
         return sol
+    except Exception as er:
+        return er
+
+def variation(m, n):
+    try:
+        sol = math.factorial(m)/math.factorial(m-n)
+        return sol
+    except Exception as er:
+        return er
+
+def tableGenerator1(height):
+    try:
+        matrix=[["commercials", "sells(millions)"]]
+        m=(random.randint(0,1)*2)-1
+        for n in range(height):
+                matrix.append([])
+                for m in range(2):
+                    matrix[n+1].append(str(n+1) if m==0 else str(random.randint(1,10)+(n*m)))
+        return matrix
+    except Exception as er:
+        return er
+
+def completeTableGenerator1(table):
+    try:
+        newTable=[]
+        for n in range(len(table)-1):
+                newTable.append([int(table[n+1][0]), int(table[n+1][1]), int(table[n+1][0])*int(table[n+1][1]), int(table[n+1][0])**2])
+        return newTable
+    except Exception as er:
+        return er
+
+def tableString(matrix):
+    try:
+        matrix_=""
+        for row in range(len(matrix)):
+                for col in range(len(matrix[row])):
+                    matrix_=matrix_+r""+matrix[row][col]+(r" & " if (len(matrix[row])-1)!=col else r"")
+                matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
+        return r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}'
     except Exception as er:
         return er

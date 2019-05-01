@@ -444,34 +444,6 @@ def varianceProblem():
     except Exception as er:
         return er
 
-
-
-#use chevishev theorem
-#sigma is standard deviation, mu is average value
-def chebyshevProblem():
-    try:
-        av = random.randint(41,80)
-        sd = random.randint(10,20)
-        ran = random.randint(21,40)
-        k = ran/sd
-        prob = 1-(1/(k**2))
-        sol = round(prob*100,4)
-        solution=r""+str(sol)+r"\%"
-        question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
-        tempAlternatives =[]
-        for ta in range(5):
-            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
-        options =json.loads(json.dumps({'a':tempAlternatives[0],
-                                        'b':tempAlternatives[1], 
-                                        'c': tempAlternatives[2], 
-                                        'd': tempAlternatives[3], 
-                                        'e': tempAlternatives[4]}))
-        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
-    except Exception as er:
-        return er
-
 def geometryDistributionProblem():
     try:
         x = random.randint(2,10)
@@ -664,8 +636,38 @@ def bayesTheoremProblem():
     except Exception as er:
         return er
 
+
+def bagBallsProblem():
+    try:
+        r = random.randint(4,6)
+        g = random.randint(4,6)
+        b = random.randint(4,6)
+        r0 = random.randint(1,3) 
+        g0 = random.randint(1,3) 
+        b0 = random.randint(1,3) 
+        c = math.factorial(r0+g0+b0)/(math.factorial(r0)*math.factorial(g0)*math.factorial(b0))
+        m=coursesFunctionsBll.variation(r+g+b,r0+g0+b0)
+        p=(r+g+b)**(r0+g0+b0)
+        sol1= round(c*coursesFunctionsBll.variation(r, r0)*coursesFunctionsBll.variation(g, g0)*coursesFunctionsBll.variation(b, b0)*100/m,4)
+        sol2= round(c*(r**r0)*(g**g0)*(b**b0)*100/p,4)
+        solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
+        question=r"We have a bag with "+str(r+g+b)+r" balls; "+str(r)+r" red, "+str(g)+r" green and "+str(b)+r" blue. If we take out "+str(r0+g0+b0)+r" balls \\ a) which is the probability to get "+str(r0)+r" red, "+str(g0)+r" green and "+str(b0)+r" blue (the order doesn't matter) \\ b) find probability for last question but this time every time you take out a ball, a new one of the same color is add on the bag:"
+        alternatives = coursesFunctionsBll.multiplePercentageOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
-exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, chebyshevProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem, bayesTheoremProblem]
+exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem, bayesTheoremProblem, bagBallsProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
