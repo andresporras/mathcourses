@@ -608,7 +608,7 @@ def pyramidRegularPolygonProblem():
         base = op*x*s/2
         volume = round((1/3)*base*h,4)
         solution=r""+str(volume)
-        question=r"For a  pyramid where base is a regular polygon of "+str(s)+" sides where each side have a length of "+str(x)+r",and the pyramid height is "+str(h)+r", find the area of the pyramid: "
+        question=r"For a  pyramid where base is a regular polygon of "+str(s)+" sides where each side have a length of "+str(x)+r",and the pyramid height is "+str(h)+r", find the volume of the pyramid: "
         alternatives = coursesFunctionsBll.multipleOptions([volume],5)
         tempAlternatives =[]
         for ta in range(5):

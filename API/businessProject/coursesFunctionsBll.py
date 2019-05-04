@@ -657,6 +657,32 @@ def arithmeticPercentageOptions(data, numberOptions):
     except Exception as er:
         return er
 
+def correlationOptions(data, numberOptions):
+    try:
+        alternatives = [data.copy()]
+        x=0
+        while x <(numberOptions-1):
+            i=random.randint(0,1)
+            j=random.randint(0,len(data)-1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]-0.1,4)
+                if j!=0 and nAlternative[j]<-1:
+                    x=x-1
+                else:
+                    alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]+0.1,4)
+                if j!=0 and  nAlternative[j]>1:
+                    x=x-1
+                else:
+                    alternatives.append(nAlternative)
+            x=x+1
+        return alternatives
+    except Exception as er:
+        return er
+
 def multiAritmeticOptions(data, numberOptions):
     try:
         alternatives = [data.copy()]
@@ -927,12 +953,12 @@ def tableGenerator1(height):
         return matrix
     except Exception as er:
         return er
-
+#in order x, y, x*y, x**2, y**2
 def completeTableGenerator1(table):
     try:
         newTable=[]
         for n in range(len(table)-1):
-                newTable.append([int(table[n+1][0]), int(table[n+1][1]), int(table[n+1][0])*int(table[n+1][1]), int(table[n+1][0])**2])
+                newTable.append([int(table[n+1][0]), int(table[n+1][1]), int(table[n+1][0])*int(table[n+1][1]), int(table[n+1][0])**2,  int(table[n+1][1])**2])
         return newTable
     except Exception as er:
         return er

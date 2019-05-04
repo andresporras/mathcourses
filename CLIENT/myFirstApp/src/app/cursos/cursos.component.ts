@@ -36,7 +36,6 @@ export class CursosComponent implements OnInit {
     this.httpClient.get<JSON>('http://localhost:5000/courses/getData')
     .subscribe(data => {
       console.log(data);
-      debugger;
       this.courseList = data as JSON;
       // var listCourses = JSON.parse(JSON.stringify(data));
       // for(let c in this.courseList){
@@ -54,7 +53,6 @@ export class CursosComponent implements OnInit {
     {headers: new  HttpHeaders({ 'Content-Type': 'application/json'
     ,'**Accept**': 'application/json'
 })};
-    debugger;
     this.httpClient.post<JSON>('http://localhost:5000/courses/mixExam', this.courseList, options)
     .subscribe(data => {
       this.examData = data as JSON;
@@ -72,7 +70,6 @@ export class CursosComponent implements OnInit {
 })};
     
     var userData={course, unit};
-    debugger;
     this.httpClient.post<JSON>('http://localhost:5000/courses/generateExam', userData, options)
     .subscribe(data => {
       this.examData = data as JSON;
@@ -86,12 +83,10 @@ export class CursosComponent implements OnInit {
   updateScore(newValue:string, index:number){
     this.radioValue[index]=newValue;
     this.score=0;
-    debugger;
     for(var i=0;i<this.radioValue.length;i++){
       if(this.radioValue[i]==this.examData[i]['solution']){
         this.score+=1;
       }
     }
   }
-
 }

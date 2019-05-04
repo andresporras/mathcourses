@@ -271,7 +271,7 @@ def linearRegressionProblem():
         a = round(a,4)
         solution=r"y="+str(b)+r"x+"+str(a)
         matrix_ = coursesFunctionsBll.tableString(matrix)
-        question=r'A marketing department wants to understand the success of a tv daily broadcast commercial to increase sells. The collect the next data\\ '+str(matrix_)+r' \\ Find the simple lienar regression to express the relationship between number os commercials (independent variable) and millions of sells (dependent variable): '
+        question=r'A marketing department wants to understand the success of a tv daily broadcast commercial to increase sells. The collect the next data\\ '+str(matrix_)+r' \\ Find the simple linear regression to express the relationship between number os commercials (independent variable) and millions of sells (dependent variable): '
         alternatives = coursesFunctionsBll.multipleOptions([b, a],5)
         tempAlternatives =[]
         for ta in range(5):
@@ -285,8 +285,81 @@ def linearRegressionProblem():
         return jsonResponse
     except Exception as er:
         return er
+#https://stattrek.com/statistics/dictionary.aspx?definition=correlation  correlation formula, far easier than book explanation
+def coefficientDeterminationProblem():
+    try:
+        rows = random.randint(4,8)
+        matrix = coursesFunctionsBll.tableGenerator1(rows)
+        completeMatrix = coursesFunctionsBll.completeTableGenerator1(matrix)
+        b = round(((len(completeMatrix)*sum(c[2] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)*sum(c[1] for c in completeMatrix)))/((len(completeMatrix)*sum(c[3] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)**2)),4)
+        a = round((sum(c[1] for c in completeMatrix)-(b*sum(c[0] for c in completeMatrix)))/len(completeMatrix),4)
+        n=len(completeMatrix)
+        sumX =round(sum(c[0] for c in completeMatrix),4)
+        sumY =round(sum(c[1] for c in completeMatrix),4)
+        sumXY =round(sum(c[2] for c in completeMatrix),4)
+        sumX2 =round(sum(c[3] for c in completeMatrix),4)
+        sumY2 =round(sum(c[4] for c in completeMatrix),4)
+        sumX_X2=round(sum((c[0]-(sumX/n))**2 for c in completeMatrix),4)
+        sumY_Y2=round(sum((c[1]-(sumY/n))**2 for c in completeMatrix),4)
+        sumX_Y=round(sum((c[0]-(sumX/n))*(c[1]-(sumY/n)) for c in completeMatrix),4)
+        sol1 = round(((sumY2-(a*sumX)-(b*sumXY))/(n-2))**(1/2),4)
+        sol2 = round(sumX_Y/((sumX_X2*sumY_Y2)**(1/2)),4)
+        sol3 = round(sol2**2,4)
+        #s2 = (sumY2/n)-((sumY/n)**2)
+        #sol2 = 1-((sol1**2)/s2)
+        #sol3 = sol2**(1/2)
+        solution=r"a) "+str(sol1)+r", b)"+str(sol2)+r", c)"+str(sol3)
+        data = [["\sum X","\sum Y","\sum XY","\sum X^{2}","\sum Y^{2}","\sum (X - \overline{X})^{2}","\sum(Y - \overline{Y})^{2}","\sum (X-\overline{X})*(Y-\overline{Y})","a","b","n"],
+                [str(sumX),str(sumY),str(sumXY),str(sumX2),str(sumY2), str(sumX_X2), str(sumY_Y2), str(sumX_Y),str(a),str(b),str(n)]]
+        matrix_ = coursesFunctionsBll.tableString(data)
+        question=r'Using the next table \\ '+str(matrix_)+r' \\ Where a and b are the intersection and the slope get by the linear regression formula, and n is the number of data. \\ Find a) standard error b) coefficient of linear correlation c) coefficient of determination: '
+        alternatives = coursesFunctionsBll.correlationOptions([sol1, sol2, sol3],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b)"+str(alternatives[ta][1])+r", c)"+str(alternatives[ta][2]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
-exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem]
+def correlationRulesProblem():
+    try:
+        q1 = [random.randint(0,7), random.randint(0,1)]
+        while True:
+            q2 =  [random.randint(0,7), random.randint(0,1)]
+            if q2[0]!=q1[0]:
+                break
+
+        questOptions = [
+            ["linear correlation coefficient value is always between -1 and 1","linear correlation coefficient value is always between 0 and 1"],
+            ["linear correlation coefficient is que square root of the coefficient of determination","coefficient of determination is que square root of the linear correlation coefficient"],
+            ["for the linear correlation coefficient, the closer to 0 the less correlation between variables","for the linear correlation coefficient, the lowest the less correlation between variables"],
+            ["for the coefficient of determination, the lower the value the less reliability have the linear regression model","for the coefficient of determination, the lower the value the more reliability have the linear regression model"],
+            ["standard error shows the variability between the real data and the linear regression model","standard error shows the variability between the data and the mean of the variable"],
+            ["for the linear correlation coefficient, a closer value to 1 shows a positive correlation between variables","for the linear correlation coefficient, a closer value to 0 shows a negative correlation between variables"],
+            ["linear correlation coefficient is also known as pearson coefficient, while coefficient of determination is also known as R^{2}","linear correlation coefficient is also known as R^{2}, while coefficient of determination is also known as pearson coefficient"],
+            ["a bigger variance will mean a bigger coefficient of determination","a lower variance will mean a bigger coefficient of determination"] #keep in mind that coefficient of determination = 1-((e^2)/(s^2)), where e is standard error and s^2 is the variance
+            ]
+       
+        optSolutions=["is true","is false"]
+        solution=r"A "+str(optSolutions[q1[1]])+r" and B "+str(optSolutions[q2[1]])+r""
+        question = r"Which of the next affirmations are true, \\ A="+str(questOptions[q1[0]][q1[1]])+r" \\ B="+str(questOptions[q2[0]][q2[1]])+r""
+        
+        options =json.loads(json.dumps({'a':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[0])+r"",
+                                        'b':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[1])+r"", 
+                                        'c':r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[0])+r"", 
+                                        'd': r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[1])+r""}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
