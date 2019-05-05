@@ -359,7 +359,40 @@ def correlationRulesProblem():
     except Exception as er:
         return er
 
-exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem]
+def statisticsConceptProblem():
+    try:
+        q1 = [random.randint(0,8), random.randint(0,1)]
+        while True:
+            q2 =  [random.randint(0,8), random.randint(0,1)]
+            if q2[0]!=q1[0]:
+                break
+
+        questOptions = [
+            ["sample statistic is a single measure of some attribute of a sample","sample statistic is another name for the mean of a sample"],
+            ["statistical parameter is a numerical characteristic of a statistical population","statistical parameter is a numerical characteristic of a statistical sample"],
+            ["estimator is the sample statistic used to measure a parameter","estimator is the standard error used to measure a sample statistic"],
+            ["consistent is a property of estimator that as the sample increase the measure converges to the true value","consistent is a property of estimator that the sample increase doesn't need to increase to converge to the true value"],
+            ["efficiency is a property of estimator, so efficiency is bigger when variance is lower","efficiency is a property of estimator, so efficiency is bigger when  measure converges to the true value"],
+            ["bias is a property of estimator, so estimator is unbias when mean of data is equal to estimated parameter","bias is a property of estimator, so estimator is unbias when mode of data is equal to estimated parameter"],
+            ["robustness is a property of estimator as it describe how much an statistic change by only one data, for exmaple median is a robust estimator","robustness is a property of estimator as it describe how much an statistic change by only one data, for exaple average is a robust estimator"],
+            ["for an estimator there are many sample statistics to measure one parameter","for an estimator there are only one sample statistic to measure one parameter"],
+            ["sufficient is a property of estimator as it provides a summary of all the information related to the parameter","sufficient is a property of estimator as it provides a summary of all the information related to the statistic sample"]
+            ]
+       
+        optSolutions=["is true","is false"]
+        solution=r"A "+str(optSolutions[q1[1]])+r" and B "+str(optSolutions[q2[1]])+r""
+        question = r"Which of the next affirmations are true, \\ A="+str(questOptions[q1[0]][q1[1]])+r" \\ B="+str(questOptions[q2[0]][q2[1]])+r""
+        
+        options =json.loads(json.dumps({'a':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[0])+r"",
+                                        'b':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[1])+r"", 
+                                        'c':r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[0])+r"", 
+                                        'd': r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[1])+r""}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
