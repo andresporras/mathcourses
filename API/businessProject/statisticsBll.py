@@ -153,6 +153,12 @@ def categoricalQuantitativeProblem():
     except Exception as er:
         return er
 
+# simple random: each object is equally likely to be selected.
+# convenience: you make it easy, the easiest sample you can get.
+# systematic: selection of every k object for your sample, where k=m/n, where m is population and n is sample size.
+# cluster: population is divide in clusters and one of the clusters, randomly selected, is chosen as the sample.
+# stratified: the sample is formed by choosing objects from different stratified clusters.
+#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
 def samplingProblem():
     try:
         opts = ["simple random","convenience","systematic","cluster", "stratified"]
@@ -197,12 +203,7 @@ def samplingProblem():
     except Exception as er:
         return er
 
-# simple random: each object is equally likely to be selected.
-# convenience: you make it easy, the easiest sample you can get.
-# systematic: selection of every k object for your sample, where k=m/n, where m is population and n is sample size.
-# cluster: population is divide in clusters and one of the clusters, randomly selected, is chosen as the sample.
-# stratified: the sample is formed by choosing objects from different stratified clusters.
-#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
+
 def plotBoxOutlierProblem():
     try:
         n = random.randint(11,16)
@@ -394,13 +395,13 @@ def statisticsConceptProblem():
 
 def expectedVarianceProblem():
     try:
-        m=random.randint(20,100)
+        m=random.randint(100,150)
         p= random.randint(200,1000)
-        s2=random.randint(100,200)
-        sol1 = round(s2/m,4)
-        sol2 = round((s2/m)*((p-m)/(p-1)),4)
+        s=random.randint(100,200)
+        sol1 = round(s/(m**(1/2)),4)
+        sol2 = round((s/(m**(1/2)))*((p-m)/(p-1)),4)
         solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r""
-        question=r'If you make a sample of size '+str(m)+r' from a population with \sigma^{2} = '+str(s2)+r' a) find the expected variance if population size is infinite b) expected variance if population size is '+str(p)+r': '
+        question=r'If you make a sample of size '+str(m)+r' from a population with \sigma = '+str(s)+r' a) find the standard error of mean if population size is infinite (or it is a sample with replacement) b) standard error of mean if population size is '+str(p)+r': '
         alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
         tempAlternatives =[]
         for ta in range(5):
