@@ -631,7 +631,7 @@ def multiplePercentageOptions(data, numberOptions):
     except Exception as er:
         return er
 
-def arithmeticPercentageOptions(data, numberOptions):
+def arithmeticPercentageOptions(data, numberOptions, jump):
     try:
         alternatives = [data.copy()]
         x=0
@@ -640,14 +640,14 @@ def arithmeticPercentageOptions(data, numberOptions):
             j=random.randint(0,len(data)-1)
             if(i==0):
                 nAlternative = alternatives[0].copy()
-                nAlternative[j]=round(nAlternative[j]-1,4)
+                nAlternative[j]=round(nAlternative[j]-jump,4)
                 if nAlternative[j]<0:
                     x=x-1
                 else:
                     alternatives.insert(0,nAlternative)
             else:
                 nAlternative = alternatives[len(alternatives)-1].copy()
-                nAlternative[j]=round(nAlternative[j]+1,4)
+                nAlternative[j]=round(nAlternative[j]+jump,4)
                 if nAlternative[j]>100:
                     x=x-1
                 else:
@@ -971,5 +971,22 @@ def tableString(matrix):
                     matrix_=matrix_+r""+matrix[row][col]+(r" & " if (len(matrix[row])-1)!=col else r"")
                 matrix_=matrix_+(r"\\" if (len(matrix)-1)!=row else r"")
         return r'\begin{bmatrix}'+matrix_+r'\end{bmatrix}'
+    except Exception as er:
+        return er
+
+
+def normalDistributionAprox(x,m,v):
+    try:
+        total=0
+        i=m-(v*4)
+        while(i<x):
+            j=i+0.001
+            z = (i-m)/(v**0.5)
+            z1 = (j-m)/(v**0.5)
+            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*0.001)
+            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*0.001)
+            total+=(temp1+temp2)/2
+            i+=0.001
+        return total
     except Exception as er:
         return er

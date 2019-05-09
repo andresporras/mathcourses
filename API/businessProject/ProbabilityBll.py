@@ -452,8 +452,10 @@ def geometryDistributionProblem():
         q=1-p
         sol1 = round((q**(x-1))*p*100,4)
         sol2=0
-        for i in range(y):
+        i=1
+        while i<y:
             sol2+=(q**(i-1))*p*100
+            i+=1
         sol2=round(sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
         question=r"The probability to call a station radio and get a response is "+str(round(p*100))+r"\%. a) which is the probability to call and only get a response until the call number "+str(x)+r", b) get your first response on less than "+str(y)+r" calls:"

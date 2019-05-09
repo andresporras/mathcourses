@@ -247,7 +247,7 @@ def chebyshevProblem():
         sol = round(prob*100,4)
         solution=r""+str(sol)+r"\%"
         question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
@@ -415,9 +415,33 @@ def expectedVarianceProblem():
         return jsonResponse
     except Exception as er:
         return er
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def normalDistributionProblem():
+    try:
+        x=random.randint(14,20)
+        m=x
+        while m==x:
+            m= random.randint(14,20)
+        v=random.randint(4,10)
+        sol = round(coursesFunctionsBll.normalDistributionAprox(x,m,v)*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'The average salary in google is '+str(m)+' thousand dollars, with a variance of $'+str(v)+' thousand dollars. If distribution follows a normal distribution, which percentage of google employeers get a salary below $'+str(x)+' thousand dollars. Choose the option closer to the right solution: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
-exam2 = []
+exam2 = [normalDistributionProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
