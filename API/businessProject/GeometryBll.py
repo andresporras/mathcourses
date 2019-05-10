@@ -72,7 +72,7 @@ def ellipseProblem():
         y1 = random.randint(2,10) * (random.randint(0,1) * 2 - 1)
         x0 = (x01 + x02) / 2 #HERE IS X0
         if x01 == x02 or y0 == y1:
-            ellipseProblem()
+            return ellipseProblem()
         constant = ((((x1 - x01) ** 2) + ((y1 - y0) ** 2)) ** (1 / 2)) + ((((x1 - x02) ** 2) + ((y1 - y0) ** 2)) ** (1 / 2))
         vertice01 = (x01 + x02 - constant) / 2
         vertice02 = (x01 + x02 + constant) / 2

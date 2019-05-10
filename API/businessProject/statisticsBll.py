@@ -416,6 +416,7 @@ def expectedVarianceProblem():
     except Exception as er:
         return er
 #https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+#http://onlinestatbook.com/2/calculators/normal_dist.html normal distribution calculator
 def normalDistributionProblem():
     try:
         x=random.randint(14,20)
@@ -440,8 +441,65 @@ def normalDistributionProblem():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def normalSampleInfiniteProblem():
+    try:
+        n = random.randint(5,10)
+        x=random.randint(144,150)
+        m=x
+        while m==x:
+            m= random.randint(144,150)
+        v=random.randint(40,50)
+        v1=v/n
+        sol = round((1-coursesFunctionsBll.normalDistributionAprox(x,m,v1))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'Average height for school students in New York is '+str(m)+r' cms, with a variance of '+str(v)+r' cms. For a sample of '+str(n)+' students, find the probability that sample average height is above '+str(x)+r' cms. Choose the option closer to the right solution: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def normalSampleInfiniteProblem2():
+    try:
+        nn = random.randint(50,100)
+        n = random.randint(5,10)
+        m= random.randint(100,110)
+        d =random.randint(1,6)
+        x=m-d
+        v=random.randint(50,60)
+        v1=(v/n)*((nn-n)/(nn-1))
+        sol = round((1-(2*coursesFunctionsBll.normalDistributionAprox(x,m,v1)))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'In a little village with '+str(nn)+r' houses,  the average size of a house is '+str(m)+r' mts^{2}, with a variance of '+str(v)+r' mts^{2}. For a sample of '+str(n)+' different houses, find the probability that sample average size is between '+str(m-d)+r' mts^{2} and '+str(m+d)+r' mts^{2}. Choose the option closer to the right solution: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
-exam2 = [normalDistributionProblem]
+exam2 = [
+    normalDistributionProblem, 
+    normalSampleInfiniteProblem, 
+    normalSampleInfiniteProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

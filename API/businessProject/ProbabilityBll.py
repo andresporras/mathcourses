@@ -624,7 +624,7 @@ def bayesTheoremProblem():
         sol2= round(100*((1-fb)*b/(1-(fa*a)-(fb*b)-(fc*c))),4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
         question=r"Three machines, A, B and C produce "+str(round(a*100))+r"\%, "+str(round(b*100))+r"\% and "+str(round(c*100))+r"\% of total items. Percentage of broken production for this machines are "+str(round(fa*100))+r"\%, "+str(round(fb*100))+r"\% and "+str(round(fc*100))+r"\%.\\ If you choose a random produced item  a) which is the probability of don't get a machine C item if the item is broken, b) get a machine B item if the item is not broken:"
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5, 1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")
