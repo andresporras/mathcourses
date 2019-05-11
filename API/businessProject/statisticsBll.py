@@ -221,7 +221,7 @@ def plotBoxOutlierProblem():
         sol+= sum((1 if s>ul or s<ll else 0) for s in listValues)
         solution=r""+str(sol)
         question=r"Use the plot box outlier test to find how many potencial outliers are in "+", ".join(str(x) for x in listValues)+r":"
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r""+str(alternatives[ta][0]))
@@ -495,11 +495,35 @@ def normalSampleInfiniteProblem2():
     except Exception as er:
         return er
 
+def errorProportionProblem():
+    try:
+        m=random.randint(100,150)
+        p= random.randint(200,1000)
+        a=random.randint(10,90)/100
+        sol1 = round(((a*(1-a))/(m))**(1/2),4)
+        sol2 = round((((a*(1-a))/(m))*((p-m)/(p-1)))**(1/2),4)
+        solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r""
+        question=r'In a car factory the '+str(round(a*100))+r'\% of productions has mechanical problems. If you make a sample of '+str(m)+r' cars a) find the standard error of proportion supposing factory made infinite cars (or it is a sample with replacement) b) standard error of proportion if total cars made are '+str(p)+r': '
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b) "+str(alternatives[ta][1])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
     normalSampleInfiniteProblem, 
-    normalSampleInfiniteProblem2]
+    normalSampleInfiniteProblem2,
+    errorProportionProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
