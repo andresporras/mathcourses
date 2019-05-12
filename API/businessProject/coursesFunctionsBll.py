@@ -978,7 +978,23 @@ def tableString(matrix):
 def normalDistributionAprox(x,m,v):
     try:
         total=0
-        i=m-(v*4)
+        i=m-(v*50)
+        while(i<x):
+            j=i+0.01
+            z = (i-m)/(v**0.5)
+            z1 = (j-m)/(v**0.5)
+            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*0.01)
+            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*0.01)
+            total+=(temp1+temp2)/2
+            i+=0.01
+        return total
+    except Exception as er:
+        return er
+
+def normalProportionAprox(x,m,v):
+    try:
+        total=0
+        i=0
         while(i<x):
             j=i+0.001
             z = (i-m)/(v**0.5)

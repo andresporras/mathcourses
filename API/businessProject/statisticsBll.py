@@ -518,12 +518,36 @@ def errorProportionProblem():
     except Exception as er:
         return er
 
+def sampleProportionProblem():
+    try:
+        a = random.randint(10,90)/100
+        x=a+(random.randint(1,5)/100*((random.randint(0,1)*2)-1))
+        n=random.randint(25,50)
+        v=(a*(1-a))/n
+        sol = round((1-coursesFunctionsBll.normalProportionAprox(x,a,v))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'In Colombia '+str(round(a*100))+r'\% of citizens think that president is doing a great job. If you make a sample of '+str(n)+r' citizens a) which is the probability that more than '+str(round(x*100))+r'\% of sample thinks the same way (choose the closest option): '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
     normalSampleInfiniteProblem, 
     normalSampleInfiniteProblem2,
-    errorProportionProblem]
+    errorProportionProblem,
+    sampleProportionProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
