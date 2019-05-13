@@ -459,7 +459,7 @@ def geometryDistributionProblem():
         sol2=round(sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
         question=r"The probability to call a station radio and get a response is "+str(round(p*100))+r"\%. a) which is the probability to call and only get a response until the call number "+str(x)+r", b) get your first response on less than "+str(y)+r" calls:"
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5, 1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")

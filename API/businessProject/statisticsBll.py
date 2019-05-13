@@ -266,8 +266,13 @@ def linearRegressionProblem():
         rows = random.randint(4,8)
         matrix = coursesFunctionsBll.tableGenerator1(rows)
         completeMatrix = coursesFunctionsBll.completeTableGenerator1(matrix)
-        b = ((len(completeMatrix)*sum(c[2] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)*sum(c[1] for c in completeMatrix)))/((len(completeMatrix)*sum(c[3] for c in completeMatrix))-(sum(c[0] for c in completeMatrix)**2))
-        a = (sum(c[1] for c in completeMatrix)-(b*sum(c[0] for c in completeMatrix)))/len(completeMatrix)
+        n=len(completeMatrix)
+        sum_xy = sum(c[2] for c in completeMatrix)
+        sum_x = sum(c[0] for c in completeMatrix)
+        sum_y = sum(c[1] for c in completeMatrix)
+        sum_x2 = sum(c[3] for c in completeMatrix)
+        b = ((n*sum_xy)-(sum_x*sum_y))/((n*sum_x2)-(sum_x**2))
+        a = (sum_y-(b*sum_x))/n
         b = round(b,4)
         a = round(a,4)
         solution=r"y="+str(b)+r"x+"+str(a)
@@ -469,7 +474,7 @@ def normalSampleInfiniteProblem():
         return er
 
 #https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
-def normalSampleInfiniteProblem2():
+def normalSampleFiniteProblem():
     try:
         nn = random.randint(50,100)
         n = random.randint(5,10)
@@ -541,13 +546,40 @@ def sampleProportionProblem():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def proportionFiniteProblem():
+    try:
+        nn = random.randint(500,1000)
+        n = random.randint(50,100)
+        m= random.randint(10,90)/100
+        d =random.randint(1,5)/100
+        x=m-d
+        v=((m*(1-m))/n)*((nn-n)/(nn-1))
+        sol = round((2*coursesFunctionsBll.normalProportionAprox(x,m,v))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'In Mexico City the '+str(round(m*100))+r'\% hospitals report losses last year. If this city have a total of '+str(nn)+r' hospitals and a research study make a sample of '+str(n)+' different hospitals, find the probability that the percentage of hospitals in the sample which report losses last year is not between '+str(round((m-d)*100))+r'\% and '+str(round((m+d)*100))+r'\%. Choose the option closer to the right solution: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
     normalSampleInfiniteProblem, 
-    normalSampleInfiniteProblem2,
+    normalSampleFiniteProblem,
     errorProportionProblem,
-    sampleProportionProblem]
+    sampleProportionProblem,
+    proportionFiniteProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
