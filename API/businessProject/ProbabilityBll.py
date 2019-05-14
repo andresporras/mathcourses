@@ -567,7 +567,7 @@ def hyperGeometricDistributionProblem():
         sol2=round(sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
         question=r"A glasses factory for this month make "+str(nk)+r" glasses, the quality engineer finds that "+str(k)+r" glasses are broken. for a group of "+str(nx)+r" glasses randomly chosen a) which is the probability that "+str(x)+r" glasses are broken b) less than "+str(x2)+r" glasses are broken: "
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5,1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")

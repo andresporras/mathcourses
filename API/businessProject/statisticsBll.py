@@ -572,6 +572,34 @@ def proportionFiniteProblem():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def averageComparisonProblem():
+    try:
+        x = random.randint(70,90)
+        y = x+(random.randint(1,5)*((random.randint(0,1)*2)-1))
+        sx = random.randint(5,10)
+        sy = random.randint(5,10)
+        nx = random.randint(35,40)
+        ny = nx+(random.randint(1,5)*((random.randint(0,1)*2)-1))
+        d =random.randint(1,10)/10
+        v=((sx**2)/nx)+((sy**2)/ny)
+        sol = round((1-coursesFunctionsBll.normalDistributionAprox(d,(x-y),v))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'The average argentine lives '+str(x)+r' years, with standard deviation of '+str(sx)+r' years, while the average chilean lives '+str(y)+r' years, with standard deviation of '+str(sy)+r' years. If we make a sample of '+str(nx)+r' argentines and another samples whith '+str(ny)+r' chileans, which is the probability that argentine sample in average lives at least '+str(d)+r' years more than chilean sample? choose closest option: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
@@ -579,7 +607,8 @@ exam2 = [
     normalSampleFiniteProblem,
     errorProportionProblem,
     sampleProportionProblem,
-    proportionFiniteProblem]
+    proportionFiniteProblem,
+    averageComparisonProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
