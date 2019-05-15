@@ -600,6 +600,33 @@ def averageComparisonProblem():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def proportionComparisonProblem():
+    try:
+        x = random.randint(40,60)/100
+        y = x+((random.randint(1,5)*((random.randint(0,1)*2)-1))/100)
+        nx = random.randint(35,40)
+        ny = nx+(random.randint(1,5)*((random.randint(0,1)*2)-1))
+        d =random.randint(1,5)/100
+        v=((x*(1-x))/nx)+((y*(1-y))/ny)
+        sol = round((coursesFunctionsBll.normalProportionAprox(d,(x-y),v))*100,4)
+        solution=r""+str(sol)+r"\%"
+        question=r'The '+str(round(x*100))+r'\% of ferrari cars are red color, while '+str(round(y*100))+r'\% of williams cars are red. For a sample of '+str(nx)+r' ferrari cars and a sample of '+str(ny)+r' williams cars, which is the probability that ferrari sample percentage of red cars is not more than '+str(round(d*100))+r'\% above the percentage of red cars in williams sample. Choose closest option: '
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
@@ -608,7 +635,8 @@ exam2 = [
     errorProportionProblem,
     sampleProportionProblem,
     proportionFiniteProblem,
-    averageComparisonProblem]
+    averageComparisonProblem,
+    proportionComparisonProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

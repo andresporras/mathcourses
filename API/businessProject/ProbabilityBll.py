@@ -646,7 +646,7 @@ def bagBallsProblem():
         b = random.randint(4,6)
         r0 = random.randint(1,3) 
         g0 = random.randint(1,3) 
-        b0 = random.randint(1,3) 
+        b0 = random.randint(1,3)
         c = math.factorial(r0+g0+b0)/(math.factorial(r0)*math.factorial(g0)*math.factorial(b0))
         m=coursesFunctionsBll.variation(r+g+b,r0+g0+b0)
         p=(r+g+b)**(r0+g0+b0)

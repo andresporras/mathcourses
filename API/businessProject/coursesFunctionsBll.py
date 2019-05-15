@@ -994,7 +994,7 @@ def normalDistributionAprox(x,m,v):
 def normalProportionAprox(x,m,v):
     try:
         total=0
-        i=0
+        i=-1
         while(i<x):
             j=i+0.001
             z = (i-m)/(v**0.5)
