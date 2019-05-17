@@ -431,7 +431,7 @@ def normalDistributionProblem():
         v=random.randint(4,10)
         sol = round(coursesFunctionsBll.normalDistributionAprox(x,m,v)*100,4)
         solution=r""+str(sol)+r"\%"
-        question=r'The average salary in google is '+str(m)+' thousand dollars, with a variance of $'+str(v)+' thousand dollars. If distribution follows a normal distribution, which percentage of google employeers get a salary below $'+str(x)+' thousand dollars. Choose the option closer to the right solution: '
+        question=r'The average salary in google is '+str(m)+' thousand dollars, with a variance of \$'+str(v)+' thousand. If distribution follows a normal distribution, which percentage of google employeers get a salary below \$'+str(x)+' thousand. Choose the option closer to the right solution: '
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
         tempAlternatives =[]
         for ta in range(5):
@@ -600,6 +600,7 @@ def averageComparisonProblem():
     except Exception as er:
         return er
 
+
 #https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
 def proportionComparisonProblem():
     try:
@@ -626,6 +627,30 @@ def proportionComparisonProblem():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def sampleSizeProblem():
+    try:
+        p = random.randint(500,1000)
+        s = random.randint(100,150)
+        e = random.randint(5,10)
+        a = random.randint(1,10)/100
+        z = coursesFunctionsBll.normalDistributionAprox(1-(a/2),0,1)
+        sol = round((z**2)*(s**2)*p/(((p-1)*(e**2))+((z**2)*(s**2))))
+        solution=r""+str(sol)+r""
+        question=r'A bank wants to know the average saving per client. A previous study shows the standard deviation on clients saving is \$'+str(s)+r'. The bank has '+str(p)+r' clients. What should be the size of the sample for an error limit of '+str(e)+r' and a significance level of '+str(a)+r'\%. Choose the closest answer: '
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 3)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
@@ -636,7 +661,8 @@ exam2 = [
     sampleProportionProblem,
     proportionFiniteProblem,
     averageComparisonProblem,
-    proportionComparisonProblem]
+    proportionComparisonProblem,
+    sampleSizeProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

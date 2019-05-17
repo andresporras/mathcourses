@@ -513,7 +513,7 @@ def pascalDistributionProblem():
         sol2=round(100-sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
         question=r"The probability of a soccer player to score in a match is "+str(round(p*100))+r"\%. a) which is the probability that the player achieve his "+str(r)+r" match scoring in the "+str(x)+r" game b) for achieve his "+str(r2)+r" match scoring he needs more than "+str(x2)+r" games:"
-        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5)
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5, 1)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r"\%, b) "+str(alternatives[ta][1])+r"\%")

@@ -657,6 +657,29 @@ def arithmeticPercentageOptions(data, numberOptions, jump):
     except Exception as er:
         return er
 
+def positiveArithmeticOptions(data, numberOptions, jump):
+    try:
+        alternatives = [data.copy()]
+        x=0
+        while x <(numberOptions-1):
+            i=random.randint(0,1)
+            j=random.randint(0,len(data)-1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]-jump,4)
+                if nAlternative[j]<0:
+                    x=x-1
+                else:
+                    alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]+jump,4)
+                alternatives.append(nAlternative)
+            x=x+1
+        return alternatives
+    except Exception as er:
+        return er
+
 def correlationOptions(data, numberOptions):
     try:
         alternatives = [data.copy()]
@@ -978,15 +1001,16 @@ def tableString(matrix):
 def normalDistributionAprox(x,m,v):
     try:
         total=0
-        i=m-(v*50)
+        i=m-(v*100)
+        k = v/100
         while(i<x):
-            j=i+0.01
+            j=i+k
             z = (i-m)/(v**0.5)
             z1 = (j-m)/(v**0.5)
-            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*0.01)
-            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*0.01)
+            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*k)
+            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*k)
             total+=(temp1+temp2)/2
-            i+=0.01
+            i+=k
         return total
     except Exception as er:
         return er
