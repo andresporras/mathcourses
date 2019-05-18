@@ -1001,7 +1001,7 @@ def tableString(matrix):
 def normalDistributionAprox(x,m,v):
     try:
         total=0
-        i=m-(v*100)
+        i=m-(v*10)
         k = v/100
         while(i<x):
             j=i+k
@@ -1012,6 +1012,25 @@ def normalDistributionAprox(x,m,v):
             total+=(temp1+temp2)/2
             i+=k
         return total
+    except Exception as er:
+        return er
+
+def normalDistributionInverse(limit):
+    try:
+        m=0
+        v=0.1
+        total=0
+        i=-1
+        z=0
+        while(total<limit):
+            j=i+0.001
+            z = (i-m)/(v**0.5)
+            z1 = (j-m)/(v**0.5)
+            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*0.001)
+            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*0.001)
+            total+=(temp1+temp2)/2
+            i+=0.001
+        return z
     except Exception as er:
         return er
 

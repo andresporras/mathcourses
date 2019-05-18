@@ -632,13 +632,37 @@ def sampleSizeProblem():
     try:
         p = random.randint(500,1000)
         s = random.randint(100,150)
-        e = random.randint(5,10)
+        e = random.randint(20,30)
         a = random.randint(1,10)/100
-        z = coursesFunctionsBll.normalDistributionAprox(1-(a/2),0,1)
+        z = coursesFunctionsBll.normalDistributionInverse(1-(a/2))
         sol = round((z**2)*(s**2)*p/(((p-1)*(e**2))+((z**2)*(s**2))))
         solution=r""+str(sol)+r""
-        question=r'A bank wants to know the average saving per client. A previous study shows the standard deviation on clients saving is \$'+str(s)+r'. The bank has '+str(p)+r' clients. What should be the size of the sample for an error limit of '+str(e)+r' and a significance level of '+str(a)+r'\%. Choose the closest answer: '
-        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 3)
+        question=r'A bank wants to know the average saving per client. A previous study shows the standard deviation on clients saving is \$'+str(s)+r'. The bank has '+str(p)+r' clients. What should be the size of the sample for an error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest answer: '
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def sampleSizeProblem2():
+    try:
+        s = random.randint(20,30)
+        e = random.randint(5,10)
+        a = random.randint(1,10)/100
+        z = coursesFunctionsBll.normalDistributionInverse(1-(a/2))
+        sol = round((z**2)*(s**2)/e**2)
+        solution=r""+str(sol)+r""
+        question=r'A research shows that average height of basketball players follows a normal distribution with standard deviation of '+str(s)+r' cms. If a research group wants to find the average size, what should be the size of the sample for an error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\% . Choose the closest option: '
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
         tempAlternatives =[]
         for ta in range(5):
             tempAlternatives.append(r""+str(alternatives[ta][0])+r"")
@@ -662,7 +686,8 @@ exam2 = [
     proportionFiniteProblem,
     averageComparisonProblem,
     proportionComparisonProblem,
-    sampleSizeProblem]
+    sampleSizeProblem,
+    sampleSizeProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
