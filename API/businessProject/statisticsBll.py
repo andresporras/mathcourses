@@ -45,7 +45,7 @@ def uniformDistributionProblem():
         return jsonResponse
     except Exception as er:
         return er
-
+#https://math.dartmouth.edu/archive/m60s06/public_html/Lecture17.pdf
 def continuousVarianceProblem():
     try:
         problem = random.randint(1,3)
@@ -676,6 +676,32 @@ def sampleSizeProblem2():
     except Exception as er:
         return er
 
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def proportionSizeProblem1():
+    try:
+        nn = random.randint(5000,10000)
+        p = random.randint(1,9)/10
+        q=1-p
+        e = random.randint(5,10)/100
+        a = random.randint(1,10)/100
+        z = coursesFunctionsBll.normalDistributionInverse(1-(a/2))
+        sol = round((((z**2)*p*q*nn)+(nn*(e**2)))/((nn*(e**2))+((z**2)*p*q)))
+        solution=r""+str(sol)+r""
+        question=r'In a city a previous study shows that '+str(round(p*100))+r'\% of population are fans of A team. A survey wants to comfirm this previous result. The city have '+str(nn)+r' citizens. Which should be the size of the sample for the new study for a error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest option: '
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     normalDistributionProblem, 
@@ -687,7 +713,8 @@ exam2 = [
     averageComparisonProblem,
     proportionComparisonProblem,
     sampleSizeProblem,
-    sampleSizeProblem2]
+    sampleSizeProblem2,
+    proportionSizeProblem1]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
