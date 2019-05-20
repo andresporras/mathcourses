@@ -343,7 +343,7 @@ def correlationRulesProblem():
 
         questOptions = [
             ["linear correlation coefficient value is always between -1 and 1","linear correlation coefficient value is always between 0 and 1"],
-            ["linear correlation coefficient is que square root of the coefficient of determination","coefficient of determination is que square root of the linear correlation coefficient"],
+            ["linear correlation coefficient is que square root of the coefficient of determination","coefficient of determination is tue square root of the linear correlation coefficient"],
             ["for the linear correlation coefficient, the closer to 0 the less correlation between variables","for the linear correlation coefficient, the lowest the less correlation between variables"],
             ["for the coefficient of determination, the lower the value the less reliability have the linear regression model","for the coefficient of determination, the lower the value the more reliability have the linear regression model"],
             ["standard error shows the variability between the real data and the linear regression model","standard error shows the variability between the data and the mean of the variable"],
@@ -680,7 +680,7 @@ def sampleSizeProblem2():
 def proportionSizeProblem1():
     try:
         nn = random.randint(5000,10000)
-        p = random.randint(1,9)/10
+        p = random.randint(10,90)/100
         q=1-p
         e = random.randint(5,10)/100
         a = random.randint(1,10)/100
@@ -688,6 +688,31 @@ def proportionSizeProblem1():
         sol = round((((z**2)*p*q*nn)+(nn*(e**2)))/((nn*(e**2))+((z**2)*p*q)))
         solution=r""+str(sol)+r""
         question=r'In a city a previous study shows that '+str(round(p*100))+r'\% of population are fans of A team. A survey wants to comfirm this previous result. The city have '+str(nn)+r' citizens. Which should be the size of the sample for the new study for a error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest option: '
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def proportionSizeProblem2():
+    try:
+        p = random.randint(10,90)/100
+        q=1-p
+        e = random.randint(5,10)/100
+        a = random.randint(1,10)/100
+        z = coursesFunctionsBll.normalDistributionInverse(1-(a/2))
+        sol = round(((z**2)*p*q)/(e**2))
+        solution=r""+str(sol)+r""
+        question=r'An international statistical service founds that '+str(round(p*100))+r'\% of population in country B lives in poverty. A new research wants to comfirm the former conclusion. Which should be the size of the sample for the new study for a error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest option: '
         alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
         tempAlternatives =[]
         for ta in range(5):
@@ -714,7 +739,8 @@ exam2 = [
     proportionComparisonProblem,
     sampleSizeProblem,
     sampleSizeProblem2,
-    proportionSizeProblem1]
+    proportionSizeProblem1,
+    proportionSizeProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
