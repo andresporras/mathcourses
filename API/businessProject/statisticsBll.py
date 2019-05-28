@@ -158,7 +158,7 @@ def categoricalQuantitativeProblem():
 # systematic: selection of every k object for your sample, where k=m/n, where m is population and n is sample size.
 # cluster: population is divide in clusters and one of the clusters, randomly selected, is chosen as the sample.
 # stratified: the sample is formed by choosing objects from different stratified clusters.
-#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
+
 def samplingProblem():
     try:
         opts = ["simple random","convenience","systematic","cluster", "stratified"]
@@ -203,7 +203,7 @@ def samplingProblem():
     except Exception as er:
         return er
 
-
+#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
 def plotBoxOutlierProblem():
     try:
         n = random.randint(11,16)
@@ -449,10 +449,42 @@ def samplePopulationDeviationProblem():
     except Exception as er:
         return er
 
+#https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
+def boxWhiskerPlotProblem():
+    try:
+        n = random.randint(11,16)
+        listValues=[]
+        for i in range(n):
+            m = random.randint(0,4)
+            listValues.append(random.randint(1,100) if m==0 else random.randint(55,65))
+        listValues.sort()
+        q1 = (listValues[math.floor((1/4)*(n+1))-1]+listValues[math.ceil((1/4)*(n+1))-1])/2 
+        q3 = (listValues[math.floor((3/4)*(n+1))-1]+listValues[math.ceil((3/4)*(n+1))-1])/2
+        iqr=q3-q1
+        ll = q1-(1.5*iqr)
+        ul = q3+(1.5*iqr)
+        th = random.randint(0,n-1)
+        solution=""
+        if (listValues[th]>=q1 and listValues[th]<=q3):
+            solution=r"box"
+        elif (listValues[th]>=ll and listValues[th]<=ul):
+            solution=r"whisker"
+        else:
+            solution=r"outlier"
+        question=r"Use the box and whisker plot for the next list of values "+", ".join(str(x) for x in listValues)+r". Find where the "+str(th+1)+r"th value of the list falls: "
+        options =json.loads(json.dumps({'a':r"box",
+                                        'b':r"whisker", 
+                                        'c': r"outlier"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
-    samplePopulationDeviationProblem]
+    samplePopulationDeviationProblem,
+    boxWhiskerPlotProblem]
 listMethods = [exam1, exam2]
 
 def generateExam(unit):

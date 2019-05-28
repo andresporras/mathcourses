@@ -569,11 +569,12 @@ def logarithmMethodOptions(data,tempTri):
         return er
 def multipleOptions(data, numberOptions):
     try:
+        i = random.randint(0,numberOptions-1)
         alternatives = [data.copy()]
         for x in range(numberOptions-1):
-            i=random.randint(0,1)
+            #i=random.randint(0,1)
             j=random.randint(0,len(data)-1)
-            if(i==0):
+            if(i<x):
                 nAlternative = alternatives[0].copy()
                 nAlternative[j]=round(nAlternative[j]/2,4)
                 alternatives.insert(0,nAlternative)
