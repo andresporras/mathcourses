@@ -235,8 +235,8 @@ def plotBoxOutlierProblem():
     except Exception as er:
         return er
 
-#use chevishev theorem
 #sigma is standard deviation, mu is average value
+#use chebyshev inequality https://en.wikipedia.org/wiki/Chebyshev%27s_inequality
 def chebyshevProblem():
     try:
         av = random.randint(41,80)
@@ -377,9 +377,9 @@ def statisticsConceptProblem():
             ["sample statistic is a single measure of some attribute of a sample","sample statistic is another name for the mean of a sample"],
             ["statistical parameter is a numerical characteristic of a statistical population","statistical parameter is a numerical characteristic of a statistical sample"],
             ["estimator is the sample statistic used to measure a parameter","estimator is the standard error used to measure a sample statistic"],
-            ["consistent is a property of estimator that as the sample increase the measure converges to the true value","consistent is a property of estimator that the sample increase doesn't need to increase to converge to the true value"],
-            ["efficiency is a property of estimator, so efficiency is bigger when variance is lower","efficiency is a property of estimator, so efficiency is bigger when  measure converges to the true value"],
-            ["bias is a property of estimator, so estimator is unbias when mean of data is equal to estimated parameter","bias is a property of estimator, so estimator is unbias when mode of data is equal to estimated parameter"],
+            ["consistent is a property of an estimator that as the sample increase the measure converges to the true value","consistent is a property of estimator that the sample increase doesn't need to increase to converge to the true value"],
+            ["efficiency is a property of an estimator, so efficiency is bigger when variance is lower","efficiency is a property of estimator, so efficiency is bigger when  measure converges to the true value"],
+            ["bias is a property of an estimator, so estimator is unbias when mean of data is equal to estimated parameter","bias is a property of an estimator, so estimator is unbias when mode of data is equal to estimated parameter"],
             ["robustness is a property of estimator as it describe how much an statistic change by only one data, for exmaple median is a robust estimator","robustness is a property of estimator as it describe how much an statistic change by only one data, for exaple average is a robust estimator"],
             ["for an estimator there are many sample statistics to measure one parameter","for an estimator there are only one sample statistic to measure one parameter"],
             ["sufficient is a property of estimator as it provides a summary of all the information related to the parameter","sufficient is a property of estimator as it provides a summary of all the information related to the statistic sample"]
@@ -480,11 +480,47 @@ def boxWhiskerPlotProblem():
     except Exception as er:
         return er
 
+def statisticsMeasuresProblem():
+    try:
+        q1 = [random.randint(0,8), random.randint(0,1)]
+        while True:
+            q2 =  [random.randint(0,8), random.randint(0,1)]
+            if q2[0]!=q1[0]:
+                break
+
+        questOptions = [
+            [r"If mean is bigger than median then the distribution is skewed to the left",r"If mean is bigger than median then the distribution is skewed to the right"],
+            [r"If mean is lower than median then the distribution is positively skewed",r"If mean is lower than median then the distribution is negatively skewed"],
+            [r"If data is skewed to one side then median is a best measure of the center than mean",r"If data is skewed to one side then mean is a best measure of the center than median"],
+            [r"The median does not have to be one of the data values",r"The median is always one of the data values"],
+            [r"The midrange is the midpoint between the highest and the lowest value",r"The midrange is the midpoint between the most extreme value and 0"],
+            [r"The trimmed mean remove the 10\% highest and the 10\% lowest values to get the mean",r"The trimmed mean remove the 10\% most extreme values to get the mean"],
+            [r"To get the quadratic mean first sum the squares of every value, then divide by the number of values and then get the square root",r"To get the quadratic mean first sum the squares of every value, then get the square root and then divide by the number of values"],
+            [r"To get the geometric mean first multiply all the values and then get the n root (where n is the number of values)",r"To get the geometric mean first multiply all the values and then get the n-1 root (where n is the number of values)"],
+            [r"To get the harmonic mean divide n by the sum of the multiplicative inverses of each value",r"To get the harmonic mean divide 1 by the sum of the multiplicative inverses of each value"],
+            [r"A distribution is multimodal when more than one value (and less than all the values) is the most repeated value",r"A distribution is always multimodal when more than one value is the most repeated value"],
+            [r"A distribution has no mode when all the values repeat the same number of times",r"if all the values repeat the same number of times, then all the values are the mode"]
+            ]
+       
+        optSolutions=["is true","is false"]
+        solution=r"A "+str(optSolutions[q1[1]])+r" and B "+str(optSolutions[q2[1]])+r""
+        question = r"Which of the next affirmations are true, \\ A="+str(questOptions[q1[0]][q1[1]])+r" \\ B="+str(questOptions[q2[0]][q2[1]])+r""
+        
+        options =json.loads(json.dumps({'a':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[0])+r"",
+                                        'b':r"A "+str(optSolutions[0])+r" and B "+str(optSolutions[1])+r"", 
+                                        'c':r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[0])+r"", 
+                                        'd': r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[1])+r""}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
-    boxWhiskerPlotProblem]
+    boxWhiskerPlotProblem,
+    statisticsMeasuresProblem,]
 listMethods = [exam1, exam2]
 
 def generateExam(unit):
