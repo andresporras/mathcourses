@@ -52,12 +52,12 @@ def continuousVarianceProblem():
         sol1=0
         sol2=0
         sol3=0
-        if problem==1:
+        if problem==1: 
             choose = random.randint(0,5)
             ran = (2**(choose))/8
             product = 128/(4**(choose))
             sol1= round(product*(ran**3)/3,4)
-            sol2 = round((product*(ran**4)/4)-(2*product*sol1*(ran**3)/3)+(product*(sol1**2)*(ran**2)/2),4)
+            sol2 = round((product*(ran**4)/4)-(2*product*sol1*(ran**3)/3)+(product*(sol1**2)*(ran**2)/2),4) #f(x)*[(u-x)**2] where u is expected value (sol1)
         elif problem==2:
             choose = random.randint(0,4)
             ran = (2**(choose))/8
@@ -420,7 +420,7 @@ def expectedVarianceProblem():
         return jsonResponse
     except Exception as er:
         return er
-
+#sample standard deviation vs population standard deviation https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/variance-standard-deviation-sample/a/population-and-sample-standard-deviation-review
 def samplePopulationDeviationProblem():
     try:
         i0= random.randint(1,5)
@@ -449,6 +449,7 @@ def samplePopulationDeviationProblem():
     except Exception as er:
         return er
 
+#Box and Whisker Plot https://datavizcatalogue.com/methods/box_plot.html
 #https://www.whatissixsigma.net/box-plot-diagram-to-identify-outliers/
 def boxWhiskerPlotProblem():
     try:
@@ -479,7 +480,7 @@ def boxWhiskerPlotProblem():
         return jsonResponse
     except Exception as er:
         return er
-
+#skewed right and left, and center using mean and median https://people.richland.edu/james/ictcm/2001/descriptive/helpcenter.html https://study.com/academy/lesson/skewed-distribution-examples-definition-quiz.html
 def statisticsMeasuresProblem():
     try:
         q1 = [random.randint(0,8), random.randint(0,1)]
@@ -515,12 +516,45 @@ def statisticsMeasuresProblem():
     except Exception as er:
         return er
 
+#domain and range https://www.varsitytutors.com/hotmath/hotmath_help/topics/domain-and-range
+def midRangeProblem():
+    try:
+        a = random.randint(1,10)*((random.randint(0,1)*2)-1)
+        b = random.randint(1,10)*((random.randint(0,1)*2)-1)
+        c = random.randint(1,10)
+        d = random.randint(1,10)
+        a1 = -a*c
+        b1 = -2*b*c
+        c1 = a*d
+        x1 = (-b1+(((b1**2)-(4*a1*c1))**0.5))/(2*a1)
+        x2 = (-b1-(((b1**2)-(4*a1*c1))**0.5))/(2*a1)
+        y1= ((a*x1)+(b))/((c*x1*x1)+(d))
+        y2= ((a*x2)+(b))/((c*x2*x2)+(d))
+        sol = round((y1+y2)/2,4)
+        solution=r""+str(sol)
+        question=r"Find the midrange of the function \frac{"+str(a)+r"x"+(r"+" if b>=0 else r"")+str(b)+r"}{"+str(c)+r"x^{2}+"+str(d)+r"}: "
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
     boxWhiskerPlotProblem,
-    statisticsMeasuresProblem,]
+    statisticsMeasuresProblem,
+    midRangeProblem,
+    ]
 listMethods = [exam1, exam2]
 
 def generateExam(unit):

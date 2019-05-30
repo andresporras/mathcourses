@@ -270,7 +270,7 @@ def proportionSizeProblem1():
         z = coursesFunctionsBll.normalDistributionInverse(1-(a/2))
         sol = round((((z**2)*p*q*nn)+(nn*(e**2)))/((nn*(e**2))+((z**2)*p*q)))
         solution=r""+str(sol)+r""
-        question=r'In a city a previous study shows that '+str(round(p*100))+r'\% of population are fans of A team. A survey wants to comfirm this previous result. The city have '+str(nn)+r' citizens. Which should be the size of the sample for the new study for a error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest option: '
+        question=r'In a city a previous study shows that '+str(round(p*100))+r'\% of population are fans of A team. A survey wants to comfirm this previous result. The city have '+str(nn)+r' citizens. Which should be the size of the sample for the new study for an error limit of '+str(e)+r' and a significance level of '+str(round(a*100))+r'\%. Choose the closest option: '
         alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol],5, 10)
         tempAlternatives =[]
         for ta in range(5):
