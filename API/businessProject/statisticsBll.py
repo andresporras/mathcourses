@@ -547,6 +547,30 @@ def midRangeProblem():
     except Exception as er:
         return er
 
+#empirical rule of normal distribution https://www.investopedia.com/terms/e/empirical-rule.asp
+def empiricalRuleProblem():
+    try:
+        p= random.randint(10000,20000)
+        m= random.randint(80,120)
+        s= random.randint(2,8)
+        sol1 = round(p*0.68)
+        sol2 = round((p/2)-((p/2)*0.95))
+        sol3 = round((p/2)+((p/2)*0.997))
+        solution=r"a) "+str(sol1)+r", b) "+str(sol2)+r", c) "+str(sol3)
+        question=r"A college research make a IQ test to every single student of the college and found the data follows a normal distribution where average IQ score is "+str(m)+r" and standard deviation equal to "+str(s)+r". Having the college "+str(p)+r" students, use the empirical rule of normal distribution to answer the next quetions \\ a) How many students get a score between "+str(m-s)+r" and "+str(m+s)+r". b) how many students get have a score below "+str(m-(2*s))+r". c) how many students get a score above "+str(m-(3*s))+r". Choose the closer option: "
+        alternatives = coursesFunctionsBll.positiveArithmeticOptions([sol1, sol2, sol3],5, 5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r", b) "+str(alternatives[ta][1])+r", c) "+str(alternatives[ta][2]))
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
@@ -554,6 +578,7 @@ exam2 = [
     boxWhiskerPlotProblem,
     statisticsMeasuresProblem,
     midRangeProblem,
+    empiricalRuleProblem,
     ]
 listMethods = [exam1, exam2]
 

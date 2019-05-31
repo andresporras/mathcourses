@@ -138,7 +138,7 @@ def proportionFiniteProblem():
         d =random.randint(1,5)/100
         x=m-d
         v=((m*(1-m))/n)*((nn-n)/(nn-1))
-        sol = round((2*coursesFunctionsBll.normalProportionAprox(x,m,v))*100,4)
+        sol = round((2*(0.5-coursesFunctionsBll.normalProportionAprox(x,m,v)))*100,4)
         solution=r""+str(sol)+r"\%"
         question=r'In Mexico City the '+str(round(m*100))+r'\% hospitals report losses last year. If this city have a total of '+str(nn)+r' hospitals and a research study make a sample of '+str(n)+' different hospitals, find the probability that the percentage of hospitals in the sample which report losses last year is not between '+str(round((m-d)*100))+r'\% and '+str(round((m+d)*100))+r'\%. Choose the option closer to the right solution: '
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
