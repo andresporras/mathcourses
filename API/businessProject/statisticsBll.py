@@ -572,6 +572,32 @@ def empiricalRuleProblem():
     except Exception as er:
         return er
 
+#fiftieth percentile is the median https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/percentiles-rank-range/
+def percentileProblem():
+    try:
+        a= random.randint(2,10)
+        b= random.randint(2,10)
+        z= random.randint(2,10)
+        w = (random.randint(10,40)+(50 if random.randint(0,1)==0 else 0))/100
+        c = (b*(math.e**(z/2))/a)-(b/a)
+        sol1 = round(b*math.log(((0.5*a*c)+b)/b),4) 
+        sol2 = round(b*math.log(((w*a*c)+b)/b),4) 
+        solution=r"a) "+str(sol1)+r" hours, b) "+str(sol2)+r" hours"
+        question=r"A chemistry laboratory finds that function \frac{e^{\frac{x}{"+str(b)+r"}}}{"+str(round(a*c,4))+r"} between 0 and "+str(z)+r" describes the probability distribution of the time of life (per hours) for XA1800  bacteria. \\ a) find the minimal time of life that a XA1800 bacteria requires to be in percentile 50 (median) b) minimal time of life that a XA1800 bacteria requires to be in percentile "+str(round(w*100))+r": "
+        alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r"a) "+str(alternatives[ta][0])+r" hours, b) "+str(alternatives[ta][1])+r" hours")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
@@ -579,6 +605,7 @@ exam2 = [
     statisticsMeasuresProblem,
     midRangeProblem,
     empiricalRuleProblem,
+    percentileProblem,
     ]
 listMethods = [exam1, exam2]
 

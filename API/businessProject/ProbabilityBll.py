@@ -536,7 +536,7 @@ def pascalVarianceProblem():
         sol2= round(r*q/(p**2),4)
         sol3 = round(sol2**(1/2),4)
         solution=r"Expected value="+str(sol1)+r", variance="+str(sol2)+r", standard deviation="+str(sol3)+r""
-        question=r"Probability for a soccer player to score in a match is "+str(round(p*100))+r"\%. For scoring in "+str(r)+r" matches, find a) \mu b) \sigma^{2} c) \sigma: "
+        question=r"Probability for a soccer player to score in a match is "+str(round(p*100))+r"\%. To arrive to "+str(r)+r" matches scoring, find a) \mu b) \sigma^{2} c) \sigma: "
         alternatives = coursesFunctionsBll.multipleOptions([sol1, sol2, sol3],5)
         tempAlternatives =[]
         for ta in range(5):
