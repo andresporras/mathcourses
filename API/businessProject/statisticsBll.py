@@ -598,6 +598,30 @@ def percentileProblem():
     except Exception as er:
         return er
 
+#use hyper Geometric Distribution to solve this problem
+#https://math.stackexchange.com/questions/3248971/what-is-the-probability-that-at-least-one-of-the-questions-appears-in-both-exams?noredirect=1#3248971 question made by myself in stackexchange
+def bothExamsProblem():
+    try:
+        q= random.randint(80,160)
+        e1= random.randint(5,10)
+        e2= random.randint(15,30)
+        sol = round(100*(1-coursesFunctionsBll.binomialCoefficient(q-e1,e2)/coursesFunctionsBll.binomialCoefficient(q,e2)),4)
+        solution=r""+str(sol)+r"\%"
+        question=r"To make his exams, a teacher has a database with "+str(q)+r" different questions and an algorithm which chooses n different questions from the database. In the semester the teacher made two exams, the first one with "+str(e1)+r" questions, the second one with "+str(e2)+r" questions. What is the probability that at least one of the questions appears in both exams?"
+        alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5,1)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
@@ -606,6 +630,7 @@ exam2 = [
     midRangeProblem,
     empiricalRuleProblem,
     percentileProblem,
+    bothExamsProblem,
     ]
 listMethods = [exam1, exam2]
 
