@@ -622,6 +622,27 @@ def bothExamsProblem():
     except Exception as er:
         return er
 
+#use z valueu of normal distribution to define who is relatively taller http://www.talkstats.com/threads/computing-z-scores.602/
+def relativelyTallerProblem():
+    try:
+        mm= random.randint(150,190)
+        mf= mm-random.randint(5,20)
+        m = mm+random.randint(1,5)*((random.randint(0,1)*2)-1)
+        f=mf+random.randint(1,5)*((random.randint(0,1)*2)-1)
+        sm = random.randint(10,15)
+        sf = random.randint(10,15)
+        zm= (m-mm)/sm
+        zf= (f-mf)/sf
+        solution = r"the male is relatively taller" if(zm>zf) else (r"the female is relatively taller" if(zm<zf) else r"the male and the female are relatively of the same tall")
+        question=r"In X city the average size of 20-29 year old man is "+str(mm)+r" cms with an standard deviation of "+str(sm)+r" cms, the average size of 20-29 year old woman is "+str(mf)+r" cms with an standards deviation of "+str(sf)+r" cms. For 25 year old male person whose size is "+str(m)+r" cms and a 27 year old female whose size is "+str(f)+r" cms. Whose is relatively taller?: "
+        options =json.loads(json.dumps({'a':r"the male is relatively taller",
+                                        'b':r"the female is relatively taller", 
+                                        'c': r"the male and the female are relatively of the same tall"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
@@ -631,6 +652,7 @@ exam2 = [
     empiricalRuleProblem,
     percentileProblem,
     bothExamsProblem,
+    relativelyTallerProblem,
     ]
 listMethods = [exam1, exam2]
 
