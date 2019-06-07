@@ -643,6 +643,50 @@ def relativelyTallerProblem():
     except Exception as er:
         return er
 
+#residuals https://stattrek.com/regression/residual-analysis.aspx
+def residualProblem():
+    try:
+        patron= random.randint(0,1)
+        mistake= random.randint(0,1)
+        m= random.randint(100,1000)/1000
+        lista=[]
+        sol1=["non-linear model", "linear model"]
+        sol2=["no evidence of mistake in residual data", "evidence of mistake in residual data"]
+        if patron==0:
+            for x in range(7):
+                lista.append(m*((x-3)**2))
+        else:
+            for x in range(7):
+                lista.append(random.randint(1,10) if x%2==0 else (random.randint(1,10)*-1))
+        distance = sum(lis for lis in lista)/7
+        for x in range(7):
+            lista[x]=round(lista[x]-distance,2)
+        
+        if mistake==0:
+            nDistance = sum(lis for lis in lista)
+            lista[0]=round(lista[3]-nDistance,2)
+        else:
+            lista[0]=round(lista[0]-0.5,2) if lista[0]<lista[1] else round(lista[0]+0.5,2)
+            lista[6]=round(lista[6]-0.5,2) if lista[6]<lista[5] else round(lista[6]+0.5,2)
+        subPatron=random.randint(0,1)
+        if subPatron==0:
+            for x in range(7):
+                lista[x]=round(lista[x]*-1,2)
+        matrix=[["independent variable (x)","residual"]]
+        for x in range(7):
+            matrix.append([str(x+1), str(lista[x])])
+        matrix_ = coursesFunctionsBll.tableString(matrix)
+        solution = r"a) "+sol1[patron]+r", b) "+sol2[mistake]
+        question=r"A linear regression model gives this table about independent variable (x) of the model and it's residuals \\ "+str(matrix_)+r" \\ find a) if residual data suggest a linear or non-linear model b) if there is evidence of a mistake in residual data: "
+        options =json.loads(json.dumps({'a':r"a) linear model, b) evidence of mistake in residual data",
+                                        'b':r"a) linear model, b) no evidence of mistake in residual data", 
+                                        'c': r"a) non-linear model, b) evidence of mistake in residual data", 
+                                        'd': r"a) non-linear model, b) no evidence of mistake in residual data"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [uniformDistributionProblem, continuousVarianceProblem, uniformVarianceProblem, categoricalQuantitativeProblem, samplingProblem, plotBoxOutlierProblem, chebyshevProblem, linearRegressionProblem, coefficientDeterminationProblem, correlationRulesProblem, statisticsConceptProblem, expectedVarianceProblem]
 exam2 = [
     samplePopulationDeviationProblem,
@@ -653,6 +697,7 @@ exam2 = [
     percentileProblem,
     bothExamsProblem,
     relativelyTallerProblem,
+    residualProblem,
     ]
 listMethods = [exam1, exam2]
 
