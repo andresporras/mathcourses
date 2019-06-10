@@ -167,7 +167,7 @@ def samplingProblem():
             for j in range(5):
                 biOpts.append(r"a) "+str(opts[i])+r", b) "+str(opts[j]))
         quest = [
-            ["Teacher randomly choose three papers from a bag. The bag contains 30 sheets, each one with a different student name.", 0],
+            ["Teacher randomly choose three sheets from a bag. The bag contains 30 sheets, each one with a different student name.", 0],
             ["The company assign sequential numbers for each employee(1,2,3...n), then use a software to generate random numbers and choose a sample of 10 employees",0],
             ["A student task is to make a poll to 10 random people about political view. He make the poll to the closest students he find in the classroom.",1],
             ["A college research wants to make a poll about local citizens preferences to traveling. They use students volunteers as sample",1],
@@ -260,7 +260,9 @@ def chebyshevProblem():
         return jsonResponse
     except Exception as er:
         return er
-
+    #y=mx+c https://stattrek.com/regression/regression-example.aspx?Tutorial=ap
+    #m=sum[(x-X)(y-Y)]/sun[(x-X)^2]
+    #c=Y-m*X
 def linearRegressionProblem():
     try:
         rows = random.randint(4,8)

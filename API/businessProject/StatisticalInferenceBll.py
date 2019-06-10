@@ -138,7 +138,7 @@ def proportionFiniteProblem():
         d =random.randint(1,5)/100
         x=m-d
         v=((m*(1-m))/n)*((nn-n)/(nn-1))
-        sol = round((2*(0.5-coursesFunctionsBll.normalProportionAprox(x,m,v)))*100,4)
+        sol = round((1-(2*(0.5-coursesFunctionsBll.normalProportionAprox(x,m,v))))*100,4)
         solution=r""+str(sol)+r"\%"
         question=r'In Mexico City the '+str(round(m*100))+r'\% hospitals report losses last year. If this city have a total of '+str(nn)+r' hospitals and a research study make a sample of '+str(n)+' different hospitals, find the probability that the percentage of hospitals in the sample which report losses last year is not between '+str(round((m-d)*100))+r'\% and '+str(round((m+d)*100))+r'\%. Choose the option closer to the right solution: '
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 5)
@@ -310,6 +310,32 @@ def proportionSizeProblem2():
     except Exception as er:
         return er
 
+#https://en.wikipedia.org/wiki/Student%27s_t-distribution link to t-student table distribution
+def tStudentProblem():
+    try:
+        x = random.randint(5,25)
+        m = random.randint(100,200)
+        s = random.randint(5,10)
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
+        p = pOptions[random.randint(0,5)]
+        t=abs(coursesFunctionsBll.tStudentAprox(p/2,x-1))
+        sol = round(t*s/(x**0.5),4)
+        solution=r""+str(m)+r" \pm "+str(sol)+r""
+        question=r'A sample of '+str(x)+r' canned tunas give an average weight of '+str(m)+r' grams and standard deviation of '+str(s)+r' grams. Find the confidence limit with a '+str(round(100*(1-p),1))+r'\% for the real weight of all the canned tunas (choose the closer solution): '
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(m)+r" \pm "+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [normalDistributionProblem, 
     normalSampleInfiniteProblem, 
     normalSampleFiniteProblem,
@@ -322,7 +348,7 @@ exam1 = [normalDistributionProblem,
     sampleSizeProblem2,
     proportionSizeProblem1,
     proportionSizeProblem2]
-exam2 = []
+exam2 = [tStudentProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

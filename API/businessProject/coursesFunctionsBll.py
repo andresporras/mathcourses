@@ -1051,18 +1051,34 @@ def normalProportionAprox(x,m,v):
     except Exception as er:
         return er
 
-def tStudentAprox(x,m,v):
+def gama(v):
     try:
-        total=0
-        i=-1
-        while(i<x):
+        if(v%2==0):
+            total1=1/(2*(v**0.5))
+            i=1
+            while((v-i-1)>=2):
+                total1=total1*(v-i)/(v-i-1)
+                i+=2
+            return total1
+        else:
+            total1=1/(math.pi*(v**0.5))
+            i=1;
+            while((v-i)>=2):
+                total1=total1*(v-i)/(v-i-1)
+                i+=2
+            return total1
+    except Exception as er:
+        return er
+
+def tStudentAprox(p,v):
+    try:
+        sol=0
+        g=gama(v)
+        i=-10
+        while(sol<p):
             j=i+0.001
-            z = (i-m)/(v**0.5)
-            z1 = (j-m)/(v**0.5)
-            temp2 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z1**2)/2))*0.001)
-            temp1 = ((1/((2*math.pi*v)**0.5))*(math.e**(-(z**2)/2))*0.001)
-            total+=(temp1+temp2)/2
+            sol+=((g*((1+((i**2)/v))**((v+1)/(-2)))*0.001)+(g*((1+((j**2)/v))**((v+1)/(-2)))*0.001))*0.5
             i+=0.001
-        return total
+        return i
     except Exception as er:
         return er
