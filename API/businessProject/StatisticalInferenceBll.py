@@ -309,7 +309,7 @@ def proportionSizeProblem2():
         return jsonResponse
     except Exception as er:
         return er
-
+#https://stattrek.com/online-calculator/t-distribution.aspx t-student distribution calculator
 #https://en.wikipedia.org/wiki/Student%27s_t-distribution link to t-student table distribution
 def tStudentProblem():
     try:

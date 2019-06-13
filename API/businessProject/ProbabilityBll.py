@@ -498,21 +498,21 @@ def geometryVarianceProblem():
 
 def pascalDistributionProblem():
     try:
-        x = random.randint(11,15)
-        r = random.randint(6,10)
+        x = random.randint(1,5) #success
+        r = random.randint(6,10) #fails
         p = (random.randint(3,4)+(random.randint(0,1)*3))/10
         q=1-p
-        sol1 = round(math.factorial(x-1)*(q**(x-r))*(p**(r))*100/(math.factorial(r-1)*math.factorial(x-r)),4)
-        x2 = random.randint(7,10)
-        r2 = random.randint(6,x2-1)
+        sol1 = round(math.factorial(x+r-1)*(q**(x))*(p**(r))*100/(math.factorial(r-1)*math.factorial(x)),4)
+        x2 = random.randint(1,5)
+        r2 = random.randint(6,10)
         sol2=0
-        i=r2
-        while i<=x2:
-            sol2+=round(math.factorial(i-1)*(q**(i-r2))*(p**(r2))*100/(math.factorial(r2-1)*math.factorial(i-r2)),4)
+        i=0
+        while i<=(x2):
+            sol2+=round(math.factorial(i+r2-1)*(q**(i))*(p**(r2))*100/(math.factorial(r2-1)*math.factorial(i)),4)
             i+=1
         sol2=round(100-sol2,4)
         solution=r"a) "+str(sol1)+r"\%, b) "+str(sol2)+r"\%"
-        question=r"The probability of a soccer player to score in a match is "+str(round(p*100))+r"\%. a) which is the probability that the player achieve his "+str(r)+r" match scoring in the "+str(x)+r" game b) for achieve his "+str(r2)+r" match scoring he needs more than "+str(x2)+r" games:"
+        question=r"The probability of a soccer player to fail a score opportunity is "+str(round(p*100))+r"\%. a) which is the probability that the player achieve his "+str(r)+r"th fail in the "+str(x+r)+r"th opportunity b) for achieve his "+str(r2)+r"th fail he needs more than "+str(x2+r2)+r" opportunities:"
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol1, sol2],5, 1)
         tempAlternatives =[]
         for ta in range(5):
