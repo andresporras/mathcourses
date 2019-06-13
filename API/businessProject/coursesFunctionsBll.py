@@ -1021,7 +1021,7 @@ def normalDistributionInverse(limit):
         m=0
         v=0.1
         total=0
-        i=-1
+        i=-5
         z=0
         while(total<limit):
             j=i+0.001

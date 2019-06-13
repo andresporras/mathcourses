@@ -321,7 +321,34 @@ def tStudentProblem():
         t=abs(coursesFunctionsBll.tStudentAprox(p/2,x-1))
         sol = round(t*s/(x**0.5),4)
         solution=r""+str(m)+r" \pm "+str(sol)+r""
-        question=r'A sample of '+str(x)+r' canned tunas give an average weight of '+str(m)+r' grams and standard deviation of '+str(s)+r' grams. Find the confidence limit with a '+str(round(100*(1-p),1))+r'\% for the real weight of all the canned tunas (choose the closer solution): '
+        question=r'A sample of '+str(x)+r' canned tunas give an average weight of '+str(m)+r' grams and standard deviation of '+str(s)+r' grams. Find the confidence limit with a '+str(round(100*(1-p),1))+r'\% for the real weight of all the canned tunas (choose the closest option): '
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(m)+r" \pm "+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
+#https://www.youtube.com/watch?v=6_V-bJlvR6Y how to calculate confidence interval in big samples
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def confidenceBigSamplesProblem():
+    try:
+        x = random.randint(50,100)
+        m = random.randint(150,175)
+        s = random.randint(5,10)
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
+        p = pOptions[random.randint(0,5)]
+        z=coursesFunctionsBll.normalDistributionInverse(1-(p/2))
+        sol = round(z*s/(x**0.5),4)
+        solution=r""+str(m)+r" \pm "+str(sol)+r""
+        question=r'A sample of '+str(x)+r' school girls give an average height of '+str(m)+r' cms and standard deviation of '+str(s)+r' cms. Find the confidence limit with a '+str(round(100*(1-p),1))+r'\% for the real height of all the school girls (choose the closest option): '
         alternatives = coursesFunctionsBll.multipleOptions([sol],5)
         tempAlternatives =[]
         for ta in range(5):
@@ -348,7 +375,7 @@ exam1 = [normalDistributionProblem,
     sampleSizeProblem2,
     proportionSizeProblem1,
     proportionSizeProblem2]
-exam2 = [tStudentProblem]
+exam2 = [tStudentProblem, confidenceBigSamplesProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
