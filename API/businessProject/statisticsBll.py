@@ -261,7 +261,7 @@ def chebyshevProblem():
     except Exception as er:
         return er
     #y=mx+c https://stattrek.com/regression/regression-example.aspx?Tutorial=ap
-    #m=sum[(x-X)(y-Y)]/sun[(x-X)^2]
+    #m=sum[(x-X)(y-Y)]/sum[(x-X)^2] where X is x media, Y is y media
     #c=Y-m*X
 def linearRegressionProblem():
     try:

@@ -362,6 +362,34 @@ def confidenceBigSamplesProblem():
         return jsonResponse
     except Exception as er:
         return er
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def confidenceComparisonSamplesProblem():
+    try:
+        n1 = random.randint(41,50)
+        n2 = random.randint(31,40)
+        u1 = random.randint(31,40)
+        u2 = random.randint(41,50)
+        s1 = random.randint(2,5)
+        s2 = random.randint(6,9)
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
+        p = pOptions[random.randint(0,5)]
+        z=coursesFunctionsBll.normalDistributionInverse(1-(p/2))
+        sol = round(z*((((s1**2)/n1)+((s2**2)/n2))**0.5),4)
+        solution=r""+str(abs(u1-u2))+r" \pm "+str(sol)+r""
+        question=r'In a software company the average age of programmers have standard deviation of '+str(s1)+r' years, and for human resources they have a standard deviation of '+str(s2)+r' years. \\ In a sample of '+str(n1)+r' programmers the average age was '+str(u1)+r' years, and in a sample of '+str(n2)+r' human resources employees the average age was '+str(u2)+r' years. \\ Find the confidence interval for the difference of height with a level of '+str(round(100*(1-p),2))+r'\%. Choose the closest option: '
+        alternatives = coursesFunctionsBll.multipleOptions([sol],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(abs(u1-u2))+r" \pm "+str(alternatives[ta][0])+r"")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
 
 exam1 = [normalDistributionProblem, 
     normalSampleInfiniteProblem, 
@@ -374,8 +402,10 @@ exam1 = [normalDistributionProblem,
     sampleSizeProblem,
     sampleSizeProblem2,
     proportionSizeProblem1,
-    proportionSizeProblem2]
-exam2 = [tStudentProblem, confidenceBigSamplesProblem]
+    proportionSizeProblem2,]
+exam2 = [tStudentProblem, 
+         confidenceBigSamplesProblem,
+         confidenceComparisonSamplesProblem,]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
