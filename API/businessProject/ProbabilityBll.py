@@ -668,6 +668,8 @@ def bagBallsProblem():
     except Exception as er:
         return er
 
+
+
 exam1 = [multiplicationCombinationProblem, permutationsProblem, combinationPermutationProblem, cpRepetitionProblem, coinProblem, throwProblem, coinUnfairProblem, binomialDistributionProblem, poissonDistributionProblem, vennDiagramProblem, unionThreeEventsProblem, mutuallyExclusiveProblem]
 exam2 = [conditionalProbabilityProblem, conditionalProbabilityProblem2, conditionalProbabilityProblem3, varianceProblem, geometryDistributionProblem, geometryVarianceProblem, pascalDistributionProblem, pascalVarianceProblem, hyperGeometricDistributionProblem, hyperGeometricVarianceProblem, bayesTheoremProblem, bagBallsProblem]
 listMethods = [exam1, exam2]

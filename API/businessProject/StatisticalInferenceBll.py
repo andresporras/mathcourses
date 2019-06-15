@@ -362,6 +362,7 @@ def confidenceBigSamplesProblem():
         return jsonResponse
     except Exception as er:
         return er
+
 #https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
 def confidenceComparisonSamplesProblem():
     try:
@@ -391,6 +392,34 @@ def confidenceComparisonSamplesProblem():
     except Exception as er:
         return er
 
+#https://www.youtube.com/watch?v=6_V-bJlvR6Y how to calculate confidence interval in big samples
+#https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf link to normal distribution table
+def confidenceProportionProblem():
+    try:
+        n = random.randint(40,60)
+        u = random.randint(20,30)
+        pr = u/n
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
+        p = pOptions[random.randint(0,5)]
+        z=coursesFunctionsBll.normalDistributionInverse(1-(p/2))
+        sol1=round(100*pr,4)
+        sol2 = round(z*100*((pr*(1-pr)/n)**0.5),4)
+        solution=r""+str(sol1)+r"\% \pm "+str(sol2)+r"\%"
+        question=r'In colombia the police officers are being spied by a criminal organization, but the proportion is unknown. \\ A search founds that in a sample of  '+str(n)+r' police officers they found that '+str(u)+r' police officers are spied . \\ Find the confidence limit with a '+str(round(100*(1-p),1))+r'\% for the real proportion of police officers spied (choose the closest option): '
+        alternatives = coursesFunctionsBll.percentageProportionOptions([sol1, sol2],5)
+        tempAlternatives =[]
+        for ta in range(5):
+            tempAlternatives.append(r""+str(alternatives[ta][0])+r"\% \pm "+str(alternatives[ta][1])+r"\%")
+        options =json.loads(json.dumps({'a':tempAlternatives[0],
+                                        'b':tempAlternatives[1], 
+                                        'c': tempAlternatives[2], 
+                                        'd': tempAlternatives[3], 
+                                        'e': tempAlternatives[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return jsonResponse
+    except Exception as er:
+        return er
+
 exam1 = [normalDistributionProblem, 
     normalSampleInfiniteProblem, 
     normalSampleFiniteProblem,
@@ -405,7 +434,8 @@ exam1 = [normalDistributionProblem,
     proportionSizeProblem2,]
 exam2 = [tStudentProblem, 
          confidenceBigSamplesProblem,
-         confidenceComparisonSamplesProblem,]
+         confidenceComparisonSamplesProblem,
+         confidenceProportionProblem,]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []

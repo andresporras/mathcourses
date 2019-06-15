@@ -560,7 +560,7 @@ def kiteSinAreaProblem():
         long = ((a**2)+(b**2)-(2*a*b*math.cos(z*math.pi/180)))**(1/2)
         short = round(2*area/long,4)
         solution=r"area: "+str(area)+r", diagonal: "+str(short)+r""
-        question=r"For a kite with side A with length "+str(a)+r" and side B with length "+str(b)+r", and angle between them equals to "+str(z)+r" degrees, find the area of the kite and the length of diagonal who connects the two congruent angles of the kite: "
+        question=r"For a kite with side A with length "+str(a)+r" and side B with length "+str(b)+r", and angle between them equals to "+str(z)+r" degrees, find the area of the kite and the length of diagonal which connects the two congruent angles of the kite: "
         alternatives = coursesFunctionsBll.multipleOptions([area, short],5)
         tempAlternatives =[]
         for ta in range(5):

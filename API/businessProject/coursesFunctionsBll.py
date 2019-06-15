@@ -632,6 +632,29 @@ def multiplePercentageOptions(data, numberOptions):
     except Exception as er:
         return er
 
+def percentageProportionOptions(data, numberOptions):
+    try:
+        alternatives = [data.copy()]
+        x=0
+        while x <(numberOptions-1):
+            i=random.randint(0,1)
+            j=random.randint(0,len(data)-1)
+            if(i==0):
+                nAlternative = alternatives[0].copy()
+                nAlternative[j]=round(nAlternative[j]/2,4)
+                alternatives.insert(0,nAlternative)
+            else:
+                nAlternative = alternatives[len(alternatives)-1].copy()
+                nAlternative[j]=round(nAlternative[j]*2,4)
+                if (nAlternative[0]+nAlternative[1])>100:
+                    x=x-1
+                else:
+                    alternatives.append(nAlternative)
+            x=x+1
+        return alternatives
+    except Exception as er:
+        return er
+
 def arithmeticPercentageOptions(data, numberOptions, jump):
     try:
         alternatives = [data.copy()]
