@@ -244,7 +244,7 @@ def chebyshevProblem():
         ran = random.randint(21,40)
         k = ran/sd
         prob = 1-(1/(k**2))
-        sol = round(prob*100,4)
+        sol = round(prob*100,4) #equals to 1-((sd/ran)**2)
         solution=r""+str(sol)+r"\%"
         question=r"About the daily driver licenses issued in a city we have the next information, \mu="+str(av)+" and \sigma="+str(sd)+". Having no more information, which is the minimal probability that any day the number of driver licences issued is between "+str(av-ran)+r" and "+str(av+ran)+r": "
         alternatives = coursesFunctionsBll.arithmeticPercentageOptions([sol],5, 1)

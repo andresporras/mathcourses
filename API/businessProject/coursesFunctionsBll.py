@@ -1105,3 +1105,24 @@ def tStudentAprox(p,v):
         return i
     except Exception as er:
         return er
+def beta(a, b):
+    try:
+        sol=0
+        i=0.0001
+        while(i<1):
+            sol+=(i**(a-1))*((1-i)**(b-1))*0.0001
+            i=round(i+0.0001,4)
+        return sol
+    except Exception as er:
+        return er
+def fDistributionAprox(p,d1, d2):
+    try:
+        b=beta(d1/2, d2/2)
+        sol=0
+        i=0.0001
+        while(sol<p):
+            sol+=((((d1*i)**d1)*(d2**d2)/((d1*i+d2)**(d1+d2)))**0.5)*0.0001/(i*b)
+            i=round(i+0.0001,4)
+        return i
+    except Exception as er:
+        return er
