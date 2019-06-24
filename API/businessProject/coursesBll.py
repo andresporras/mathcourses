@@ -41,13 +41,21 @@ def getQuetions(cursos):
     try:
         sExams = getSelected(cursos)
         questions=[]
-        for x in range(12):
+        while len(questions)<12:
             indexExam =  random.randint(0,len(sExams)-1)
             exam = allExams[int(sExams[indexExam].course)-1][int(sExams[indexExam].unit)-1]
             q =  random.randint(0,len(exam)-1)
-            item = str(exam[q]())
-            questions.append(json.loads(item))
-        return questions
+            items = exam[q]()
+            for x in range(len(items)):
+                item = str(items[x])
+                questions.append(json.loads(item))
+        #for x in range(12):
+        #    indexExam =  random.randint(0,len(sExams)-1)
+        #    exam = allExams[int(sExams[indexExam].course)-1][int(sExams[indexExam].unit)-1]
+        #    q =  random.randint(0,len(exam)-1)
+        #    item = str(exam[q]())
+        #    questions.append(json.loads(item))
+        return questions[0:12]
     except Exception as er:
         return er
 def getSelected(cursos):

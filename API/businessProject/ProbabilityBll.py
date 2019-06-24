@@ -23,7 +23,7 @@ def multiplicationCombinationProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -50,7 +50,7 @@ def permutationsProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -74,7 +74,7 @@ def combinationPermutationProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -97,7 +97,7 @@ def cpRepetitionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -123,7 +123,7 @@ def coinProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #binomialdistribution
@@ -150,7 +150,7 @@ def throwProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -177,7 +177,7 @@ def coinUnfairProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -200,7 +200,7 @@ def binomialDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -228,7 +228,7 @@ def poissonDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -255,7 +255,7 @@ def vennDiagramProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -283,7 +283,7 @@ def unionThreeEventsProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #-a U -b U -c = a + a-b + ab-c
@@ -308,7 +308,7 @@ def mutuallyExclusiveProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -332,7 +332,7 @@ def conditionalProbabilityProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -356,7 +356,7 @@ def conditionalProbabilityProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -381,7 +381,7 @@ def conditionalProbabilityProblem2():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -407,7 +407,7 @@ def conditionalProbabilityProblem3():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -440,7 +440,7 @@ def varianceProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -469,7 +469,7 @@ def geometryDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -492,7 +492,7 @@ def geometryVarianceProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -523,7 +523,7 @@ def pascalDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -547,7 +547,7 @@ def pascalVarianceProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -577,7 +577,7 @@ def hyperGeometricDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -603,7 +603,7 @@ def hyperGeometricVarianceProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -634,7 +634,7 @@ def bayesTheoremProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -664,7 +664,7 @@ def bagBallsProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 

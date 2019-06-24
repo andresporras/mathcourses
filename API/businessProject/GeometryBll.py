@@ -22,7 +22,7 @@ def parallelProblem():
         question = "which is the straight line which pass through the point (" + str(x0) + "," + str(y0) + ") and is parallel to the straigh line which pass through the points (" + str(x1) + "," + str(y1) + ") and (" + str(x2) + "," + str(y2) + "): "
         options = coursesFunctionsBll.parallelProblemOptions(slope, intersection)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find perpendicular line which connect a given point with a given line
@@ -42,7 +42,7 @@ def perpendicularProblem():
         question = "which is the straight line which pass through the point (" + str(x0) + "," + str(y0) + ") and is perpendicular to the straigh line which pass through the points (" + str(x1) + "," + str(y1) + ") and (" + str(x2) + "," + str(y2) + "): "
         options = coursesFunctionsBll.parallelProblemOptions(slope, intersection)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find circle equation having one point of the circle an its center
@@ -59,7 +59,7 @@ def circleProblem():
         question = "Find the perimeter and area of the circle which center is (" + str(x0) + "," + str(y0) + ") and pass through the point (" + str(x1) + "," + str(y1) + "): "
         options = coursesFunctionsBll.perimeterAreaOptions(perimeter, area)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find ellipse having the foci and a point of the ellipse
@@ -90,7 +90,7 @@ def ellipseProblem():
         options = coursesFunctionsBll.ellipseProblemOptions([x0, round(xDistance ** 2,4), y0, round(yDistance ** 2,4)])
         question = "which is the canonical equation of the ellipse  which focus are (" + str(x01) + "," + str(y0) + ") (" + str(x02) + "," + str(y0) + ") and pass through the point (" + str(x1) + "," + str(y1) + "): "
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #get parabola equation through focus and directrix
@@ -110,7 +110,7 @@ def parabolaProblem():
         options = coursesFunctionsBll.parabolaProblemOptions([c1, c2, c3])
         question = "which is the canonical equation of the parabola which focus (" + str(focusx) + "," + str(focusy) + ")  directrix y=" + str(directrix) + ":"
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #given the center and one vertix find the equation of hyperbola
@@ -135,7 +135,7 @@ def hyperbolaProblem():
         options = coursesFunctionsBll.hyperbolaProblemOptions([x0, round(a ** 2,4), y0, round(b ** 2,4)])
         question = "which is the canonical equation of the hyperbola  which foci are (" + str(x01) + "," + str(y0) + ") (" + str(x02) + "," + str(y0) + ") and one of vertices is in (" + str(vertice) + "," + str(y0) + "): "
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find the diameter of the circle which a given center and a given tangent line
@@ -156,7 +156,7 @@ def circleTanProblem():
         options = coursesFunctionsBll.generateOptions(diameter)
         question = "which is the diameter of a circle where center is in (" + str(x) + "," + str(y) + ") and is tangent to the line y=(" + str(m) + "x)+(" + str(c) + ")"
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find the are havinf the foci and the minor semiaxis, to do this you must find
@@ -176,7 +176,7 @@ def ellipseAreaProblem():
         options = coursesFunctionsBll.generateOptions(area)
         question = "which is the area of ellipse which focus on (" + str(x01) + "," + str(y0) + ") (" + str(x02) + "," + str(y0) + ") and minor semiaxis equal to " + str(minor) + ""
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #to the triangle with given three points find the area and perimeter
@@ -211,7 +211,7 @@ def triangleProblem():
         options = coursesFunctionsBll.perimeterAreaOptions(perimeter, area)
         question = "which is the perimeter and area of triangle where vertixes are (" + str(x1) + "," + str(y1) + ") (" + str(x2) + "," + str(y2) + ") (" + str(x3) + "," + str(y3) + "):"
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #for the triangle with the given three vertixes find if is acute, obtuse or
@@ -264,7 +264,7 @@ def triangleAngleProblem():
         options = json.loads(json.dumps({'a':'right', 'b':'obtuse', 'c':'acute'}))
         question = "which is the triangle type if vertixes are (" + str(x1) + "," + str(y1) + "), (" + str(x2) + "," + str(y2) + "), and (" + str(x3) + "," + str(y3) + "): "
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -291,7 +291,7 @@ def apothemProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -323,7 +323,7 @@ def rhombusProblem():
                                         'c':r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[0])+r"", 
                                         'd': r"A "+str(optSolutions[1])+r" and B "+str(optSolutions[1])+r""}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -359,7 +359,7 @@ def orthoCenterProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -381,7 +381,7 @@ def tangencyPointProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -414,7 +414,7 @@ def cosineTheoremProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #centroid is also known as median
@@ -459,7 +459,7 @@ def centroidTriangleProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -483,7 +483,7 @@ def quadrilateralProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -513,7 +513,7 @@ def ellipsePointProblem():
                                         'b':r"On the edge", 
                                         'c':r"Outside"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -543,7 +543,7 @@ def sinTheoremProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -571,7 +571,7 @@ def kiteSinAreaProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -594,7 +594,7 @@ def circleRegularPolygonProblem1():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -619,7 +619,7 @@ def pyramidRegularPolygonProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -642,7 +642,7 @@ def circleRegularPolygonProblem2():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -677,7 +677,7 @@ def circleKiteProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 

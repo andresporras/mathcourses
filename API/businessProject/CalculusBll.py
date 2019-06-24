@@ -21,7 +21,7 @@ def lineTanProblem():
         question = "for which values of x the function ("+str(a)+"x^3)+("+str(b)+"x^2)+("+str(c)+"x)+("+str(d)+") has tangent equals to zero:"
         options = coursesFunctionsBll.twoXSolutions([sol1, sol2])
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -36,7 +36,7 @@ def exponentialProblem():
         question = "for which value of x the function (e^x)-("+str(a)+"^x)+("+str(b)+") has slope equals to zero:"
         options = coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -50,7 +50,7 @@ def productProblem():
         question = "find equivalent expression to x where f(x)'="+str(c)+" if f(x)=("+str(a)+"x+("+str(b)+"))*e^x: "
         options = coursesFunctionsBll.productRuleOptions([log_c,a,a+b])
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -64,7 +64,7 @@ def divisionProblem():
         question = "finds x where f'(x)=f''(x) if f(x)=("+str(a)+"x+"+str(b)+")/("+str(c)+"^x): "
         options = coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
@@ -86,7 +86,7 @@ def trigonometryProblem():
         question="if f(a)=["+str(items[0][0])+"] and g(b)=["+str(items[1][0])+"] find f'(a)+g'(b)"
         options =json.loads(json.dumps({'a':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'b':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+["+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'c':"["+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]", 'd':"[-"+str((items[0][2])[-1*len(items[0][2]) if (items[0][2])[0]!='-' else (-1*len(items[0][2]))+1:])+"]+[-"+str((items[1][2])[-1*len(items[1][2]) if (items[1][2])[0]!='-' else (-1*len(items[1][2]))+1:])+"]"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -106,7 +106,7 @@ def ruleChainProblem():
         question = "using chain rule find f(x)' where f(x)=("+str(a if a!=math.e else "e")+"^("+str(b*f)+"x+"+str(c)+")+"+str(d*f)+"x^"+str(e)+")^(1/"+str(f)+"): "
         options = coursesFunctionsBll.ruleChainOptions([comp1,comp2,comp3],a,b,c,d,e,f)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -133,7 +133,7 @@ def trigonometryProblem2():
         question="if f(a)=["+str(items[0][0])+"] and g(b)=["+str(items[1][0])+"] find g'(f(a))"
         options =json.loads(json.dumps({'a':listOptions[0], 'b':listOptions[1], 'c':listOptions[2], 'd':listOptions[3]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -151,7 +151,7 @@ def implicitProblem():
         question = "find dy/dx from ("+str(a)+"y+"+str(b)+")^"+str(c)+"="+str(d)+"x^"+str(e)+"+"+str(f)+"xy+"+str(g)+"y^"+str(h)+": "
         options = coursesFunctionsBll.implicitOptions([a,b,d,f,g],c,e,h)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -184,7 +184,7 @@ def inverseTriProblem():
         solution= str(sol)
         options = coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve something like cos(x/2) or sin(x/2)
@@ -205,7 +205,7 @@ def logarithmProblem():
         question="find the derivative of ln("+str(identities[a][b][0])+"): "
         options =json.loads(json.dumps({'a':listOptions[0], 'b':listOptions[1], 'c':listOptions[2], 'd':listOptions[3], 'e':listOptions[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #it has two valid solutions, anyone of those can appear
@@ -221,7 +221,7 @@ def logarithm_a_Problem():
         question="find dy/dx if log_{"+str(a)+r"}("+str(b)+r"xy^2+"+str(c)+r"y)="+str(d)+r"x"
         options =coursesFunctionsBll.logarithm_a_options([a,b,c,d,e])
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def logarithmMethodProblem():
@@ -243,7 +243,7 @@ def logarithmMethodProblem():
         solution= r"dy/dx=-y/ln((x+"+str(c2)+r")^{x+"+str(c2)+r"}) + ["+str(triOptions[b][1])+r"*y] - "+str(comp2)+r"*y"
         options =coursesFunctionsBll.logarithmMethodOptions([c2,comp2,triOptions[b][1]],tempTri)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def positionProblem():
@@ -266,7 +266,7 @@ def positionProblem():
             tempAlternatives.append("velocity="+str(alternatives[y][0])+"m/s and acceleration="+str(alternatives[y][1])+"m/s^2")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #http://www.ugrad.math.ubc.ca/coursedoc/math100/notes/diffeqs/cool.html newton cooling law explained
@@ -290,7 +290,7 @@ def newtonCoolingProblem():
             tempAlternatives.append("time="+str(alternatives[y][0])+"m and rate change="+str(alternatives[y][1])+"°F/m")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def balloonProblem():
@@ -309,7 +309,7 @@ def balloonProblem():
             tempAlternatives.append(str(alternatives[y][0])+str(units[unit][1])+"/s")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #http://funes.uniandes.edu.co/9564/15/Guasca2018Puntos.pdf
@@ -341,7 +341,7 @@ def densityProblem():
             tempAlternatives.append("minimum="+str(alternatives[y][0])+"kg/cm^3. maximum="+str(round(alternatives[y][0]*proportion,4))+"kg/cm^3")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -388,7 +388,7 @@ def intermediateValueProblem():
         options =json.loads(json.dumps({'a':opts[0], 'b':opts[1], 'c':opts[2],'d':opts[3], 'e':opts[4], 'f':opts[5]}))
         question = "using the intermediate value theorem find how many roots have the function ("+str(a)+"x^3)+("+str(b)+"x^2)+("+str(c)+"x)+("+str(d)+"), and find the inflection point of the function:"
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def concaveConvexProblem():
@@ -400,7 +400,7 @@ def concaveConvexProblem():
         question ="define, when the function is continues, if f(x)="+str(functions[a][b])+" is concave or convex: "
         options =json.loads(json.dumps({'a':'concave', 'b':'convex', 'c':'none'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def lhospitalProblem():
@@ -431,7 +431,7 @@ def lhospitalProblem():
             tempAlternatives.append(str(alternatives[y][0]))
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': 'inf', 'e': '-inf'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 def optimizationProblem():
@@ -453,7 +453,7 @@ def optimizationProblem():
             tempAlternatives.append(str(alternatives[y1][0]))
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -490,7 +490,7 @@ def profitProblem():
             tempAlternatives.append(r"Units="+str(alternatives[m][0])+r", profit="+str(alternatives[m][1])+r".")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -509,7 +509,7 @@ def coneProblem():
             tempAlternatives.append(r""+str(alternatives[m][0])+r"\frac{cm}{s}")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -531,7 +531,7 @@ def balloonFlyProblem():
             tempAlternatives.append(r"h="+str(alternatives[m][0])+r"mt, \frac{dh}{dt}=\frac{"+str(alternatives[m][1])+r"mt}{m}")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -551,7 +551,7 @@ def carDistanceProblem():
             tempAlternatives.append(str(alternatives[m][0])+r"\frac{km}{h}")
         options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -582,7 +582,7 @@ def carDistanceProblem():
 #            tempAlternatives.append(str(alternatives[m][0])+r"\frac{km}{h}")
 #        options =json.loads(json.dumps({'a':tempAlternatives[0], 'b':tempAlternatives[1], 'c': tempAlternatives[2], 'd': tempAlternatives[3], 'e': tempAlternatives[4]}))
 #        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-#        return jsonResponse
+#        return [jsonResponse]
 #    except Exception as er:
 #        return er
 

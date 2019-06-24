@@ -17,7 +17,7 @@ def basicIdentityProblem1():
         question = "simplify " + side_a[a] + "*" + side_b[b]
         options = coursesFunctionsBll.fromGivenRange(solution, solutions.copy())
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->0 for the function [(ax+b)(cx+d)-bd*cos(ex)]/(ex)
@@ -51,7 +51,7 @@ def sumIdentityProblem1():
             question = "tan(pi" + str(("+" if d == 0 else "-")) + "(" + str(a + b) + "))*[cos(" + str(a) + ")cos(" + str(b) + ")-sin(" + str(a) + ")sin(" + str(b) + ")]"
         options = json.loads(json.dumps({'a':"sin(" + str(sol) + ")", 'b':"-sin(" + str(sol) + ")", 'c':"[sec(" + str(sol) + ")-cos(" + str(sol) + ")]",'d':"-[sec(" + str(sol) + ")-cos(" + str(sol) + ")]"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using double angle property find a solution similar to sin(2x) or cos(2x)
@@ -64,7 +64,7 @@ def doubleAngleProblem1():
         question = "simplify " + str(a) + "*sin((pi-" + str(b) + "a)/4)*cos((pi-" + str(b) + "a)/4)" if c == 0 else "simplify " + str(a) + "[cos^2((pi-" + str(b) + "a)/4)-sin^2((pi-" + str(b) + "a)/4)]"
         options = json.loads(json.dumps({'a':str(a / 2) + "*sin(" + str(b / 2) + "a)", 'b':str(a) + "*cos(" + str(b / 2) + "a)", 'c':str(a) + "*sin(" + str(b / 2) + "a)", 'd':str(a / 2) + "*cos(" + str(b / 2) + "a)"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -82,7 +82,7 @@ def middleAngleProblem1():
         question = "simplify  +-([1" + str("-" if b == 0 else "+") + "(" + str("cos(" + str(d) + ")cos(" + str(e) + ") " + str("+" if c == 1 else "-") + " sin(" + str(d) + ")sin(" + str(e) + ")") + ")]/2)^(1/2)"
         options = json.loads(json.dumps({'a':"sin(" + str((d + e) / 2) + ")", 'b':"sin(" + str((d - e) / 2) + ")", 'c':"cos(" + str((d + e) / 2) + ")", 'd':"cos(" + str((d - e) / 2) + ")"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -111,7 +111,7 @@ def productSumProblem1():
         
         options = json.loads(json.dumps({'a':"sin(" + str(b) + ")cos(" + str(c) + ")", 'b':"sin(" + str(b) + ")sin(" + str(c) + ")", 'c':"cos(" + str(b) + ")sin(" + str(c) + ")", 'd':"cos(" + str(b) + ")cos(" + str(c) + ")"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -139,7 +139,7 @@ def sumProductProblem1():
             question = "simplify 2*[[+-((1-cos(" + str(b - c) + "))/2))^(1/2)]sin((" + str((-1) * (b + c) / 2) + ")]" #remember that sin(-a)=-sin(a)
         options = json.loads(json.dumps({'a':"sin(" + str(b) + ")+sin(" + str(c) + ")", 'b':"sin(" + str(b) + ")-sin(" + str(c) + ")", 'c':"cos(" + str(b) + ")+cos(" + str(c) + ")", 'd':"cos(" + str(b) + ")-cos(" + str(c) + ")"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -162,7 +162,7 @@ def basicPropertyProblem1():
         question = "[" + str(items[0][0]) + "]+[" + str(items[1][0]) + "]"
         options = json.loads(json.dumps({'a':"[" + str((items[0][1])[-6:]) + "]+[" + str((items[1][1])[-6:]) + "]", 'b':"[-" + str((items[0][1])[-6:]) + "]+[" + str((items[1][1])[-6:]) + "]", 'c':"[" + str((items[0][1])[-6:]) + "]+[-" + str((items[1][1])[-6:]) + "]", 'd':"[-" + str((items[0][1])[-6:]) + "]+[-" + str((items[1][1])[-6:]) + "]"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -193,7 +193,7 @@ def sumDifTanProblem1():
         question = "([" + str(items[0][0]) + "]+[" + str(items[1][0]) + "])/(1-[" + str(items[0][0]) + "][" + str(items[1][0]) + "])"
         options = json.loads(json.dumps({'a':"tan(a+b)", 'b':"-tan(a+b)", 'c':"tan(a-b)", 'd':"-tan(a-b)"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -226,7 +226,7 @@ def doubleAngleTanProblem1():
             solution = firstCharacter + "cot(2a)"
         options = json.loads(json.dumps({'a':"tan(2a)", 'b':"-tan(2a)", 'c':"cot(2a)", 'd':"-cot(2a)"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #using the middle angle property solve a problem where you have to achieve
@@ -254,7 +254,7 @@ def middleAngleTanProblem1():
             solution = firstCharacter + "cot(a/2)"
         options = json.loads(json.dumps({'a':"tan(a/2)", 'b':"-tan(a/2)", 'c':"cot(a/2)", 'd':"-cot(a/2)"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 

@@ -27,7 +27,7 @@ def seriesProblem():
         solution= str(sol)
         options = coursesFunctionsBll.alternativesSequence(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -60,7 +60,7 @@ def typeSeriesProblem():
         question = "for de next function  "+function+", define the series type when x tends to infinity"
         options =json.loads(json.dumps({'a':'increasing', 'b':'decreasing', 'c':'alterning', 'd':'undefined'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #for the function define the type of series
@@ -93,7 +93,7 @@ def boundedSeriesProblem():
         question = "for de next function  "+function+", define the series type"
         options =json.loads(json.dumps({'a':'inferior bounded', 'b':'superior bounded', 'c':'not bounded', 'd':'bounded'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #for the function define the type of series
@@ -119,7 +119,7 @@ def convergentSeriesProblem():
             solution = "convergent" if a%2!=0 else "divergent"
         options =json.loads(json.dumps({'a':'convergent', 'b':'divergent'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -135,7 +135,7 @@ def gaussSeriesProblem():
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -148,7 +148,7 @@ def simpleGaussProblem():
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -167,7 +167,7 @@ def geometricSeriesProblem():
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
     #for the arithmetic series get the nth item
@@ -185,7 +185,7 @@ def nArithmeticProblem():
         solution=str(sol)
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #for the geometric series get the nth item
@@ -202,7 +202,7 @@ def nGeometricProblem():
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #get the product of the first n numbers of the geometric series
@@ -222,7 +222,7 @@ def productGeometricProblem():
         solution=str(sol)
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->a for the function  (x^2-a^2)/(x-a) + b 
@@ -234,7 +234,7 @@ def simpleLimitProblem():
         question="[lim x->("+str(a)+")] for ((x^2)+("+str(b)+"*x)+("+str((-a*b)-(a**2))+"))/(x-("+str(a)+"))"
         options=coursesFunctionsBll.arithmeticAlternatives(solution)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -249,7 +249,7 @@ def simpleLimitProblem2():
         question="[Lim x->("+str(a)+")] for ((x^2)+("+str((-1*a)+b)+"*x)+("+str(-1*a*b)+"))/(x-("+str(a)+"))"
         options=coursesFunctionsBll.arithmeticAlternatives(solution)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->inf for the function  (ax+b)/(cx+d) + (ex+f)/(gx+h)
@@ -268,7 +268,7 @@ def infiniteLimitProblem():
         question="[Lim x->inf] for (("+str(a)+"x)+("+str(b)+"))/(("+str(c)+"x)+("+str(d)+")) + (("+str(e)+"x)+("+str(f)+"))/(("+str(g)+"x)+("+str(h)+"))"
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->inf for the function  [((ax^(2*g))+bx)^(1/2)](ex+f)/((cx^g)+d)(ex+f)
@@ -286,7 +286,7 @@ def infiniteLimitProblem2():
         question="[Lim x->inf] for [(("+str(a)+"x^"+str(2*g)+")+("+str(b)+"x))^(1/2)](("+str(e)+"x)+("+str(f)+"))/(("+str(c*e)+"x^"+str(g+1)+")+("+str(c*f)+"x^"+str(g)+")+("+str(e*d)+"x)+("+str(d*f)+"))"
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->b for the function a/(x-b)(x-c)
@@ -307,7 +307,7 @@ def toInfiniteLimitProblem():
         question="[lim x->("+str(b)+")] for ("+str(a)+")/(x^2+("+str(-b-c)+"x)+("+str(b*c)+"))"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->c for the function (x-a)^b/(x-c)^d
@@ -329,7 +329,7 @@ def toInfiniteLimitProblem2():
         question="[lim x->("+str(c)+")] for [(x-("+str(a)+"))^("+str(b)+")]/[(x-("+str(c)+"))^("+str(d)+")]"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'undefined', 'd': '0'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->inf for the function (ax^2-b)^(1/2) - cx
@@ -350,7 +350,7 @@ def squareLimitProblem():
         question="[lim x->(inf)] for (("+str(a)+"x^2)-("+str(b)+"))^(1/2)-("+str(c)+"x)"
         options =json.loads(json.dumps({'a':'inf', 'b':'-inf', 'c':'0'}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->0 for the function ((a+bx)^(1/2)-(a)^(1/2))/cx
@@ -364,7 +364,7 @@ def squareLimitProblem2():
         question="[lim x->(0)] for ((("+str(a)+")+("+str(b)+"x))^(1/2)-("+str(a)+")^(1/2))/("+str(c)+"x)"
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->0 for the function (sin(ax)+bx)/cx
@@ -378,7 +378,7 @@ def trigonometryLimitProblem():
         question="[lim x->(0)] for (sin("+str(a)+"x)+("+str(b)+"x))/("+str(c)+"x)"
         options =coursesFunctionsBll.arithmeticAlternatives(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #find limit when x->0 for the function [(ax+b)(cx+d)-bd*cos(ex)]/(ex)
@@ -396,7 +396,7 @@ def trigonometryLimitProblem2():
         question="[lim x->(0)] for [(("+str(a)+"x)+("+str(b)+"))(("+str(c)+"x)+("+str(d)+"))-(("+str(b*d)+")*cos("+str(e)+"x))]/("+str(e)+"x)"
         options =coursesFunctionsBll.generateOptions(sol)
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 exam1 =[seriesProblem, typeSeriesProblem, boundedSeriesProblem, convergentSeriesProblem, gaussSeriesProblem, simpleGaussProblem, geometricSeriesProblem, nArithmeticProblem, nGeometricProblem, productGeometricProblem]

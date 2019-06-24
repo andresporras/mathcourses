@@ -25,7 +25,7 @@ def normalDistributionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -52,7 +52,7 @@ def normalSampleInfiniteProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -79,7 +79,7 @@ def normalSampleFiniteProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -102,7 +102,7 @@ def errorProportionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -125,7 +125,7 @@ def sampleProportionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -151,7 +151,7 @@ def proportionFiniteProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -179,7 +179,7 @@ def averageComparisonProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -206,7 +206,7 @@ def proportionComparisonProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -231,7 +231,7 @@ def sampleSizeProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -255,7 +255,7 @@ def sampleSizeProblem2():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -281,7 +281,7 @@ def proportionSizeProblem1():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -306,7 +306,7 @@ def proportionSizeProblem2():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 #https://stattrek.com/online-calculator/t-distribution.aspx t-student distribution calculator
@@ -332,7 +332,7 @@ def tStudentProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -359,7 +359,7 @@ def confidenceBigSamplesProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -388,7 +388,7 @@ def confidenceComparisonSamplesProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -415,7 +415,7 @@ def confidenceProportionProblem():
                                         'd': tempAlternatives[3], 
                                         'e': tempAlternatives[4]}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
     except Exception as er:
         return er
 
@@ -452,7 +452,44 @@ def fDistributionProblem():
         options =json.loads(json.dumps({'a':r"equal",
                                         'b':r"not equal",}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
-        return jsonResponse
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+#http://www.stat.purdue.edu/~jtroisi/STAT350Spring2015/tables/FTable.pdf f distribution
+#https://stattrek.com/online-calculator/f-distribution.aspx f distribution calculator
+def differenceMeansProblem():
+    try:
+        class sample:
+            def __init__(self, size, variance):
+                self.variance = variance
+                self.size = size
+        n1 = random.randint(2,10)
+        n2 = random.randint(2,10)
+        list1=[]
+        list2=[]
+        for x in range(n1):
+            list1.append(random.randint(20,80))
+        for x in range(n2):
+            list2.append(random.randint(40,60))
+        m1= sum(l1 for l1 in list1)/n1
+        m2= sum(l2 for l2 in list2)/n2
+        v1= sum((l1-m1)**2 for l1 in list1)/n1
+        v2= sum((l2-m2)**2 for l2 in list2)/n2
+        data = [sample(n1,v1) if v1>v2 else sample(n2,v2),
+                sample(n1,v1) if v1<=v2 else sample(n2,v2),]
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01, 0.005]
+        p = pOptions[random.randint(0,5)]
+        f1=data[0].variance/data[1].variance
+        f0 = coursesFunctionsBll.fDistributionAprox(p/2,data[0].size-1,data[1].size-1)
+        f2 = coursesFunctionsBll.fDistributionAprox(1-(p/2),data[0].size-1,data[1].size-1)
+        solution = r"equal" if(f0<=f1 and f1<=f2) else r"not equal"
+        question=r'In order to search a new treatment for cancer, '+str(data[0].size+data[1].size)+r' mice are selected. '+str(data[0].size)+r' mice receive the treatment \\ while '+str(data[1].size)+r' mice dont receive the treatment. The first group shows a standard deviation of '+str(round(data[0].variance**0.5,4))+r' \\ while the second group shows an standard deviation of  '+str(round(data[1].variance**0.5,4))+r'. With a significance level of  '+str(round(p*100,2))+r'\%.  \\ Define if variance of both groups are equal: '
+        
+        options =json.loads(json.dumps({'a':r"equal",
+                                        'b':r"not equal",}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
     except Exception as er:
         return er
 

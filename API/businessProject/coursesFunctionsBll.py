@@ -110,7 +110,7 @@ def quadraticFactorization(type_):
     solution = '[('+(str(a) if type_==False else remove(str(a), len(str(a))-1))+'x)+('+str(b)+')]*[('+(str(c) if type_==False else remove(str(c), len(str(c))-1))+'x)+('+str(d)+')]'
     options = generateAlternativesQF([a,b,c,d],type_)
     jsonResponse = json.dumps({"question":replaceSpace(question), "solution":replaceSpace(solution), "options":replaceOptions(options)})
-    return jsonResponse
+    return [jsonResponse]
 def inequationsAlternatives1(sol):
     options =[sol]
     i=random.randint(0,1)
