@@ -311,6 +311,7 @@ def proportionSizeProblem2():
         return er
 #https://stattrek.com/online-calculator/t-distribution.aspx t-student distribution calculator
 #https://en.wikipedia.org/wiki/Student%27s_t-distribution link to t-student table distribution
+#in the calculator, use 1-(p/2) as probability, and x-1 for free degrees 
 def tStudentProblem():
     try:
         x = random.randint(5,25)
@@ -446,48 +447,40 @@ def fDistributionProblem():
         f1=data[0].variance/data[1].variance
         f0 = coursesFunctionsBll.fDistributionAprox(p/2,data[0].size-1,data[1].size-1)
         f2 = coursesFunctionsBll.fDistributionAprox(1-(p/2),data[0].size-1,data[1].size-1)
-        solution = r"equal" if(f0<=f1 and f1<=f2) else r"not equal"
-        question=r'In order to search a new treatment for cancer, '+str(data[0].size+data[1].size)+r' mice are selected. '+str(data[0].size)+r' mice receive the treatment \\ while '+str(data[1].size)+r' mice dont receive the treatment. The first group shows a standard deviation of '+str(round(data[0].variance**0.5,4))+r' \\ while the second group shows an standard deviation of  '+str(round(data[1].variance**0.5,4))+r'. With a significance level of  '+str(round(p*100,2))+r'\%.  \\ Define if variance of both groups are equal: '
+        solution = r"Not enough evidence that both variances are not equal" if(f0<=f1 and f1<=f2) else r"Enough evidence that both variances are not equal"
+        question=r'In order to search a new treatment for cancer, '+str(data[0].size+data[1].size)+r' mice are selected. '+str(data[0].size)+r' mice receive the treatment \\ while '+str(data[1].size)+r' mice dont receive the treatment. The first group shows a standard deviation of '+str(round(data[0].variance**0.5,4))+r' \\ while the second group shows an standard deviation of  '+str(round(data[1].variance**0.5,4))+r'. With a significance level of  '+str(round(p*100,2))+r'\%.  \\ Define if there is enough evidence that both variances are not equal: '
         
-        options =json.loads(json.dumps({'a':r"equal",
-                                        'b':r"not equal",}))
+        options =json.loads(json.dumps({'a':r"Not enough evidence that both variances are not equal",
+                                        'b':r"Enough evidence that both variances are not equal",}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return [jsonResponse]
     except Exception as er:
         return er
 
-#http://www.stat.purdue.edu/~jtroisi/STAT350Spring2015/tables/FTable.pdf f distribution
-#https://stattrek.com/online-calculator/f-distribution.aspx f distribution calculator
+#https://stattrek.com/online-calculator/t-distribution.aspx t-student distribution calculator
+#https://en.wikipedia.org/wiki/Student%27s_t-distribution link to t-student table distribution
 def differenceMeansProblem():
     try:
-        class sample:
-            def __init__(self, size, variance):
-                self.variance = variance
-                self.size = size
-        n1 = random.randint(2,10)
-        n2 = random.randint(2,10)
-        list1=[]
-        list2=[]
-        for x in range(n1):
-            list1.append(random.randint(20,80))
-        for x in range(n2):
-            list2.append(random.randint(40,60))
-        m1= sum(l1 for l1 in list1)/n1
-        m2= sum(l2 for l2 in list2)/n2
-        v1= sum((l1-m1)**2 for l1 in list1)/n1
-        v2= sum((l2-m2)**2 for l2 in list2)/n2
-        data = [sample(n1,v1) if v1>v2 else sample(n2,v2),
-                sample(n1,v1) if v1<=v2 else sample(n2,v2),]
-        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01, 0.005]
+        n1 = random.randint(30,40)
+        n2 = random.randint(30,40)
+        x1 = random.randint(500,600)/10
+        x2 = x1+(random.randint(10,50)*((random.randint(0,1)*2)-1)/10)
+        s1 = random.randint(5,25)/10
+        s2 = s1
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
         p = pOptions[random.randint(0,5)]
-        f1=data[0].variance/data[1].variance
-        f0 = coursesFunctionsBll.fDistributionAprox(p/2,data[0].size-1,data[1].size-1)
-        f2 = coursesFunctionsBll.fDistributionAprox(1-(p/2),data[0].size-1,data[1].size-1)
-        solution = r"equal" if(f0<=f1 and f1<=f2) else r"not equal"
-        question=r'In order to search a new treatment for cancer, '+str(data[0].size+data[1].size)+r' mice are selected. '+str(data[0].size)+r' mice receive the treatment \\ while '+str(data[1].size)+r' mice dont receive the treatment. The first group shows a standard deviation of '+str(round(data[0].variance**0.5,4))+r' \\ while the second group shows an standard deviation of  '+str(round(data[1].variance**0.5,4))+r'. With a significance level of  '+str(round(p*100,2))+r'\%.  \\ Define if variance of both groups are equal: '
+        t=abs(coursesFunctionsBll.tStudentAprox(p/2,n1+n2-2))
+        co = ((1/n1)+(1/n2))**0.5
+        sp= (((n1-1)*(s1**2))+((n2-1)*(s2**2))/(n1+n2-2))**0.5
+        sol1=(x1-x2)-(t*sp*co)
+        sol2=(x1-x2)+(t*sp*co)
+        solution=r"Not enough evidence that means are different"
+        if(sol1>0 and sol2>0) or (sol1<0 and sol2<0):
+            solution=r"Enough evidence that means are different"
+        question=r'A pharmaceutical company wants to find the grams of A component in medicines B and C. The made a study with a sample of '+str(n1)+r' A medicines and '+str(n2)+r' B medicines. \\ They found that sample of A medicine have a mean of '+str(x1)+r' grams and sample of B medicine have a mean of '+str(x2)+r' grams, both samples with an standard deviation of '+str(s1)+r' grams. \\ Having not enough evidence that both medicines have different variances (after using F distribution) at a significance level of '+str(round(p*100,2))+r'\%, \\ find if there is enough evidence that both medicines have different means at a significance level of '+str(round(p*100,2))+r'\%: '
         
-        options =json.loads(json.dumps({'a':r"equal",
-                                        'b':r"not equal",}))
+        options =json.loads(json.dumps({'a':r"Not enough evidence that means are different",
+                                        'b':r"Enough evidence that means are different",}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
         return [jsonResponse]
     except Exception as er:
@@ -509,7 +502,8 @@ exam2 = [tStudentProblem,
          confidenceBigSamplesProblem,
          confidenceComparisonSamplesProblem,
          confidenceProportionProblem,
-         fDistributionProblem,]
+         fDistributionProblem,
+         differenceMeansProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
