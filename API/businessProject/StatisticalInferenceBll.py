@@ -486,6 +486,39 @@ def differenceMeansProblem():
     except Exception as er:
         return er
 
+#http://www.itchihuahua.edu.mx/academic/industrial/estadistica1/cap03d.html explanation
+#https://stattrek.com/online-calculator/t-distribution.aspx t-student distribution calculator
+#https://en.wikipedia.org/wiki/Student%27s_t-distribution link to t-student table distribution
+def differenceMeansProblem2():
+    try:
+        n1 = random.randint(30,40)
+        n2 = random.randint(30,40)
+        x1 = round(random.randint(2500,3000)/10,2)
+        x2 = round(x1+(random.randint(10,20)*((random.randint(0,1)*2)-1)/10),2)
+        s1 = round(random.randint(50,100)/10,2)
+        s2 = round(s1/random.randint(12,15),2)
+        pOptions = [0.2, 0.1, 0.05, 0.02, 0.01,0.005]
+        p = pOptions[random.randint(0,5)]
+        v1=round(s1**2,2)
+        v2=round(s2**2,2)
+        g= (((v1/n1)+(v2/n2))**2)/((((v1/n1)**2)/(n1-1))+(((v2/n2)**2)/(n2-1)))
+        g=math.floor(g)
+        t=abs(coursesFunctionsBll.tStudentAprox(p/2,g))
+        #tc=(x1-x2)/((v1/n1)+(v2/n2))
+        co = ((v1/n1)+(v2/n2))**0.5
+        sol1=round((x1-x2)-(t*co),4)
+        sol2=round((x1-x2)+(t*co),4)
+        solution=r"Not enough evidence that means are different"
+        if(sol1>0 and sol2>0) or (sol1<0 and sol2<0):
+            solution=r"Enough evidence that means are different"
+        question=r'An electric circuit factory wants to compare the current flow with two designs. For the first design they use a sample of \\ '+str(n1)+' and found a mean of '+str(x1)+' current flow with a variance of '+str(v1)+'. For the second design they use a sample\\ of '+str(n2)+' and found a mean of '+str(x2)+' current flow with a variance of '+str(v2)+'. The analysis using the f distribution \\ with a significance level of '+str(round(p*100,2))+r'\% shows enough evidence that variance with the two designs are different.  Use the confidence interval for difference of means \\with a significance level of '+str(round(p*100,2))+r'\%, find if there is enogh evidence to suggest that means are different: '
+        options =json.loads(json.dumps({'a':r"Not enough evidence that means are different",
+                                        'b':r"Enough evidence that means are different",}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
 exam1 = [normalDistributionProblem, 
     normalSampleInfiniteProblem, 
     normalSampleFiniteProblem,
@@ -503,7 +536,8 @@ exam2 = [tStudentProblem,
          confidenceComparisonSamplesProblem,
          confidenceProportionProblem,
          fDistributionProblem,
-         differenceMeansProblem]
+         differenceMeansProblem,
+         differenceMeansProblem2]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
