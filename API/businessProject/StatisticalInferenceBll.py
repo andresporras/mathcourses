@@ -521,7 +521,7 @@ def differenceMeansProblem2():
 
 exam1 = [normalDistributionProblem, 
     normalSampleInfiniteProblem, 
-    normalSampleFiniteProblem,
+    normalSampleFiniteProblem, 
     errorProportionProblem,
     sampleProportionProblem,
     proportionFiniteProblem,
