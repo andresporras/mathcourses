@@ -14,6 +14,7 @@ import TrigonometryBll
 import ProbabilityBll
 import statisticsBll
 import StatisticalInferenceBll
+import discreteMathematicsBll
 
 allExams = [
     [BasicAlgebraBll.exam1, BasicAlgebraBll.exam2],
@@ -26,6 +27,7 @@ allExams = [
     [ProbabilityBll.exam1, ProbabilityBll.exam2],
     [statisticsBll.exam1, statisticsBll.exam2],
     [StatisticalInferenceBll.exam1, StatisticalInferenceBll.exam2],
+    [discreteMathematicsBll.exam1, discreteMathematicsBll.exam2],
     ]
 
 def getData():

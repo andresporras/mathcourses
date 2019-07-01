@@ -549,3 +549,7 @@ def generateExam(unit):
         #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
         solution.append(json.loads(item))
     return solution
+
+#TOPICS LEFT OUTSIDE
+#unilateral intervals for difference of means, with variances unknown and equals
+#unilateral intervals for difference of means, with variances unknown and differents

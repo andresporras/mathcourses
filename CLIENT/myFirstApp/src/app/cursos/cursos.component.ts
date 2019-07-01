@@ -12,6 +12,7 @@ class courses{
   templateUrl: './cursos.component.html',
   styleUrls: ['./cursos.component.css']
 })
+
 export class CursosComponent implements OnInit {
   courseList: JSON;
   examData: JSON;

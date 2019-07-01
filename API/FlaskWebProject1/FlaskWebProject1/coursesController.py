@@ -12,6 +12,7 @@ import TrigonometryBll
 import ProbabilityBll
 import statisticsBll
 import StatisticalInferenceBll
+import discreteMathematicsBll
 from bson import json_util, ObjectId
 import json
 
@@ -48,6 +49,8 @@ class coursesController(object):
             return json.dumps(statisticsBll.generateExam(unit))
         elif(course=='10'):
             return json.dumps(StatisticalInferenceBll.generateExam(unit))
+        elif(course=='11'):
+            return json.dumps(discreteMathematicsBll.generateExam(unit))
         return 'course or unit invalid'
     @app.route(defaultRoute+'/getData', methods=['GET'])
     def getData():
