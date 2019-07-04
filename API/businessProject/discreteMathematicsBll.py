@@ -44,7 +44,51 @@ def truthTableProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem]
+def tautologiesProblem():
+    try:
+        truthOptions=[[r"P \lor \neg P",r"P \lor P"],
+                      [r"\neg(P \land \neg P)",r"P \land \neg P"],
+                      [r"[(P \Rightarrow Q) \land \neg Q]  \Rightarrow \neg P",r"[(P \Rightarrow Q) \land \neg Q]  \Rightarrow P"],
+                      [r"\neg \neg P \iff P",r"\neg \neg P \iff \neg P"],
+                      [r"[(P \Rightarrow Q) \land (Q \Rightarrow R)] \Rightarrow (P \Rightarrow R)",r"[(P \Rightarrow Q) \land (Q \Rightarrow R)] \Rightarrow (R \Rightarrow P)"],
+                      [r"(P \land Q) \Rightarrow P",r"(P \land Q) \Rightarrow \neg P"],
+                      [r"(P \land Q) \Rightarrow Q",r"(P \land Q) \Rightarrow \neg Q"],
+                      [r"P \rightarrow (P \lor Q)",r"\neg P \rightarrow (P \lor Q)"],
+                      [r"Q \rightarrow (P \lor Q)",r"\neg Q \rightarrow (P \lor Q)"],
+                      [r"(P \iff Q) \iff [(P \Rightarrow Q) \land (P \Rightarrow Q)]",r"\neg (P \iff Q) \iff [(P \Rightarrow Q) \land (P \Rightarrow Q)]"],
+                      [r"(P \land Q) \iff (Q \land P)",r"\neg (P \land Q) \iff (Q \land P)"],
+                      [r"(P \lor Q) \iff (Q \lor P)",r"(P \lor Q) \iff \neg (Q \lor P)"],
+                      [r"[(P \land Q) \land R] \iff [P \land (Q \land R)]",r"[(P \land Q) \land R] \iff \neg [P \land (Q \land R)]"],
+                      [r"[(P \lor Q) \lor R] \iff [P \lor (Q \lor R)]",r"[(P \lor Q) \lor R] \iff [\neg P \lor (Q \lor R)]"],
+                      [r"\neg (P \lor Q) \iff (\neg P \land \neg Q)",r"(P \lor Q) \iff (\neg P \land \neg Q)"],
+                      [r"\neg (P \land Q) \iff (\neg P \lor \neg Q)",r"(P \land Q) \iff (\neg P \lor \neg Q)"],
+                      [r"[P \land (Q \lor R)] \iff [(P \land Q) \lor (P \land R)]",r"[P \land (Q \lor R)] \iff [(P \lor Q) \land (P \lor R)]"],
+                      [r"[P \lor (Q \land R)] \iff [(P \lor Q) \land (P \lor R)]",r"[P \lor (Q \land R)] \iff [(P \land Q) \lor (P \land R)]"],
+                      [r"(P \Rightarrow Q) \iff (\neg Q \Rightarrow \neg P)",r"\neg (P \Rightarrow Q) \iff (\neg Q \Rightarrow \neg P)"],
+                      [r"(P \Rightarrow Q) \iff (\neg P \lor Q)",r"(P \Rightarrow Q) \iff (\neg P \land Q)"],
+                      [r"[(P \lor Q) \land \neg P] \RightArrow Q",r"[(P \lor Q) \land \neg P] \iff Q"],
+                      [r"(P \lor P) \iff P",r"(\neg P \lor P) \iff P"],
+                      [r"(P \land P) \iff P",r"(\neg P \land P) \iff P"]]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2]
+        del truthOptions[i2]
+        solution = r"a) "+("Yes" if j1==0 else "No")+r", b) "+("Yes" if j2==0 else "No")+r""
+        question=r'which of the next propositions are tautologies: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) Yes, b) Yes",
+                                        'b':r"a) Yes, b) No", 
+                                        'c':r"a) No, b) Yes", 
+                                        'd':r"a) No, b) No"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
@@ -57,3 +101,6 @@ def generateExam(unit):
         #jsonData = json.loads(json.dumps({numberQuestion: json.loads(item)}))
         solution.append(json.loads(item))
     return solution
+
+#http://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.html two exercises
+#https://www.geeksforgeeks.org/mathematical-logic-propositional-equivalences/ two exercises

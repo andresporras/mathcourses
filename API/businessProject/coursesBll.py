@@ -46,11 +46,13 @@ def getQuetions(cursos):
         while len(questions)<12:
             indexExam =  random.randint(0,len(sExams)-1)
             exam = allExams[int(sExams[indexExam].course)-1][int(sExams[indexExam].unit)-1]
-            q =  random.randint(0,len(exam)-1)
-            items = exam[q]()
-            for x in range(len(items)):
-                item = str(items[x])
-                questions.append(json.loads(item))
+            if len(exam)>0:
+                q =  random.randint(0,len(exam)-1)
+                items = exam[q]()
+                for x in range(len(items)):
+                    item = str(items[x])
+                    questions.append(json.loads(item))
+            
         #for x in range(12):
         #    indexExam =  random.randint(0,len(sExams)-1)
         #    exam = allExams[int(sExams[indexExam].course)-1][int(sExams[indexExam].unit)-1]
@@ -63,15 +65,17 @@ def getQuetions(cursos):
 def getSelected(cursos):
     try:
         selected=[]
+        nonSelected=[]
         for i in range(len(cursos)):
             curso=cursos[i]['cod']
             for j in range(len(cursos[i]['units'])):
+                unidad = cursos[i]['units'][j]['cod']
+                class obj: course=curso; unit=unidad
                 if cursos[i]['units'][j]['selected']==1:
-                    unidad = cursos[i]['units'][j]['cod']
-                    #obj = type('',(object,),{"course": curso, "unit": unidad})()
-                    class obj: course=curso; unit=unidad
                     selected.append(obj)
-        return selected
+                else:
+                    nonSelected.append(obj)
+        return selected if len(selected)>0 else nonSelected
     except Exception as er:
         return er
     

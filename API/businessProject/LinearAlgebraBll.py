@@ -641,7 +641,7 @@ def skewProblem():
         return [jsonResponse]
     except Exception as er:
         return er
-
+#https://www.youtube.com/watch?v=0qYJfKG-3l8  how to find plane that contains three points
 def twoLinesProblem():
     try:
         point1 = coursesFunctionsBll.randomMatrixGenerator(-1, 2,3) #first row is the dot, second row is the directional vector
@@ -658,7 +658,6 @@ def twoLinesProblem():
         else:
             multiply = random.randint(1,10)*(random.randint(0,1)*2-1)
             point2[0]=[point1[0][0]+(point1[1][0]*multiply),point1[0][1]+(point1[1][1]*multiply),point1[0][2]+(point1[1][2]*multiply)]
-   
         dots = [[point1[0][0],point1[0][1],point1[0][2]],
                 [point2[0][0],point2[0][1],point2[0][2]],
                 [point2[0][0]+point2[1][0],point2[0][1]+point2[1][1],point2[0][2]+point2[1][2]]]
