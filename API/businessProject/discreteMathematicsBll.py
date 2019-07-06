@@ -120,7 +120,7 @@ def tautologyNameProblem():
         uTotalOpts.append(sol[1])
         uTotalOpts.sort()
         solution = sol[1]
-        question=r'select is the name of the next tautology: '+sol[0]+r''
+        question=r'select is the name of the next tautology: '+sol[0]+r'' 
         options =json.loads(json.dumps({'a':uTotalOpts[0],
                                         'b':uTotalOpts[1], 
                                         'c':uTotalOpts[2], 
