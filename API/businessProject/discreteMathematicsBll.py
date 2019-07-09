@@ -43,6 +43,7 @@ def truthTableProblem():
         return [jsonResponse]
     except Exception as er:
         return er
+
 #http://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.html tautologies
 def tautologiesProblem():
     try:
@@ -87,6 +88,7 @@ def tautologiesProblem():
         return [jsonResponse]
     except Exception as er:
         return er
+
 #http://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.html tautologies
 def tautologyNameProblem():
     try:
@@ -131,7 +133,60 @@ def tautologyNameProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem]
+#https://www.geeksforgeeks.org/mathematical-logic-propositional-equivalences/ tautologies
+def equivalencesProblem():
+    try:
+        truthOptions=[[r"P \land T \equiv P",r"P \land T \equiv \neg P \lor F"],
+                      [r"P \lor F \equiv P",r"P \lor F \equiv \neg P \land T"],
+                      [r"P \land F \equiv F",r"P \land F \equiv T"],
+                      [r"P \lor T \equiv T",r"P \lor T \equiv F"],
+                      [r"P \land P \equiv P",r"P \land P \equiv T"],
+                      [r"P \lor T \equiv P",r"P \lor T \equiv T"],
+                      [r"\neg \neg P \equiv P",r"\neg \neg P \equiv F"],
+                      [r"P \land Q \equiv Q \land P",r"P \land Q \equiv \neg Q \land \neg P"],
+                      [r"P \lor Q \equiv Q \lor P",r"P \lor Q \equiv \neg Q \lor \neg P"],
+                      [r"(P \land Q) \land R \equiv P \land (Q \land R)",r"(P \land Q) land R \equiv \neg (P \land Q) \Rightarrow R "],
+                      [r"(P \lor Q) \lor R \equiv P \lor (Q \lor R)",r"(P \lor Q) \lor R \equiv (P \lor Q) \Rightarrow \neg R"],
+                      [r"P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R)",r"P \land (Q \lor R) \equiv (P \lor Q) \land (P \lor R)"],
+                      [r"P \lor (Q \land R) \equiv (P \lor Q) \land (P \lor R)",r"P \lor (Q \land R) \equiv (P \land Q) \lor (P \land R)"],
+                      [r"\neg (P \land Q) \equiv \neg P \lor \neg Q",r"\neg (P \land Q) \equiv P \lor Q"],
+                      [r"\neg (P \lor Q) \equiv \neg P \land \neg Q",r"\neg (P \lor Q) \equiv P \land Q"],
+                      [r"P \land (P \lor Q) \equiv P",r"P \land (P \lor Q) \equiv P \land Q"],
+                      [r"P \lor (P \land Q) \equiv P",r"P \lor (P \land Q) \equiv P \lor Q"],
+                      [r"P \land \neg P \equiv F",r"P \land \neg P \equiv P"],
+                      [r"P \lor \neg P \equiv T",r"P \lor \neg P \equiv P"],
+                      [r"P \Rightarrow Q \equiv \neg P \lor Q",r"P \Rightarrow Q \equiv \neg Q \lor P"],
+                      [r"P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P",r"P \Rightarrow Q \equiv \neg P \Rightarrow \neg Q"],
+                      [r"P \and Q \equiv \neg (Q \Rightarrow \neg P)",r"P \and Q \equiv Q \Rightarrow \neg P"],
+                      [r"(P \Rightarrow Q) \land (P \Rightarrow R) \equiv P \Rightarrow (Q \land R)",r"(P \Rightarrow Q) \land (P \Rightarrow R) \equiv P \Rightarrow (Q \lor R)"],
+                      [r"(P \Rightarrow R) \land (Q \Rightarrow R) \equiv (P \lor Q) \Rightarrow R",r"(P \Rightarrow R) \land (Q \Rightarrow R) \equiv (P \land Q) \Rightarrow R"],
+                      [r"(P \Rightarrow Q) \lor (P \Rightarrow R) \equiv P \Rightarrow (Q \lor R)",r"(P \Rightarrow Q) \lor (P \Rightarrow R) \equiv P \Rightarrow (Q \land R)"],
+                      [r"(P \Rightarrow R) \lor (Q \Rightarrow R) \equiv (P \land Q) \Rightarrow R",r"(P \Rightarrow R) \lor (Q \Rightarrow R) \equiv (P \lor Q) \Rightarrow R"],
+                      [r"P \iff Q \equiv (P \Rightarrow Q) \land (Q \Rightarrow P)",r"P \iff Q \equiv (P \Rightarrow Q) \lor (Q \Rightarrow P)"],
+                      [r"P \iff Q \equiv \neg P \iff \neg Q",r"P \iff Q \equiv \neg (\neg P \iff \neg Q)"],
+                      [r"P \iff Q \equiv (P \land Q) \lor (\neg P \land \neg Q)",r"P \iff Q \equiv (P \lor Q) \land (\neg P \lor \neg Q)"],
+                      [r"\neg (P \iff Q) \equiv P \iff \neg Q",r"\neg (P \iff Q) \equiv P \iff Q"],
+                      [r"\neg (P \Rightarrow Q) \equiv P \land \neg Q",r"\neg (P \Rightarrow Q) \equiv \neg P \land Q"]]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2]
+        del truthOptions[i2]
+        solution = r"a) "+("Yes" if j1==0 else "No")+r", b) "+("Yes" if j2==0 else "No")+r"" 
+        question=r'which of the next equivalences are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) Yes, b) Yes",
+                                        'b':r"a) Yes, b) No", 
+                                        'c':r"a) No, b) Yes", 
+                                        'd':r"a) No, b) No"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
