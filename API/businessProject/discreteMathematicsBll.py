@@ -173,7 +173,7 @@ def equivalencesProblem():
         del truthOptions[i1]
         i2=random.randint(0,len(truthOptions)-1)
         j2=random.randint(0,1)
-        sol2 = truthOptions[i2][j2]
+        sol2 = truthOptions[i2][j2] 
         del truthOptions[i2]
         solution = r"a) "+("Yes" if j1==0 else "No")+r", b) "+("Yes" if j2==0 else "No")+r"" 
         question=r'which of the next equivalences are correct: a) '+sol1+r',b) '+sol2+r''
