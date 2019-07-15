@@ -54,13 +54,13 @@ def tautologiesProblem():
                       [r"[(P \Rightarrow Q) \land (Q \Rightarrow R)] \Rightarrow (P \Rightarrow R)",r"[(P \Rightarrow Q) \land (Q \Rightarrow R)] \Rightarrow (R \Rightarrow P)"],
                       [r"(P \land Q) \Rightarrow P",r"(P \land Q) \Rightarrow \neg P"],
                       [r"(P \land Q) \Rightarrow Q",r"(P \land Q) \Rightarrow \neg Q"],
-                      [r"P \rightarrow (P \lor Q)",r"\neg P \rightarrow (P \lor Q)"],
-                      [r"Q \rightarrow (P \lor Q)",r"\neg Q \rightarrow (P \lor Q)"],
+                      [r"P \Rightarrow (P \lor Q)",r"\neg P \Rightarrow (P \lor Q)"],
+                      [r"Q \Rightarrow (P \lor Q)",r"\neg Q \Rightarrow (P \lor Q)"],
                       [r"(P \iff Q) \iff [(P \Rightarrow Q) \land (P \Rightarrow Q)]",r"\neg (P \iff Q) \iff [(P \Rightarrow Q) \land (P \Rightarrow Q)]"],
                       [r"(P \land Q) \iff (Q \land P)",r"\neg (P \land Q) \iff (Q \land P)"],
                       [r"(P \lor Q) \iff (Q \lor P)",r"(P \lor Q) \iff \neg (Q \lor P)"],
                       [r"[(P \land Q) \land R] \iff [P \land (Q \land R)]",r"[(P \land Q) \land R] \iff \neg [P \land (Q \land R)]"],
-                      [r"[(P \lor Q) \lor R] \iff [P \lor (Q \lor R)]",r"[(P \lor Q) \lor R] \iff [\neg P \lor (Q \lor R)]"],
+                      [r"[(P \lor Q) \lor R] \iff [P \lor (Q \lor R)]",r"[(P \lor Q) \lor R] \iff [\neg P \lor \neg (Q \lor R)]"],
                       [r"\neg (P \lor Q) \iff (\neg P \land \neg Q)",r"(P \lor Q) \iff (\neg P \land \neg Q)"],
                       [r"\neg (P \land Q) \iff (\neg P \lor \neg Q)",r"(P \land Q) \iff (\neg P \lor \neg Q)"],
                       [r"[P \land (Q \lor R)] \iff [(P \land Q) \lor (P \land R)]",r"[P \land (Q \lor R)] \iff [(P \lor Q) \land (P \lor R)]"],
@@ -122,7 +122,7 @@ def tautologyNameProblem():
         uTotalOpts.append(sol[1])
         uTotalOpts.sort()
         solution = sol[1]
-        question=r'select is the name of the next tautology: '+sol[0]+r'' 
+        question=r'select the name of the next tautology: '+sol[0]+r'' 
         options =json.loads(json.dumps({'a':uTotalOpts[0],
                                         'b':uTotalOpts[1], 
                                         'c':uTotalOpts[2], 
@@ -133,7 +133,7 @@ def tautologyNameProblem():
     except Exception as er:
         return er
 
-#https://www.geeksforgeeks.org/mathematical-logic-propositional-equivalences/ tautologies
+#https://www.geeksforgeeks.org/mathematical-logic-propositional-equivalences/ equivalences
 def equivalencesProblem():
     try:
         truthOptions=[[r"P \land T \equiv P",r"P \land T \equiv \neg P \lor F"],
@@ -186,7 +186,49 @@ def equivalencesProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem]
+#https://www.geeksforgeeks.org/mathematical-logic-propositional-equivalences/ equivalences
+def equivalenceNameProblem():
+    try:
+        truthOptions=[[r"P \land T \equiv P",r"Identity law"],
+                      [r"P \lor F \equiv P",r"Identity law"],
+                      [r"P \land F \equiv F",r"Domination law"],
+                      [r"P \lor T \equiv T",r"Domination law"],
+                      [r"P \land P \equiv P",r"Idempotent law"],
+                      [r"P \lor T \equiv P",r"Idempotent law"],
+                      [r"\neg \neg P \equiv P",r"double negation law"],
+                      [r"P \land Q \equiv Q \land P",r"commutative law"],
+                      [r"P \lor Q \equiv Q \lor P",r"commutative law"],
+                      [r"(P \land Q) \land R \equiv P \land (Q \land R)",r"associative law"],
+                      [r"(P \lor Q) \lor R \equiv P \lor (Q \lor R)",r"associative law"],
+                      [r"P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R)",r"distributive law"],
+                      [r"P \lor (Q \land R) \equiv (P \lor Q) \land (P \lor R)",r"distributive law"],
+                      [r"\neg (P \land Q) \equiv \neg P \lor \neg Q",r"De Morgan's law"],
+                      [r"\neg (P \lor Q) \equiv \neg P \land \neg Q",r"De Morgan's law"],
+                      [r"P \land (P \lor Q) \equiv P",r"absorption law"],
+                      [r"P \lor (P \land Q) \equiv P",r"absorption law"],
+                      [r"P \land \neg P \equiv F",r"negation law"],
+                      [r"P \lor \neg P \equiv T",r"negation law"],
+                      [r"P \Rightarrow Q \equiv \neg P \lor Q",r"conditional disjunction"],
+                      [r"P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P",r"contrapositive"]]
+        opt = random.randint(0,len(truthOptions)-1)
+        sol=truthOptions[opt]
+        totalOpts=list(x[1] for x in truthOptions if x!=sol[1])
+        uTotalOpts = list(set(totalOpts))[:4]
+        uTotalOpts.append(sol[1])
+        uTotalOpts.sort()
+        solution = sol[1]
+        question=r'select the name of the next equivalence: '+sol[0]+r'' 
+        options =json.loads(json.dumps({'a':uTotalOpts[0],
+                                        'b':uTotalOpts[1], 
+                                        'c':uTotalOpts[2], 
+                                        'd':uTotalOpts[3], 
+                                        'e':uTotalOpts[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

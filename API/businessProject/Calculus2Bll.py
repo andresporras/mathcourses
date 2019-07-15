@@ -240,6 +240,7 @@ def partsPowerProblem():
     except Exception as er:
         return er
 #use quotient method to solve this problem
+#calculus quotient rule: https://www.maa.org/sites/default/files/switkes01200543268.pdf
 def quotientProblem():
     try:
         a = (random.randint(0,4)*2)+1
