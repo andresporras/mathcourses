@@ -228,7 +228,42 @@ def equivalenceNameProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem]
+
+def setPropertiesProblem():
+    try:
+        truthOptions=[[r"If A and B have the same elements then they are the same set and A=B",r"Having the same elements doesnt mean that two sets are the same set"],
+                      [r"If A is a set which elements are 3 and 5 then A=\{3 ,5\}. Use brackets",r"If A is a set which elements are 3 and 5 then A=(3,5). Use parentheses"],
+                      [r"In a set the order of elements doesn't matter, therefore \{ 3,5\}=\{ 5,3\}",r"In a set the order of elements really matter, therefore \{ 3,5\} \ne \{ 5,3\}"],
+                      [r"An element can appear only one time in a set, therefore \{ 3,6,6 \} = \{ 3,6 \} ",r"An element can appear many ties in a set, therefore \{ 3,6,6\} \ne \{ 3,6\}"],
+                      [r"A set can be finite or infinite",r"A set must be finite, never infinite"],
+                      [r"A set can have zero elements",r"A set can't have zero elements"],
+                      [r"If A is the set of x elements with c property then A=\{ x:c(x) \} ",r"If A is the set of x elements with c property then A=(x:c \{ x \})"],
+                      [r"\{ x,y \} doesn't mean the set have two elements, because it can be that x=y, in that case \{ x,y \}= \{ x \} = \{ y \} ",r" \{ x,y \} means the set have two different elements, therefore \{ x,y \} \ne \{ x \} \ne \{ y \}"],
+                      [r"A=\{ x,y,z \}, if d= \{ x,y \} d \notin A",r"A= \{x,y,z \}, if d= \{ x,y \} then d \in A"],
+                      [r"if A= \{ x,y,z \} then \{ A \} is a singleton",r"\{ \} is a singleton"],
+                      [r" \mathbb{N} is the symbol for the set of natural numbers. this set has the next property: if n \in \mathbb{N} then n+1 \in \mathbb{N}",r" \mathbb{N} is the set of entire number between 1 and 10"],
+                      [r"If A is the set of natural numbers between 4 and 900, this can be show as \{ x \in \mathbb{N} : 4 \leq x \leq 900 \}",r"If A is the set of natural numbers between 4 and 900, this can be show as \{ x : 4 \leq x \leq 900 \}"],
+                      [r"A= \{ 3,8,13,18,23 \} therefore A= \{ 3+5j : j=0,1,2,3,4 \}",r"A= \{ 3,8,13,18,23 \} therefore A= \{ 3+5j : 0 \leq j \leq 4 \} "]]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'which of the next set properties/examples are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):

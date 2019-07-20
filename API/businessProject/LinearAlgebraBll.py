@@ -384,6 +384,7 @@ def inverseAdj_Problem():
         return er
 
 #adj(A)=(trans(cof(A))) where A is the matrix
+#https://www.youtube.com/watch?v=AfTAn-Ijswk 
 def span_Problem():
     try:
         matrix1=coursesFunctionsBll.randomMatrixGenerator(0, 2,2)
