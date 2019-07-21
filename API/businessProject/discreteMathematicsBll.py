@@ -255,7 +255,7 @@ def setPropertiesProblem():
         solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
         question=r'which of the next set properties/examples are correct: a) '+sol1+r',b) '+sol2+r''
         options =json.loads(json.dumps({'a':r"a) correct, b) correct",
-                                        'b':r"a) correct b) incorrect", 
+                                        'b':r"a) correct, b) incorrect", 
                                         'c':r"a) incorrect, b) correct", 
                                         'd':r"a) incorrect, b) incorrect"}))
         jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
@@ -263,7 +263,42 @@ def setPropertiesProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem]
+def subSetPropertiesProblem():
+    try:
+        truthOptions=[[r"(A \subseteq B) \iff [ \forall x : x \in A \rightarrow x \in B]",r"(A = B) \iff [ \forall x : x \in A \rightarrow x \in B]"],
+                      [r"(A \supseteq B) \iff (B \subseteq A)",r"(A \supseteq B) \rightarrow (A \ne B)"],
+                      [r"[(A \subseteq B) \land (x \notin B)] \rightarrow (x \notin A)",r"[(A \subseteq B) \land (x \notin A)] \rightarrow (x \notin B)"],
+                      [r"(A = B) \iff [(A \subseteq B) \land (B \subseteq A)]",r"(A = B) \iff [(A \subset B) \land (B \subset A)]"],
+                      [r"(A = B) \iff [ ( \forall x : x \in A \rightarrow x \in B) \land ( \forall x : x \in B \rightarrow x \in A)]",r"(A = B) \iff [ ( \forall x : x \in A \rightarrow x \in B) \lor ( \forall x : x \in B \rightarrow x \in A)]"],
+                      [r"(A = B) \iff (\forall x : x \in A \iff x \in B)",r"(A = B) \iff (\forall x : x \in A \rightarrow x \in B)"],
+                      [r"(A = B) \iff (\forall x : x \notin A \iff x \notin B)",r"(A = B) \iff (\forall x : x \notin A \rightarrow x \notin B)"],
+                      [r"(A \subset B) \iff (A \subseteq B) \land (A \ne B)",r"(A \subset B) \rightarrow (A \nsubseteq B)"],
+                      [r"(V = \emptyset) \iff \forall x : x \notin V",r"(V = \emptyset ) \iff [ \forall x : x \notin V \lor x = \emptyset ]"],
+                      [r" \forall A : \emptyset \subseteq A",r" \forall A : \emptyset \nsubseteq A"],
+                      [r"A = \emptyset \iff ( \forall B : A \subseteq B)",r"A = \emptyset \iff ( \forall B : A \nsubseteq B"],
+                      [r"(A \ne \emptyset ) \iff \exists x : x \in A",r"(A \ne \emptyset ) \iff [ \exists x : x \in A \land x \ne \emptyset ]"],
+                      [r"(A \subseteq B) \rightarrow [ \nexists x : x \in A \land x \notin B ]",r"(A \subseteq B) \rightarrow [ \exists x : x \in B \land x \notin A ]"]
+                      ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'which of the next subset properties are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
