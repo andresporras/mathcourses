@@ -3,6 +3,7 @@ import random
 import math
 import json
 import coursesFunctionsBll
+#https://texblog.org/2007/08/27/number-sets-prime-natural-integer-rational-real-and-complex-in-latex/ symbols for latex
 
 
 
@@ -298,7 +299,72 @@ def subSetPropertiesProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem]
+def subSetProblem():
+    try:
+        typeProblem = random.randint(0,1)
+        solution=""
+        question=""
+        if typeProblem==0: #product
+            a = random.randint(2,4)*((random.randint(0,1)*2)-1)
+            b = a*random.randint(1,3)*((random.randint(0,1)*2)-1)
+            z= b*random.randint(1,4)*((random.randint(0,1)*2)-1)
+            c = random.randint(1,10)*((random.randint(0,1)*2)-1)
+            d = z+c
+            exchange = random.randint(0,1)
+            if exchange==0:
+                temp=a
+                a=b
+                b=temp
+            incomparable = random.randint(0,1)*random.randint(0,1)
+            d=d+incomparable
+            if incomparable==1:
+                solution=r"incomparable sets"
+            elif abs(a)==abs(b):
+                solution=r"A = B"
+            elif abs(a)>abs(b):
+                solution=r"A \subset B"
+            else:
+                solution=r"B \subset A"
+            question=r'Find the relation between the next groups. A = \{'+str(a)+r'x+'+str(c)+r':x \in \mathbb{Z}\} B = \{'+str(b)+r'y+'+str(d)+r':y \in \mathbb{Z}\}'
+        else:
+            a = random.randint(2,4)
+            b = (a*random.randint(1,2)*random.randint(0,1)*random.randint(0,1))+a
+            z= b*random.randint(1,4)
+            c = random.randint(1,10)
+            d = z+c
+            exchange = random.randint(0,1)
+            if exchange==0:
+                temp=a
+                a=b
+                b=temp
+            i= random.randint(1,4)
+            e=z+i+(a/min(a,b))+(abs(d-c)/min(a,b) if c<d else 0)
+            f=z+i+(b/min(a,b))+(abs(d-c)/min(a,b) if d<c else 0)
+            edit =random.randint(0,2)-1
+            f=f+edit
+            if a!=b:
+                if b>a:
+                    e=e+(((b*f)-(a*f))/(a))+2
+                else:
+                    f=f+(((a*e)-(b*e))/(b))+2
+                solution=r"incomparable sets"
+            elif edit==0:
+                solution=r"A = B"
+            elif edit==1:
+                solution=r"B \subset A"
+            elif edit==-1:
+                solution=r"A \subset B"
+            question=r'Find the relation between the next groups. A = \{'+str(a)+r'x+'+str(c)+r':x \in \mathbb{N} \land x \geq '+str(e)+r' \} B = \{'+str(b)+r'y+'+str(d)+r':y \in \mathbb{N}  \land y \geq '+str(f)+r'  \}'
+        options =json.loads(json.dumps({'a':r"A = B",
+                                        'b':r"B \subset A", 
+                                        'c':r"A \subset B", 
+                                        'd':r"incomparable sets"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
