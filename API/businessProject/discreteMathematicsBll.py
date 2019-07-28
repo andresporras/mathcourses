@@ -364,7 +364,42 @@ def subSetProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem]
+def subSetPropertiesProblem2():
+    try:
+        truthOptions=[[r"reflexive property of subsets = [ \forall A : A \subseteq A]",r"antisymmetric property of subsets = [ \forall A : A \subseteq A]"],
+                      [r"antisymmetric property of subsets = [ \forall A, B : A \subseteq B \land B \subseteq A  \rightarrow A = B]",r"transitive  property of subsets = [ \forall A, B : A \subseteq B \land B \subseteq A  \rightarrow A = B]"],
+                      [r"transitive property of subsets = [ \forall A, B, C  : A \subseteq B \land B \subseteq C  \rightarrow A \subseteq C]",r"reflexive property of subsets = [ \forall A, B, C  : A \subseteq B \land B \subseteq C  \rightarrow A \subseteq C]"],
+                      [r"A relation with the reflexive, antisymmetric and transitive properties is a partial order relation",r"A relation with the reflexive, antisymmetric and transitive properties is a total order relation"],
+                      [r"\leq is a total order relation while \subseteq is a partial order relation",r"\leq is a partial order relation while \subseteq is a total order relation"],
+                      [r"given sets A and B it is true one of the next options: A \subset B \lor B \subset A \lor A = B \lor A is incomparable with B",r"given sets A and B it is true one of the next options: A \subset B \lor B \subset A \lor A = B"],
+                      [r"A total order relation has the connex property",r"A total order relation has no connex property"],
+                      [r"\mathscr{P}(A) = [B: B \subseteq A]",r"\mathscr{P}(A) = [B: B \subset A]"],
+                      [r"\mathscr{P}(A) has 2^{n} elements, where n is card(A)",r"\mathscr{P}(A) has 2^{n}-1 elements, where n is card(A)"],
+                      [r" \forall A: \emptyset \in \mathscr{P}(A) \land A \in \mathscr{P}(A)",r" \forall A: \emptyset \notin \mathscr{P}(A) \land A \notin \mathscr{P}(A)"],
+                      [r" \forall A: \emptyset \neq \mathscr{P}(A)",r" \forall A: \emptyset \eq \mathscr{P}(A) \iff \emptyset = A"],
+                      [r" \forall A, B: A \subseteq B \iff \mathscr{P}(A) \subseteq \mathscr{P}(B)",r" \forall A, B: A \subseteq B \iff \mathscr{P}(A) \in \mathscr{P}(B)"],
+                      [r" \forall A, B: A = B \iff \mathscr{P}(A) = \mathscr{P}(B)",r" \forall A, B: \mathscr{P}(A) \neq \mathscr{P}(B) then card(A) \neq card(B)"],
+                      ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'which of the next subset affirmations are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
