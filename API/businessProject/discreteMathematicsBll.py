@@ -373,12 +373,12 @@ def subSetPropertiesProblem2():
                       [r"\leq is a total order relation while \subseteq is a partial order relation",r"\leq is a partial order relation while \subseteq is a total order relation"],
                       [r"given sets A and B it is true one of the next options: A \subset B \lor B \subset A \lor A = B \lor A is incomparable with B",r"given sets A and B it is true one of the next options: A \subset B \lor B \subset A \lor A = B"],
                       [r"A total order relation has the connex property",r"A total order relation has no connex property"],
-                      [r"\mathscr{P}(A) = [B: B \subseteq A]",r"\mathscr{P}(A) = [B: B \subset A]"],
-                      [r"\mathscr{P}(A) has 2^{n} elements, where n is card(A)",r"\mathscr{P}(A) has 2^{n}-1 elements, where n is card(A)"],
-                      [r" \forall A: \emptyset \in \mathscr{P}(A) \land A \in \mathscr{P}(A)",r" \forall A: \emptyset \notin \mathscr{P}(A) \land A \notin \mathscr{P}(A)"],
-                      [r" \forall A: \emptyset \neq \mathscr{P}(A)",r" \forall A: \emptyset \eq \mathscr{P}(A) \iff \emptyset = A"],
-                      [r" \forall A, B: A \subseteq B \iff \mathscr{P}(A) \subseteq \mathscr{P}(B)",r" \forall A, B: A \subseteq B \iff \mathscr{P}(A) \in \mathscr{P}(B)"],
-                      [r" \forall A, B: A = B \iff \mathscr{P}(A) = \mathscr{P}(B)",r" \forall A, B: \mathscr{P}(A) \neq \mathscr{P}(B) then card(A) \neq card(B)"],
+                      [r"\mathcal{P}(A) = [B: B \subseteq A]",r"\mathcal{P}(A) = [B: B \subset A]"],
+                      [r"\mathcal{P}(A) has 2^{n} elements, where n is card(A)",r"\mathcal{P}(A) has 2^{n}-1 elements, where n is card(A)"],
+                      [r" \forall A: \emptyset \in \mathcal{P}(A) \land A \in \mathcal{P}(A)",r" \forall A: \emptyset \notin \mathcal{P}(A) \land A \notin \mathcal{P}(A)"],
+                      [r" \forall A: \emptyset \neq \mathcal{P}(A)",r" \forall A: \emptyset \eq \mathcal{P}(A) \iff \emptyset = A"],
+                      [r" \forall A, B: A \subseteq B \iff \mathcal{P}(A) \subseteq \mathcal{P}(B)",r" \forall A, B: A \subseteq B \iff \mathcal{P}(A) \in \mathcal{P}(B)"],
+                      [r" \forall A, B: A = B \iff \mathcal{P}(A) = \mathcal{P}(B)",r" \forall A, B: \mathcal{P}(A) \neq \mathcal{P}(B) then card(A) \neq card(B)"],
                       ]
         i1=random.randint(0,len(truthOptions)-1)
         j1=random.randint(0,1)
@@ -399,7 +399,56 @@ def subSetPropertiesProblem2():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2]
+def setOperationsProblem():
+    try:
+        truthOptions=[
+            [r"A \cup B = \{ x : x \in A \lor x \in B \}",r"A \cup B = \{ x : x \in A \land x \in B \}"],
+            [r"A \cap B = \{ x : x \in A \land x \in B \}",r"A \cap B = \{ x : x \in A \lor x \in B \}"],
+            [r"x \notin (A \cup B) \iff (x \notin A \land x \notin B)",r"x \notin (A \cup B) \iff (x \notin A \lor x \notin B)"],
+            [r"x \notin (A \cap B) \iff (x \notin A \lor x \notin B)",r"x \notin (A \cap B) \iff (x \notin A \land x \notin B)"],
+            [r"A and B are disjunctives if A \cap b = \emptyset",r"A and B are disjunctives if A \cup b = \emptyset"],
+            [r"A \cup A = A \cap A = A",r"A \cup A \neq A \cap A"],
+            [r"A \cup B = B \cup A, A \cap B = B \cap A",r"A \cup B = A \cup C \rightarrow B = C"],
+            [r"A \subseteq (A \cup B), (A \cap B) \subseteq A",r"A \cap B = A \cap C \rightarrow B = C"],
+            [r"A \cup \emptyset = A, A \cap \mathcal{U} = A",r"A \cup \emptyset = \emptyset, A \cap \mathcal{U} = \mathcal{U}"],
+            [r"A \cap \emptyset = \emptyset, A \cup \mathcal{U} = \mathcal{U}",r"A \cap \emptyset = A, A \cup \mathcal{U} = A"],
+            [r"(A \cup B) \cup C = A \cup (B \cup C), (A \cap B) \cap C = A \cap (B \cap C)",r" (A \cap B) = (A \cap C) = \emptyset \rightarrow B = C"],
+            [r"(B \subseteq A) \iff (A \cup B) = A",r"(B \subseteq A) \iff (A \cap B) = A"],
+            [r"(B \subseteq A) \iff (A \cap B) = B",r"(B \subseteq A) \iff (A \cup B) = B"],
+            [r"(A \cup B) \cap C = (A \cap C) \cup (B \cap C)",r"(A \cup B) \cap C = (A \cup C) \cap (B \cup C)"],
+            [r"(A \cap B) \cup C = (A \cup C) \cap (B \cup C)",r"(A \cap B) \cup C = (A \cap C) \cup (B \cap C)"],
+            [r"A \cup (A \cap B) = A",r"A \cup (A \cap B) = B"],
+            [r"A \cap (A \cup B) = A",r"A \cap (A \cup B) = B"],
+            [r"A \setminus B = \{ a \in A : x \notin B \}",r"A \setminus B = \{ a \in B : x \notin A \}"],
+            [r"A^{c} = \mathcal{U} \setminus A",r"A^{c} = A \setminus \mathcal{U}"],
+            [r"x \in A^{c} \iff [x \in \mathcal{U} \cap \neg (x \in A)]",r"x \in A^{c} \iff [x \in A \cap \neg (x \in \mathcal{U})]"],
+            [r"A \cap A^{c} = \emptyset, A \cup A^{c} = \mathcal{U}",r"[(A \cap B = \empyset) \land (B \cap C = \empyset)] \rightarrow (A \cap C) = \emptyset"],
+            [r"A \setminus B = A \cap B^{c}",r"A \setminus B = A^{c} \cap B"],
+            [r"(A^{c})^{c} = A",r"card(A)=6 \land card(B)=5 \rightarrow card(A \cup B)=11"],
+            [r"A \subseteq B \iff B^{c} \subseteq A^{c}",r"A \subseteq B \iff B^{c} \subseteq A^{c}"],
+            [r"(A \cup B)^{c} = A^{c} \cap B^{c}",r"(A \cup B)^{c} = A \cap B"],
+            [r"(A \cap B)^{c} = A^{c} \cup B^{c}",r"(A \cap B)^{c} = A \cup B"],
+                      ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'which of the next subset operation properties are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
