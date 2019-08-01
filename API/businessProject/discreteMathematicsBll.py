@@ -118,8 +118,11 @@ def tautologyNameProblem():
                       [r"(P \land P) \iff P",r"simplification"]]
         opt = random.randint(0,len(truthOptions)-1)
         sol=truthOptions[opt]
-        totalOpts=list(x[1] for x in truthOptions if x!=sol[1])
-        uTotalOpts = list(set(totalOpts))[:4]
+        totalOpts=list(x[1] for x in truthOptions if x[1]!=sol[1])
+        random.shuffle(totalOpts)
+        uTotalOpts = list(set(totalOpts))
+        random.shuffle(uTotalOpts)
+        uTotalOpts = uTotalOpts[:4]
         uTotalOpts.append(sol[1])
         uTotalOpts.sort()
         solution = sol[1]
@@ -213,8 +216,11 @@ def equivalenceNameProblem():
                       [r"P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P",r"contrapositive"]]
         opt = random.randint(0,len(truthOptions)-1)
         sol=truthOptions[opt]
-        totalOpts=list(x[1] for x in truthOptions if x!=sol[1])
-        uTotalOpts = list(set(totalOpts))[:4]
+        totalOpts=list(x[1] for x in truthOptions if x[1]!=sol[1])
+        random.shuffle(totalOpts)
+        uTotalOpts = list(set(totalOpts))
+        random.shuffle(uTotalOpts)
+        uTotalOpts = uTotalOpts[:4]
         uTotalOpts.append(sol[1])
         uTotalOpts.sort()
         solution = sol[1]
@@ -448,7 +454,48 @@ def setOperationsProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem]
+def setPropertyNameProblem():
+    try:
+        truthOptions=[[r"A \cup B = B \cup A",r"commutativity"],
+                      [r"A \cap B = B \cap A",r"commutativity"],
+                      [r"A \cup (B \cup C) = (A \cup B) \cup C",r"associativity"],
+                      [r"A \cap (B \cap C) = (A \cap B) \cap C",r"associativity"],
+                      [r"A \cap (A \cup B) = A",r"absorption"],
+                      [r"A \cup (A \cap B) = A",r"absorption"],
+                      [r"A \cap (B \cup C) = (A \cap B) \cup (A \cap C)",r"distribution"],
+                      [r"A \cup (B \cap C) = (A \cup B) \cap (A \cup C)",r"distribution"],
+                      [r"A \cap A^{c} = \emptyset",r"all or nothing"],
+                      [r"A \cup A^{c} = \mathcal{U}",r"all or nothing"],
+                      [r"A \cup \emptyset = A",r"identity"],
+                      [r"A \cap \mathcal{U} = A",r"identity"],
+                      [r"A \cap \emptyset = \emptyset",r"floor, ceiling"],
+                      [r"A \cup \mathcal{U} = \mathcal{U}",r"floor, ceiling"],
+                      [r"A \cup A = A",r"idempotence"],
+                      [r"A \cap A = A",r"idempotence"],
+                      [r"(A^{c})^{c}",r"double complement"],
+                      [r"(A \cup B)^{c} = A^{c} \cap B^{c}",r"Morgan's law"],
+                      [r"(A \cap B)^{c} = A^{c} \cup B^{c}",r"Morgan's law"]]
+        opt = random.randint(0,len(truthOptions)-1)
+        sol=truthOptions[opt]
+        totalOpts=list(x[1] for x in truthOptions if x[1]!=sol[1])
+        uTotalOpts = list(set(totalOpts))
+        random.shuffle(uTotalOpts)
+        uTotalOpts = uTotalOpts[:4]
+        uTotalOpts.append(sol[1])
+        uTotalOpts.sort()
+        solution = sol[1]
+        question=r'select the name of the next set property: '+sol[0]+r'' 
+        options =json.loads(json.dumps({'a':uTotalOpts[0],
+                                        'b':uTotalOpts[1], 
+                                        'c':uTotalOpts[2], 
+                                        'd':uTotalOpts[3], 
+                                        'e':uTotalOpts[4]}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem, setPropertyNameProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
