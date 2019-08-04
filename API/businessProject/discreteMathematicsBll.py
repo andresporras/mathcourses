@@ -495,7 +495,41 @@ def setPropertyNameProblem():
     except Exception as er:
         return er
 
-exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem, setPropertyNameProblem]
+def setSolveOperationProblem():
+    try:
+        truthOptions=[
+            [r"A \setminus (A \setminus B) = A \cap B",r"A \setminus (A \setminus B) = A \cap B"],
+            [r"A \cap (B \setminus C) = (A \cap B) \setminus (A \cap C)",r"A \cap (B \setminus C) = (A \cup B) \setminus (A \cup C)"],
+            [r"C \setminus (A \cup B) = (C \setminus A) \cap (C \setminus B)",r"C \setminus (A \cup B) = (C \setminus A) \cup (C \setminus B)"],
+            [r"C \setminus (A \cap B) = (C \setminus A) \cup (C \setminus B)",r"C \setminus (A \cap B) = (C \setminus A) \cap (C \setminus B)"],
+            [r"C \setminus (B \setminus A) = (A \cap B) \cup (C \setminus B)",r"C \setminus (B \setminus A) = (A \setminus B) \cup (C \setminus B)"],
+            [r"(B \setminus A) \cap C = (B \cap C) \setminus A",r"(B \setminus A) \cap C = (B \cup C) \setminus A"],
+            [r"(B \cap C) \setminus A = B \cap (C \setminus A)",r"(B \cap C) \setminus A = B \cup (C \setminus A)"],
+            [r"(B \ A) \cup C = (B \cup C) \setminus (A \setminus C)",r"(B \ A) \cup C = (B \cup C) \setminus (A \cup C)"],
+            [r"A = (A \cap B) \cup (A \cap B^{c})",r"A = (A \cup B) \cap (A \cup B^{c})"],
+            [r"(A \cup B) \cap ((A \cup B) \cap (A \cap B)) = A \cap B",r"(A \cup B) \cap ((A \cup B) \cap (A \cap B)) = A \cup B"],
+            [r"[(A^{c} \cap B = \emptyset) \land (A^{c} \cup B = \mathcal{U})] \iff A = B",r"[(A^{c} \cap B = \emptyset) \land (A^{c} \cup B = \mathcal{U})] \iff A \neq B"],
+                      ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'solve and find which set operations are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem, setPropertyNameProblem, setSolveOperationProblem]
 exam2 = []
 listMethods = [exam1, exam2]
 def generateExam(unit):
