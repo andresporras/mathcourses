@@ -3,9 +3,8 @@ import random
 import math
 import json
 import coursesFunctionsBll
-#https://texblog.org/2007/08/27/number-sets-prime-natural-integer-rational-real-and-complex-in-latex/ symbols for latex
-
-
+#https://en.wikipedia.org/wiki/Wikipedia:LaTeX_symbols symbols for latex
+#https://texblog.org/2007/08/27/number-sets-prime-natural-integer-rational-real-and-complex-in-latex/ more latex symbol (for sets)
 
 def truthTableProblem():
     try:
@@ -529,8 +528,132 @@ def setSolveOperationProblem():
     except Exception as er:
         return er
 
+def generalizeUIProblem():
+    try:
+        truthOptions=[
+            [r"\forall p : p \in \bigcup A \iff \exists b \in A: p \in b",r"\forall p : p \in \bigcup A \iff \exists b \in A: b \in p"],
+            [r"\forall p : p \in \bigcap A \iff \forall b \in A : p \in b",r"\forall p : p \in \bigcap A \iff \forall b \in A : b \in p"],
+            [r"A \subseteq B \rightarrow \bigcup A \subseteq \bigcup B",r"A \subseteq B \rightarrow \bigcup B \subseteq \bigcup A"],
+            [r"B \subseteq A \rightarrow \bigcap A \subseteq \bigcap B",r"B \subseteq A \rightarrow \bigcap B \subseteq \bigcap A"],
+            [r"a \in A \rightarrow a \subseteq \bigcup A",r"a \in A \rightarrow a \subseteq \bigcap A"],
+            [r"a \in A \rightarrow \bigcap A \subseteq a",r"a \in A \rightarrow \bigcup A \subseteq a"],
+            [r"\forall a \in A : [c \subseteq a \rightarrow c \subseteq \bigcap A]",r"\forall a \in A : [c \subseteq a \rightarrow c \subseteq \bigcup A]"],
+            [r"\forall a \in A : [a \subseteq c \rightarrow \bigcup A \subseteq c]",r"\forall a \in A : [a \subseteq c \rightarrow \bigcap A \subseteq c]"],
+            [r"\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}",r"\mathbb{N} \subset \mathbb{Z} \subset \mathbb{R} \subset \mathbb{Q}"],
+            [r"\mathbb{Q} = \{ \frac{a}{b} : a,b \in \mathbb{Z}, b \neq 0 \}",r"\mathbb{R} = \{ \frac{a}{b} : a,b \in \mathbb{Z}, b \neq 0 \}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{\leq a} = /{ x \in A : x \leq a /}",r"A \subseteq \mathbb{R} \land a \in R : A^{\leq a} = /{ x \in A : x \leq a \land x \geq 0 /}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{\geq a} = /{ x \in A : x \geq a /}",r"A \subseteq \mathbb{R} \land a \in R : A^{\qeq a} = /{ x \in A : x \geq a \land x \geq 0 /}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{< a} = /{ x \in A : x < a /}",r"A \subseteq \mathbb{R} \land a \in R : A^{< a} = /{ x \in A : x < a \land x < 0 /}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{> a} = /{ x \in A : x > a /}",r"A \subseteq \mathbb{R} \land a \in R : A^{> a} = /{ x \in A : x > a \land x > 0 /}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{+} = A^{> 0}",r"A \subseteq \mathbb{R} \land a \in R : A^{+} = A^{\geq 0}"],
+            [r"A \subseteq \mathbb{R} \land a \in R : A^{*} = \{ x \in A : x \neq 0 \}",r"A \subseteq \mathbb{R} \land a \in R : A^{*} = \{ x \in A : x \geq 0 \}"],
+            [r"\mathbb{N}^{*} = \mathbb{N}^{+} = \mathbb{Z}^{+}",r"\mathbb{N}^{+} \subset \mathbb{N}^{*} \subset \mathbb{Z}^{+}"],
+            [r"\mathbb{N}^{-} = \emptyset",r"\mathbb{N}^{-} = 0"],
+            [r"A \subseteq \mathbb{R} \land a \in R : \mathbb{A}^{*} = \mathbb{A}^{+} \cup \mathbb{A}^{-}",r"A \subseteq \mathbb{R} \land a \in R : \mathbb{A}^{*} = \mathbb{A}^{+} \cap \mathbb{A}^{-}"],
+            [r"\underset{i \in I}{\bigcup} A_i = \bigcup A",r"\underset{i \in I}{\bigcup} A_i = \bigcap A"],
+            [r"A = \{ A_i : i \in I \}",r"A = \{ A_i : i \subseteq I \}"],
+            [r"\underset{i \in I}{\bigcap} A_i = \bigcap A",r"\underset{i \in I}{\bigcap} A_i = \bigcup A"],
+            [r"n \in \mathbb{N}^{*} A_n = [0, \frac{1}{n}] : \underset{n \in N^{*}}{\bigcap} A_n = /{ 0 /}",r"n \in \mathbb{N}^{*}m A_n = [0, \frac{1}{n}] : \underset{n \in N^{*}}{\bigcap} A_n = [0, \frac{1}{n}]"],
+            [r"i \in N^{*}, A_i = (0,i) = \{ x \in \mathbb{R} : 0 < x < i \} \rightarrow \underset{i \in \mathbb{N}^{*}}{\bigcup} A_i = \mathbb{R}^{+}",r"i \in N^{*}, A_i = (0,i) = \{ x \in \mathbb{R} : 0 < x < i \} \rightarrow \underset{i \in \mathbb{N}^{*}}{\bigcup} A_i = (0,1)"],
+            [r"i \in N^{*}, A_i = (0,i) = \{ x \in \mathbb{R} : 0 < x < i \} \rightarrow \underset{i \in \mathbb{N}^{*}}{\bigcap} A_i = (0,1)",r"i \in N^{*}, A_i = (0,i) = \{ x \in \mathbb{R} : 0 < x < i \} \rightarrow \underset{i \in \mathbb{N}^{*}}{\bigcap} A_i = \mathbb{R}^{+}"],
+            [r"\forall i \in I, A_j \subseteq \underset{i \in I}{\bigcup} A_i",r"\forall i \in I, \underset{i \in I}{\bigcup} A_i \subseteq A_j"],
+            [r"\forall i \in I, \underset{i \in I}{\bigcap} A_i \subseteq A_j",r"\forall i \in I, A_j \subseteq \underset{i \in I}{\bigcap} A_i"],
+            [r"\forall i \in I, C \subseteq A_i \rightarrow C \subseteq \underset{i \in I}{\bigcap} A_i",r"\forall i \in I, C \subseteq A_i \rightarrow \underset{i \in I}{\bigcap} A_i \subseteq C"],
+            [r"\forall j \in I, A_j \subseteq C \rightarrow \underset{i \in I}{\bigcup} \subseteq C",r"\forall j \in I, A_j \subseteq C \rightarrow C \subseteq \underset{i \in I}{\bigcup}"],
+            [r"(\underset{i \in I}{\bigcap} A_i)^{c} = \underset{i \in I}{\bigcup} {A_i}^{c}",r"(\underset{i \in I}{\bigcap} A_i)^{c} = \underset{i \in I}{\bigcap} {A_i}^{c}"],
+            [r"(\underset{i \in I}{\bigcup} A_i)^{c} = \underset{i \in I}{\bigcap} {A_i}^{c}",r"(\underset{i \in I}{\bigcup} A_i)^{c} = \underset{i \in I}{\bigcup} {A_i}^{c}"],
+            ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'find which generalize union and intersection set properties are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+def cartesianProductProblem():
+    try:
+        truthOptions=[
+            [r"(a,b)=(a',b') \iff a=a' \land b=b'",r"(a,b)=(a',b') \iff (a=a' \lor a=b') \land (b=a \lor b=b')"],
+            [r"A x B = /{(x,y): x \in A \land y \in B /}",r"A x B = /{(x,y): [x \in A \lor x \in B] \land [y \in A \lor y \in B] /}"],
+            [r"A x B \neq B x A", r"A x B = B x A"],
+            [r"card(A x B) = card(A) * card(B)",r"card(A x B) = card(A) * card(B) - 1"],
+            [r"(x,y) \in \mathbb{R}^{2} \land a \in \mathbb{R}^{\geq 0}: x^{2} + y^{2} = a",r"(x,y) \in \mathbb{Q}^{2} \land a \in \mathbb{Q}^{\geq 0}: x^{2} + y^{2} = a"],
+             [r"A x \emptyset = \emptyset x B = \emptyset",r"A x \emptyset = \emptyset x B \iff A = B"],
+             [r"A \neq \emptyset \land B \neq \emptyset, A = B \iff A x B = B x A",r"A \neq \emptyset \land B \neq \emptyset, A x B \neq B x A"],
+             [r"A \neq \emptyset \land B \neq \emptyset, A = A' \land B = B' \iff A x B = A' x B'",r"A \neq \emptyset \land B \neq \emptyset, A \neq A' \land B \neq B' \iff A x B \neq A' x B'"],
+             [r"A x (B \cup C) = (A x B) \cup (A x C)",r"A x (B \cup C) = (A \cup B) x (A \cup C)"],
+             [r"A x (B \cap C) = (A x B) \cap (A x C)",r"A x (B \cap C) = (A \cap B) x (A \cap C)"],
+             [r"(a,b) = /{ /{ a /}, /{ a, b /} /}",r"(a,b) = /{ /{ a /}, /{ b /} /}"],
+             [r"a \neq b \iff /{ a,b /} is not a singleton",r"a = b \iff (a,b) = (a)"],
+             [r"a = b \iff /{ a /} = /{ b /}",r"a = b \iff /{ a, b /} = (a, b)"],
+             [r"(a, b, c) = ((a, b), c)",r"(a, b, c) \neq ((a, b), c)"],
+            ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'find which of the next cartesian product properties are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
+def wellOrderRelationProblem():
+    try:
+        truthOptions=[
+             [r"(reflexive property) \forall x \in A: x \leq x",r"(reflexive property) \forall x, y, z \in A: (x \leq y \land y\leq z) \rightarrow x \leq z"],
+             [r"(antisymmetric property) \forall x, y \in A: (x \leq y \land y \leq x) \rightarrow x = y",r"(antisymmetric property) \forall x \in A: x \leq x"],
+             [r"(transitive property) \forall x, y, z \in A: (x \leq y \land y\leq z) \transitive x \leq z",r"(antisymmetric property) \forall x, y \in A: (x \leq y \land y \leq x) \rightarrow x = y"],
+             [r"A partial order structure has the next properties: reflexivity, antisymmetric, transitivity",r"A partial order structure has the next properties: reflexivity, antisymmetric, transitivity and completeness"],
+             [r"A total order structure has the next properties: reflexivity, antisymmetric, transitivity and completeness",r"A total order structure has the next properties: reflexivity, antisymmetric, transitivity"],
+             [r"having (A, \leq ) being a partial order structure, and B \subseteq A, m = min(B) if m \in B \land \forall x \in B: m \leq x",r"having (A, \leq ) being a partial order structure, and B \subseteq A, m = min(B) if m \in B \land \forall x \in B: m < x"],
+             [r"having (A, \leq ) being a total order structure, A is a well order if \forall S \subseteq A : (S \neq \emptyset \rightarrow \exists m \in S : ( \forall x \in S : m \leq x))",r"having (A, \leq ) being a total order structure, A is a well order if \forall S \subseteq A : (S \neq \emptyset \rightarrow \exists m \in S : ( \forall x \in S : x \leq m))"],
+             [r"\mathbb{N} is well order while \mathbb{R}^{\geq 0} is not well order",r"\mathbb{R}^{\geq 0} is well order while \mathbb{N} is not well order"],
+             [r"(A, \leq) is a well order structure \rightarrow \exists x: x = min(A)",r"(A, \leq) is a well order structure \iff \exists x: x = min(A)"],
+             [r"if (A, \leq) is a partial order, S \subseteq A and \exists m, m' \in S, and \forall x \in S : m \leq x \land m' \leq x then m = m'",r"if (A, \leq) is a partial order, S \subseteq A, \exists m, m' \in S, and \forall x \in S : m \leq x \land m' \leq x then m = m' \lor m \neq m'"],
+            ]
+        i1=random.randint(0,len(truthOptions)-1)
+        j1=random.randint(0,1)
+        sol1 = truthOptions[i1][j1]
+        del truthOptions[i1]
+        i2=random.randint(0,len(truthOptions)-1)
+        j2=random.randint(0,1)
+        sol2 = truthOptions[i2][j2] 
+        del truthOptions[i2]
+        solution = r"a) "+("correct" if j1==0 else "incorrect")+r", b) "+("correct" if j2==0 else "incorrect")+r"" 
+        question=r'find which of the next well order properties are correct: a) '+sol1+r',b) '+sol2+r''
+        options =json.loads(json.dumps({'a':r"a) correct, b) correct",
+                                        'b':r"a) correct, b) incorrect", 
+                                        'c':r"a) incorrect, b) correct", 
+                                        'd':r"a) incorrect, b) incorrect"}))
+        jsonResponse = json.dumps({"question":coursesFunctionsBll.replaceSpace(question), "solution":coursesFunctionsBll.replaceSpace(solution), "options":coursesFunctionsBll.replaceOptions(options)})
+        return [jsonResponse]
+    except Exception as er:
+        return er
+
 exam1 = [truthTableProblem, tautologiesProblem, tautologyNameProblem, equivalencesProblem, equivalenceNameProblem, setPropertiesProblem, subSetPropertiesProblem, subSetProblem, subSetPropertiesProblem2, setOperationsProblem, setPropertyNameProblem, setSolveOperationProblem]
-exam2 = []
+exam2 = [generalizeUIProblem, cartesianProductProblem, wellOrderRelationProblem]
 listMethods = [exam1, exam2]
 def generateExam(unit):
     solution = []
